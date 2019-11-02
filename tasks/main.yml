@@ -1,2 +1,10 @@
 ---
 # tasks file for ap-application-load-balancer-extras
+
+- name: "AP-ALB-Extras: PHP"
+  include: php.yml
+  tags:
+    - albextras
+    - albextras-php
+  when: albextras == true and albextras_php == true
+  # when: application_load_balancer_extra_php is defined and application_load_balancer_extra_php.enabled is defined and application_load_balancer_extra_php.enabled == true
