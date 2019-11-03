@@ -53,10 +53,10 @@ Including an example of how to use your role (for instance, with variables passe
   hosts: all
   remote_user: root
   vars:
-    application_load_balancer_name: "Etica.AI/DW"
-    application_load_balancer_forcedebug: yes
+    alb_name: "Etica.AI/DW"
+    alb_forcedebug: yes
 
-    #application_load_balancer_forceignore_extra_php: false
+    #alb_forceignore_extra_php: false
     #alb_extra_php_php56_enabled: true
     #alb_extra_php_php56_state: absent
     #alb_extra_php_php70_enabled: true
@@ -68,7 +68,7 @@ Including an example of how to use your role (for instance, with variables passe
     #alb_extra_php_php74_enabled: true
     #alb_extra_php_php74_state: absent
 
-    application_load_balancer_apps:
+    alb_apps:
 
       - app_uid: "ftp"
         app_domain: "ftp.dw.etica.ai"

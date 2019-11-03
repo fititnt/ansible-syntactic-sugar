@@ -3,15 +3,15 @@
 - name: "ALB-Extras: php-repository.yml"
   include: php-repository.yml
   # when: albextras == true and albextras_php == true
-  # when: application_load_balancer_extra_php is defined and application_load_balancer_extra_php.enabled is defined and application_load_balancer_extra_php.enabled == true
+  # when: alb_extra_php is defined and alb_extra_php.enabled is defined and alb_extra_php.enabled == true
 
 - name: "ALB-Extras: php-versions.yml"
   include: php-versions.yml
   # when: albextras == true and albextras_php == true
-  # when: application_load_balancer_extra_php is defined and application_load_balancer_extra_php.enabled is defined and application_load_balancer_extra_php.enabled == true
+  # when: alb_extra_php is defined and alb_extra_php.enabled is defined and alb_extra_php.enabled == true
 
 - name: "ALB-Extras: php-debug.yml"
   include: php-debug.yml
   when: albextras_php_debug is defined
   # when: albextras_php_debug is defined and albextras_php_debug == true
-  # when: application_load_balancer_extra_php is defined and application_load_balancer_extra_php.enabled is defined and application_load_balancer_extra_php.enabled == true
+  # when: alb_extra_php is defined and alb_extra_php.enabled is defined and alb_extra_php.enabled == true

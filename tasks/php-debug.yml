@@ -8,7 +8,7 @@
 
 - name: albextras_php_debug == true ? vim /usr/local/openresty/nginx/html/phpinfo.php
   template:
-    src: "{{ role_path }}/files/phpinfo.php"
+    src: "{{ role_path }}/templates/php/debug/phpinfo.php"
     dest: /usr/local/openresty/nginx/html/phpinfo.php
     owner: www-data
     group: www-data

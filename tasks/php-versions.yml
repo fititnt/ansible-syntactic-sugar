@@ -38,8 +38,8 @@
 
 #- name: debug
 #  debug:
-#    msg: "{{ application_load_balancer_extra_php }}"
+#    msg: "{{ alb_extra_php }}"
 
 #- name: debug2
 #  debug:
-#    msg: "{{ application_load_balancer_extra_php }}"
+#    msg: "{{ alb_extra_php }}"
