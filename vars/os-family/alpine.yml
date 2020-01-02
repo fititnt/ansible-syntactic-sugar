@@ -1,0 +1,10 @@
+---
+# FILE:            {{ role_path }}/vars/os-family/alpine.yml
+# LICENSE:         Public Domain
+#
+# DESCRIPTION:     This file is loaded by default for at least these OSs:
+#                  'Alpine': ['Alpine'],
+
+albextras_internal_root_user: 'root'
+albextras_internal_root_group: 'root'
+albextras_internal_package_manager_group: "apk"

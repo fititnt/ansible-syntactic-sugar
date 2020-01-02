@@ -1,6 +1,6 @@
-# ap-application-load-balancer-extras - v0.1-alpha
-[draft] Ansible Role with extra optimal features for the
-**[Águia Pescadora Application Load Balancer ("AP-ALB")](https://github.com/fititnt/ap-application-load-balancer)**.
+# ap-application-load-balancer-extras - v0.2.0-alpha
+[not-production-ready] Ansible Role with extra optimal features for the
+**[AP Application Load Balancer ("AP-ALB")](https://github.com/fititnt/ap-application-load-balancer)**.
 
 The main objective of this role is add some functionality (for example, very
 simple configuration of PHP, Python, Java, Tomcat, ...) using a sintax that
@@ -18,7 +18,6 @@ Requirements
 Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 -->
 
-- **Ubuntu Server 18.04 LTS**
 
 Role Variables
 --------------
@@ -28,11 +27,8 @@ A description of the settable variables for this role should go here, including 
 Dependencies
 ------------
 
-<!--
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
--->
-
-Depends on [ap-application-load-balancer](https://github.com/fititnt/ap-application-load-balancer).
+This role does not depend on other Ansible roles. Not even the
+[ap-application-load-balancer](https://github.com/fititnt/ap-application-load-balancer).
 
 Example Playbook
 ----------------

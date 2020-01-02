@@ -1,10 +1,97 @@
 ---
-# tasks file for ap-application-load-balancer-extras
+# FILE:            {{ role_path }}/tasks/main.yml
+# LICENSE:         Public Domain
 
-- name: "AP-ALB-Extras: PHP"
-  include: php.yml
+- name: "AP-ALB Extras | Welcome message"
+  debug:
+    msg:
+      albextras_version: "{{ albextras_version }}"
+      node:
+        os: "{{ ansible_os_family | default('undefined') | lower }}"
+        dist: "{{ ansible_distribution | default('undefined') | lower }}"
+        dist_release: "{{ ansible_distribution_release | default('undefined') | lower }}"
+        dist_major_ver: "{{ ansible_distribution_major_version | default('undefined') | lower }}"
+        ansible_lsb: "{{ ansible_lsb | default('undefined') }}"
+        # If behind NAT, this may not represent real public IPv4.
+        # Alternative: https://docs.ansible.com/ansible/latest/modules/ipify_facts_module.html
+        ansible_default_ipv4: "{{ ansible_default_ipv4.address | default('undefined') }}"
+  tags:
+    - alb
+    - always
+
+## Variable loading based on node Operational System ___________________________
+- name: "AP-ALB Extras | OS Family variables"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ (albextras_vars_osfamily is defined) | ternary(albextras_vars_osfamily, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "os-family/{{ ansible_os_family | default('undefined') | lower }}.yml"
+    - "os-family/{{ (ansible_os_family is defined) | ternary('untested','unknown') }}.yml"
+  tags:
+    - alb
+    - always
+
+- name: "AP-ALB Extras | OS Family version variables"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ (albextras_vars_osfamilyversion is defined) | ternary(albextras_vars_osfamilyversion, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "os-family/os-family-version/{{ ansible_os_family | default('undefined') | lower }}-{{ ansible_distribution_major_version
+      | default('undefined')
+      | lower }}.yml"
+    - "os-family/os-family-version/no-os-family-version-customization.yml"
+  tags:
+    - alb
+    - always
+
+- name: "AP-ALB Extras | Distribution variables (may override OS Family variables, if exist)"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ (albextras_vars_distribution is defined) | ternary(albextras_vars_distribution, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "os-family/distribution/{{ ansible_distribution | default('undefined') | lower }}.yml"
+    - "os-family/distribution/no-os-family-customization.yml"
+  tags:
+    - alb
+    - always
+
+- name: "AP-ALB Extras | Specific version distribution variables (may override OS Family and Distribution variables, if exist)"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ (albextras_vars_distribution_version is defined) | ternary(albextras_vars_distribution_version, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "os-family/distribution/version/{{ ansible_distribution | default('undefined') | lower }}-{{ ansible_distribution_major_version
+      | default('undefined')
+      | lower }}.yml"
+    - "os-family/distribution/version/no-distribution-customization.yml"
+  tags:
+    - alb
+    - always
+
+## Run each ALB Extra subcomponent _____________________________________________
+
+- name: "AP-ALB Extras | sample-content-static-site"
+  include: sample-content-static-site/main.yml
+  tags:
+    - albextras
+    - albextras-sample-content-static-site
+
+- name: "AP-ALB Extras | sample-content-php"
+  include: sample-content-php/main.yml
+  tags:
+    - albextras
+    - albextras-sample-content-php
+
+- name: "AP-ALB Extras | sample-content-cdn"
+  include: sample-content-cdn/main.yml
+  tags:
+    - albextras
+    - albextras-sample-content-cdn
+
+- name: "AP-ALB Extras | php"
+  include: php/main.yml
   tags:
     - albextras
     - albextras-php
-  when: albextras == true and albextras_php == true
-  # when: alb_extra_php is defined and alb_extra_php.enabled is defined and alb_extra_php.enabled == true
+
+- name: "AP-ALB Extras | adminer"
+  include: adminer/main.yml
+  tags:
+    - albextras
+    - albextras-adminer
