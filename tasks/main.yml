@@ -23,6 +23,7 @@
 - name: "AP-ALB Extras | OS Family variables"
   include_vars: "{{ item }}"
   with_first_found:
+    - "{{ (albextras_iswindows is defined and albextras_iswindows|bool) | ternary('os-family/windows.yml', 'name-of-a-file-that-does-not-exist.yml') }}"
     - "{{ (albextras_vars_osfamily is defined) | ternary(albextras_vars_osfamily, 'name-of-a-file-that-does-not-exist.yml') }}"
     - "os-family/{{ ansible_os_family | default('undefined') | lower }}.yml"
     - "os-family/{{ (ansible_os_family is defined) | ternary('untested','unknown') }}.yml"
@@ -65,6 +66,13 @@
     - always
 
 ## Run each ALB Extra subcomponent _____________________________________________
+
+- name: "AP-ALB Extras | groups"
+  include: groups/main.yml
+  when:
+    - "(albextras_groups is defined)
+      and (albextras_groups[0] is defined)
+      and (albextras_groups[0].name is defined)"
 
 - name: "AP-ALB Extras | users"
   include: users/main.yml

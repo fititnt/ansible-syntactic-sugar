@@ -8,3 +8,6 @@
 albextras_internal_root_user: 'root'
 albextras_internal_root_group: 'root'
 albextras_internal_package_manager_group: "pacman"
+# discovered_interpreter_python: 
+
+albextras_internal_iswindows: false

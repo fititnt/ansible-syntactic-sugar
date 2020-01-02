@@ -51,9 +51,13 @@ This role does not depend on other Ansible roles. Not even the
     albextras_users:
       - name: user1
       - name: user2
+
+    # albextras_iswindows: true # Uncomment next variable only for Windows hosts.
   roles:
     - { role: fititnt.ap-application-load-balancer-extras }
 ```
+
+
 
 ## License
 This Ansible role have content from several places with different licenses and

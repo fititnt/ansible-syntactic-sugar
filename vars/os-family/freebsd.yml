@@ -13,3 +13,5 @@
 albextras_internal_root_user: 'root'
 albextras_internal_root_group: 'wheel'
 albextras_internal_package_manager_group: "pkgng"
+
+albextras_internal_iswindows: false

@@ -9,11 +9,11 @@ lint:
 platforms:
   - name: instance
     image: ${MOLECULE_DISTRO:-geerlingguy/docker-ubuntu1804-ansible:latest}
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
-    pre_build_image: true
+    # command: ${MOLECULE_DOCKER_COMMAND:-""}
+    # volumes:
+    #   - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    # privileged: true
+    # pre_build_image: true
   #- name: instance
   #  image: ubuntu:18.04
   #- name: instance
@@ -43,3 +43,6 @@ scenario:
     - verify
     - cleanup
     - destroy
+
+## To debug some particular instance:
+#    MOLECULE_DISTRO=archlinux:latest molecule test --destroy=never

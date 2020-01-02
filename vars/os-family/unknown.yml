@@ -18,3 +18,5 @@ albextras_internal_alert_critical_all: >
 albextras_internal_boostrap_unknown: >
   This node, even if ALB/Bootstrap could install Python for you with dirty RAW
   commands, should run again with gather_facts enabled.
+
+albextras_internal_iswindows: false

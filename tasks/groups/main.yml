@@ -1,0 +1,23 @@
+---
+
+# FILE:            {{ role_path }}/tasks/groups/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/user_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/group_module.html
+#
+# TODO:            Implement version compatible with windows, see
+#                  https://docs.ansible.com/ansible/latest/modules/win_group_module.html
+#                  (fititnt, 2020-01-02 06:04 BRT)
+
+- name: "users | main.yml: create users"
+  group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid | default(omit) }}"
+    non_unique: "{{ item.non_unique | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+  with_items: "{{ albextras_groups }}"
+  #when:
+  #  - "(albextras_users is defined)
+  #    and (albextras_users[0] is defined)
+  #    and (albextras_users[0].name is defined)"
