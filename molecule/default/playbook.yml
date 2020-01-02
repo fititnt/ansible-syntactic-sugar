@@ -4,9 +4,19 @@
   remote_user: root
   vars:
 
+    albextras_groups:
+      - name: group1
+      - name: group2
+
     albextras_users:
       - name: user1
       - name: user2
+        groups:
+          - group2
+
+    albextras_sample_content_static_site:
+      - path: /home/user2/public_html
+        user: user2
 
   roles:
     - role: ap-application-load-balancer-extras

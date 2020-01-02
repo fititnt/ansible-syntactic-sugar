@@ -46,3 +46,4 @@ scenario:
 
 ## To debug some particular instance:
 #    MOLECULE_DISTRO=archlinux:latest molecule test --destroy=never
+#    MOLECULE_DISTRO=archlinux:latest molecule --debug test
