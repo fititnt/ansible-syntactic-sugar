@@ -66,32 +66,36 @@
 
 ## Run each ALB Extra subcomponent _____________________________________________
 
+- name: "AP-ALB Extras | users"
+  include: users/main.yml
+  when:
+    - "(albextras_users is defined)
+      and (albextras_users[0] is defined)
+      and (albextras_users[0].name is defined)"
+  tags:
+    - albextras-users
+
 - name: "AP-ALB Extras | sample-content-static-site"
   include: sample-content-static-site/main.yml
   tags:
-    - albextras
     - albextras-sample-content-static-site
 
 - name: "AP-ALB Extras | sample-content-php"
   include: sample-content-php/main.yml
   tags:
-    - albextras
     - albextras-sample-content-php
 
 - name: "AP-ALB Extras | sample-content-cdn"
   include: sample-content-cdn/main.yml
   tags:
-    - albextras
     - albextras-sample-content-cdn
 
 - name: "AP-ALB Extras | php"
   include: php/main.yml
   tags:
-    - albextras
     - albextras-php
 
 - name: "AP-ALB Extras | adminer"
   include: adminer/main.yml
   tags:
-    - albextras
     - albextras-adminer

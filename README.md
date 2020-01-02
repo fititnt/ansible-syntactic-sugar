@@ -27,7 +27,7 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 -->
 
-See [defaults/main.yml].
+See [defaults/main.yml](defaults/main.yml).
 
 For internal variables based on OS, check [vars/README.md](vars/README.md).
 
@@ -48,7 +48,9 @@ This role does not depend on other Ansible roles. Not even the
 - hosts: all
   remote_user: root
   vars:
-    alb_node_isconteiner: true
+    albextras_users:
+      - name: user1
+      - name: user2
   roles:
     - { role: fititnt.ap-application-load-balancer-extras }
 ```

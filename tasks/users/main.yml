@@ -1,0 +1,41 @@
+---
+
+# FILE:            {{ role_path }}/tasks/users/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/user_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/group_module.html
+
+- name: "users | main.yml: notice"
+  debug:
+    msg: "This is a draft. Not implemented at the moment"
+
+- name: "users | main.yml: create users"
+  user:
+    name: "{{ item.name }}"
+    group: "{{ item.group | default(omit) }}"
+    groups: "{{ item.groups | default([]) | join(',') or omit }}"
+    comment:  "{{ item.comment | default(omit) }}"
+    create_home:  "{{ item.create_home | default(omit) }}"
+    expires:  "{{ item.expires | default(omit) }}"
+    force:  "{{ item.force | default(omit) }}"
+    generate_ssh_key:  "{{ item.generate_ssh_key | default(omit) }}"
+    home:  "{{ item.home | default(omit) }}"
+    password:  "{{ item.password | default(omit) }}"
+    remove:  "{{ item.remove | default(omit) }}"
+    seuser:  "{{ item.seuser | default(omit) }}"
+    shell:  "{{ item.shell | default(omit) }}"
+    skeleton: "{{ item.skeleton | default(omit) }}"
+    ssh_key_bits: "{{ item.ssh_key_bits | default(omit) }}"
+    ssh_key_comment: "{{ item.ssh_key_comment | default(omit) }}"
+    ssh_key_file: "{{ item.ssh_key_file | default(omit) }}"
+    ssh_key_passphrase: "{{ item.ssh_key_passphrase | default(omit) }}"
+    ssh_key_type: "{{ item.ssh_key_type | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+    uid: "{{ item.uid | default(omit) }}"
+    update_password: "{{ item.update_password | default(omit) }}"
+    state: "{{ item.comment | default('present') }}"
+  with_items: "{{ albextras_users }}"
+  #when:
+  #  - "(albextras_users is defined)
+  #    and (albextras_users[0] is defined)
+  #    and (albextras_users[0].name is defined)"

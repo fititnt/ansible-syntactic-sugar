@@ -3,6 +3,10 @@
   hosts: all
   remote_user: root
   vars:
-    alb_node_isconteiner: true
+
+    albextras_users:
+      - name: user1
+      - name: user2
+
   roles:
     - role: ap-application-load-balancer-extras
