@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>title</title>
-    <meta name="robots" content="oindex,nofollow"/>
+    <meta name="robots" content="noindex,nofollow"/>
   </head>
   <body>
     <!-- page content -->
@@ -11,4 +11,3 @@
     <?php phpinfo(); ?>
   </body>
 </html>
-
