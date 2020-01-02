@@ -31,6 +31,29 @@ See [defaults/main.yml](defaults/main.yml).
 
 For internal variables based on OS, check [vars/README.md](vars/README.md).
 
+### `albextras_groups`
+**List of groups to add/remove.** Values from
+[group](https://docs.ansible.com/ansible/latest/modules/group_module.html)
+and [win_group](https://docs.ansible.com/ansible/latest/modules/win_group_module.html)
+
+### `albextras_sample_content_cdns`
+**List of paths to deploy sample content of [files/videos](files/videos) and [files/images](files/images)**.
+Values from [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
+
+### `albextras_sample_content_static_sites`
+**List of paths to deploy sample content of [files/static-site](files/static-site)**.
+Values from [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
+
+### `albextras_sample_content_phps`
+**List of paths to deploy sample content of [files/php](files/php)**.
+Values from [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
+
+### `albextras_users`
+**List of users to add/remove.** Values from
+[user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
+and [win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
+
+
 ## Dependencies
 
 <!--
@@ -48,9 +71,20 @@ This role does not depend on other Ansible roles. Not even the
 - hosts: all
   remote_user: root
   vars:
+
+    albextras_groups:
+      - name: group1
+      - name: group2
+
     albextras_users:
       - name: user1
       - name: user2
+        groups:
+          - group2
+
+    albextras_sample_content_static_sites:
+      - path: /home/user2/public_html
+        user: user2
 
     # albextras_iswindows: true # Uncomment next variable only for Windows hosts.
   roles:

@@ -3,11 +3,7 @@
 # FILE:            {{ role_path }}/tasks/users/main.yml
 # LICENSE:         Public Domain
 # SEE:             https://docs.ansible.com/ansible/latest/modules/user_module.html
-# SEE:             https://docs.ansible.com/ansible/latest/modules/group_module.html
-#
-# TODO:            Implement version compatible with windows, see
-#                  https://docs.ansible.com/ansible/latest/modules/win_user_module.html#win-user-module
-#                  (fititnt, 2020-01-02 06:04 BRT)
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_user_module.html
 
 - name: "users | (*nix): add/remove users"
   user:

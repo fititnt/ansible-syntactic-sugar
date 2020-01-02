@@ -13,10 +13,20 @@
       - name: user2
         groups:
           - group2
+      - name: cdn
+      - name: php-example
 
-    albextras_sample_content_static_site:
-      - path: /home/user2/public_html
+    albextras_sample_content_static_sites:
+      - dest: /home/user2/public_html
         user: user2
+
+    albextras_sample_content_cdns:
+      - dest: /home/cdn/public_html
+        user: cdn
+
+    albextras_sample_content_phps:
+      - dest: /home/php-example/public_html
+        user: php-example
 
   roles:
     - role: ap-application-load-balancer-extras

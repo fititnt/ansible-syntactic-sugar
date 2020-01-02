@@ -2,12 +2,8 @@
 
 # FILE:            {{ role_path }}/tasks/groups/main.yml
 # LICENSE:         Public Domain
-# SEE:             https://docs.ansible.com/ansible/latest/modules/user_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/group_module.html
-#
-# TODO:            Implement version compatible with windows, see
-#                  https://docs.ansible.com/ansible/latest/modules/win_group_module.html
-#                  (fititnt, 2020-01-02 06:04 BRT)
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_group_module.html
 
 - name: "groups | (*nix): add/remove groups"
   group:

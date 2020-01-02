@@ -1,6 +1,17 @@
 ---
 # FILE: {{ role_path }}/defaults/main.yml
 
+# Customize these values if you don't want specify always on subcomponents like
+# sample-content-cdn, sample-content-php, sample-content-static-site ...
+albextras_default_user: "{{ albextras_internal_root_user }}"
+albextras_default_group: "{{ albextras_internal_root_group }}"
+
+# Permission; Check mode param from https://docs.ansible.com/ansible/latest/modules/file_module.html
+albextras_default_directory_mode: "0755"
+albextras_default_file_mode: "0644"
+
+### Old values from AP-ALB-Extras v0.1-alpha (DEPRECATED) ______________________
+
 # Set this to false/no if want for disable ap-application-load-balancer-extras
 albextras: yes
 
