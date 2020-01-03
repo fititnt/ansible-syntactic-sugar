@@ -83,6 +83,11 @@
   tags:
     - albextras-users
 
+- name: "AP-ALB Extras | hosts"
+  include: hosts/main.yml
+  tags:
+    - albextras-hosts
+
 - name: "AP-ALB Extras | sample-content-static-site"
   include: sample-content-static-site/main.yml
   when:

@@ -4,6 +4,12 @@
   remote_user: root
   vars:
 
+    albextras_hosts_etchosts:
+      - "127.0.0.1  site-a.local"
+      - "127.0.0.1  cdn.site-a.local"
+      - "127.0.0.1  site-b.local"
+      - "127.0.0.1  cdn.site-b.local"
+
     albextras_groups:
       - name: cdns
 
@@ -38,8 +44,9 @@
     albextras_devel_nginx: true
 
     ## If using devel-nginx AND running on containers without systemd
+    ## If using hosts and have have issues to write on /etc/hosts
     # Set albextras_isconteiner: true to not make this role try enable a service
-    albextras_isconteiner: false
+    albextras_isconteiner: true
 
   roles:
     - role: ap-application-load-balancer-extras

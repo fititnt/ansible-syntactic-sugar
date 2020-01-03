@@ -11,6 +11,7 @@ albextras_default_directory_mode: "0755"
 albextras_default_file_mode: "0644"
 
 ## If using devel-nginx AND running on containers without systemd
+## If using hosts and have have issues to write on /etc/hosts
 # Set albextras_isconteiner: true to not make this role try enable a service
 albextras_isconteiner: false
 

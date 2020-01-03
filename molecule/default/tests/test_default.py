@@ -15,6 +15,16 @@ def test_hosts_file(host):
     assert f.group == 'root' or f.group == 'wheel'
 
 
+def test_hosts_resolve_adress(host):
+    site_a_local = host.addr("site-a.local")
+    assert site_a_local.is_resolvable
+    assert '127.0.0.1' in site_a_local.ipv4_addresses
+
+    cdn_site_a_local = host.addr("cdn.site-a.local")
+    assert cdn_site_a_local.is_resolvable
+    assert '127.0.0.1' in cdn_site_a_local.ipv4_addresses
+
+
 def test_groups(host):
     assert host.group("cdns").exists
     # assert host.group("group1").exists

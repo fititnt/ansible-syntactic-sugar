@@ -13,6 +13,7 @@
 - [Role Variables](#role-variables)
     - [Public APIs](#public-apis)
         - [`albextras_groups`](#albextras_groups)
+        - [`albextras_hosts_etchosts` <sup>(work in progress)</sup>](#albextras_hosts_etchosts-supwork-in-progresssup)
         - [`albextras_sample_content_cdns`](#albextras_sample_content_cdns)
         - [`albextras_sample_content_static_sites`](#albextras_sample_content_static_sites)
         - [`albextras_sample_content_phps`](#albextras_sample_content_phps)
@@ -74,6 +75,17 @@ A description of the settable variables for this role should go here, including 
 **List of groups to add/remove.** Values from Ansible modules
 [group](https://docs.ansible.com/ansible/latest/modules/group_module.html)
 and [win_group](https://docs.ansible.com/ansible/latest/modules/win_group_module.html)
+
+#### `albextras_hosts_etchosts` <sup>(work in progress)</sup>
+> List of strings to be added on /etc/hosts file
+
+**List of strings**. Example:
+
+```yaml
+albextras_hosts_etchosts:
+  - "127.0.0.1  site-a.local"
+  - "198.51.100.0  example.org example.com"
+```
 
 #### `albextras_sample_content_cdns`
 > Deploy sample content on target paths designed to test a CDN (Content
