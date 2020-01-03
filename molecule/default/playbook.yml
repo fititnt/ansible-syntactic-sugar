@@ -19,17 +19,20 @@
 
     albextras_sample_content_static_sites:
       - dest: /home/site-a/public_html
-        user: site-a
+        owner: site-a
+        group: site-a
 
     albextras_sample_content_cdns:
       - dest: /home/cdn-site-a/public_html
-        user: cdn-site-a
+        owner: cdn-site-a
+        group: cdns
       - dest: /home/cdn-site-b/public_html
-        user: cdn-site-b
+        owner: cdn-site-b
+        group: cdns
 
     albextras_sample_content_phps:
       - dest: /home/php-demo/public_html
-        user: php-demo
+        owner: php-demo
 
   roles:
     - role: ap-application-load-balancer-extras

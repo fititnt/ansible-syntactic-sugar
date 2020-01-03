@@ -9,21 +9,24 @@
 
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
-    - [Defaults](#defaults)
-    - [Internal variables](#internal-variables)
     - [Public APIs](#public-apis)
         - [`albextras_groups`](#albextras_groups)
         - [`albextras_sample_content_cdns`](#albextras_sample_content_cdns)
         - [`albextras_sample_content_static_sites`](#albextras_sample_content_static_sites)
         - [`albextras_sample_content_phps`](#albextras_sample_content_phps)
         - [`albextras_users`](#albextras_users)
+    - [Defaults](#defaults)
+        - [albextras_default_*](#albextras_default_)
+            - [`albextras_default_user`](#albextras_default_user)
+            - [`albextras_default_group`](#albextras_default_group)
+            - [`albextras_default_directory_mode`](#albextras_default_directory_mode)
+            - [`albextras_default_file_mode`](#albextras_default_file_mode)
+    - [Internal variables](#internal-variables)
 - [Dependencies](#dependencies)
-- [Example Playbook](#example-playbook)
+- [Example Playbooks](#example-playbooks)
     - [Minimal Playbook](#minimal-playbook)
-    - [Using all Public APIs](#using-all-public-apis)
-    - [Complex example](#complex-example)
-        - [Complete Continuos Integration example](#complete-continuos-integration-example)
-        - [molecule/default/tests/test_default.py](#moleculedefaultteststest_defaultpy)
+    - [Playbook using all Public APIs](#playbook-using-all-public-apis)
+    - [Playbook full example with Continuos Integration and testinfra](#playbook-full-example-with-continuos-integration-and-testinfra)
 - [License](#license)
     - [ap-application-load-balancer-extras](#ap-application-load-balancer-extras)
     - [files/static-site](#filesstatic-site)
@@ -59,6 +62,43 @@ This role does not require anything over the averange for an Ansible role.
 A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 -->
 
+### Public APIs
+
+#### `albextras_groups`
+> Create operational system groups.
+
+**List of groups to add/remove.** Values from Ansible modules
+[group](https://docs.ansible.com/ansible/latest/modules/group_module.html)
+and [win_group](https://docs.ansible.com/ansible/latest/modules/win_group_module.html)
+
+#### `albextras_sample_content_cdns`
+> Deploy sample content on target paths designed to test a CDN (Content
+Delivery Network).
+
+**List of paths to deploy sample content of [files/videos](files/videos) and [files/images](files/images)**.
+Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
+
+#### `albextras_sample_content_static_sites`
+> Deploy sample content of HTML+CSS+JS static website on target paths to be be
+used as test. The string `Hello, world!` is granteed to always exist.
+
+**List of paths to deploy sample content of [files/static-site](files/static-site)**.
+Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
+
+#### `albextras_sample_content_phps`
+> Deploy sample content of PHP files on target paths to be used to test if PHP
+is working.
+
+**List of paths to deploy sample content of [files/php](files/php)**.
+Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
+
+#### `albextras_users`
+> Create operational system users.
+
+**List of users to add/remove.** Values from Ansible modules
+[user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
+and [win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
+
 ### Defaults
 
 See [defaults/main.yml](defaults/main.yml).
@@ -67,34 +107,32 @@ The variables on this file, different from the ones of _Internal variables_
 that have a more strong suggestion based on Operational System, may extend
 features of the _Public APIs_.
 
+#### albextras_default_*
+The default values from `albextras_default_*` exist to provide consistence
+across operational systems and will be used in some places if you did not
+explicitly provide a value.
+
+> **backward compatibility notice**: the values from `albextras_default_*`
+> **may** be updated betwen minor versions ("MINOR" on the `MAJOR.MINOR.PATCH`
+> format of [SemVer](https://semver.org/) intead of just majors versions of the
+> AP-ALB-Extras. If you have strong requeriments, we recommend you to either
+> enforce values on your playbooks OR (if want every place to explicitly not
+> depend on these defaults) set then to invalid values so any missing try will
+> raise imediate errors.
+
+> **Security notice**: these defaults (similar to the default permissions
+> permissions of commands like `mkdir`) may be insecure in some contexts. Even
+> if you customize them, user/owner and groups are likely depend of the more
+> specific case.
+
+##### `albextras_default_user`
+##### `albextras_default_group`
+##### `albextras_default_directory_mode`
+##### `albextras_default_file_mode`
+
 ### Internal variables
 
 For internal variables based on OS, check [vars/README.md](vars/README.md).
-
-### Public APIs
-
-#### `albextras_groups`
-**List of groups to add/remove.** Values from Ansible modules
-[group](https://docs.ansible.com/ansible/latest/modules/group_module.html)
-and [win_group](https://docs.ansible.com/ansible/latest/modules/win_group_module.html)
-
-#### `albextras_sample_content_cdns`
-**List of paths to deploy sample content of [files/videos](files/videos) and [files/images](files/images)**.
-Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
-
-#### `albextras_sample_content_static_sites`
-**List of paths to deploy sample content of [files/static-site](files/static-site)**.
-Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
-
-#### `albextras_sample_content_phps`
-**List of paths to deploy sample content of [files/php](files/php)**.
-Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
-
-#### `albextras_users`
-**List of users to add/remove.** Values from Ansible modules
-[user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
-and [win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
-
 
 ## Dependencies
 
@@ -107,7 +145,7 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 This role does not depend on other Ansible roles. Not even the
 [ap-application-load-balancer](https://github.com/fititnt/ap-application-load-balancer).
 
-## Example Playbook
+## Example Playbooks
 
 ### Minimal Playbook
 
@@ -123,7 +161,7 @@ This role does not depend on other Ansible roles. Not even the
     - { role: fititnt.ap-application-load-balancer-extras }
 ```
 
-### Using all Public APIs
+### Playbook using all Public APIs
 
 ```yaml
 - hosts: all
@@ -148,9 +186,7 @@ This role does not depend on other Ansible roles. Not even the
   roles:
     - { role: fititnt.ap-application-load-balancer-extras }
 ```
-
-### Complex example
-#### Complete Continuos Integration example
+### Playbook full example with Continuos Integration and testinfra
 
 Check the contents of [molecule/default/playbook.yml](molecule/default/playbook.yml)
 and our Travis-CI panel at <https://travis-ci.com/fititnt/ap-application-load-balancer-extras>.
@@ -160,11 +196,6 @@ very serius infrastructure or several people making changes, well written
 Ansible playbooks may already be great. If this is not sufficient, check our
 testinfra tests file at
 [molecule/default/tests/test_default.py](molecule/default/tests/test_default.py).
-
-#### molecule/default/tests/test_default.py
-
-
-
 
 ## License
 This Ansible role have content from several places with different licenses and
