@@ -34,5 +34,8 @@
       - dest: /home/php-demo/public_html
         owner: php-demo
 
+    albextras_rclone: true
+    # albextras_devel_nginx: true
+
   roles:
     - role: ap-application-load-balancer-extras

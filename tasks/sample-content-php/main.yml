@@ -44,4 +44,3 @@
     unsafe_writes: "{{ item.unsafe_writes | default(omit) }}"
     validate: "{{ item.validate | default(omit) }}"
   with_items: "{{ albextras_sample_content_phps }}"
-    

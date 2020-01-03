@@ -1,7 +1,9 @@
 galaxy_info:
   author: "Emerson Rocha <rocha(at)ieee.org>"
   description: |
-    AP Application Load Balancer Extras (AP-ALB Extras)
+    AP-ALB Extras is a well tested cross-platform Ansible role that implements
+    non-core and testing features for AP-ALB Role, but as independent role it
+    can be used by other proposes.
   company: Etica.AI
   license: Unlicense
   min_ansible_version: 2.9
@@ -40,6 +42,11 @@ galaxy_info:
   galaxy_tags:
     - applicationloadbalancer
     - apalb
+    - testtools
+    - multicloud
+    - rclone
+    - nginx
+    - php
     # List tags for your role here, one per line. A tag is a keyword that describes
     # and categorizes the role. Users find roles by searching for tags. Be sure to
     # remove the '[]' above, if you add tags to this list.
@@ -51,4 +58,3 @@ dependencies: []
   # Note: fititnt.ap_application_load_balancer is only a soft dependency. This
   #       role can be used without the base AP-ALB
   # - "fititnt.ap_application_load_balancer"
-  

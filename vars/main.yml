@@ -5,3 +5,7 @@
 
 albextras_version: "v0.2.0-alpha"
 alb_version_lastrun: -1
+
+# Draft. Eventually could be useful. Not is for now (fititnt, 2020-01-03 03:55 BRT)
+albextras_internal_rclone_manange: "{{ (albextras_rclone is defined) and (albextras_rclone|bool is sameas true) }}"
+albextras_internal_nginx_manange: "{{ (albextras_nginx is defined) and (albextras_nginx|bool is sameas true) }}"

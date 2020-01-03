@@ -119,3 +119,10 @@
   include: adminer/main.yml
   tags:
     - albextras-adminer
+
+- name: "AP-ALB Extras | rclone"
+  include: rclone/main.yml
+  when:
+    - "(albextras_internal_rclone_manange is sameas true)"
+  tags:
+    - albextras-rclone
