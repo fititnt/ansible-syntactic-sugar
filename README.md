@@ -1,6 +1,6 @@
 # ap-application-load-balancer-extras - v0.2.0-alpha
 
-[![Ansible Role](https://img.shields.io/ansible/role/45587)](https://galaxy.ansible.com/fititnt/ap-application-load-balancer-extras)
+[![Ansible Role](https://img.shields.io/ansible/role/45587)](https://galaxy.ansible.com/fititnt/ap_application_load_balancer_extras)
 
 **[not-production-ready] AP-ALB Extras is a well tested cross-platform Ansible
 role that implements non-core and testing features for
