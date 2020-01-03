@@ -1,0 +1,25 @@
+---
+
+# FILE:            {{ role_path }}/tasks/devel-nginx/install.yml
+# LICENSE:         Public Domain
+#
+# SEE:             https://docs.ansible.com/ansible/latest/modules/package_module.html
+
+# TODO: remove ignore_errors: true later (fititnt, 2020-01-01 10:45 BRT)
+- name: "devel-nginx | install | (*nix) install: package install nginx"
+  package:
+    name: "nginx"
+    state: "present"
+  # ignore_errors: true
+  when:
+    - "(albextras_internal_iswindows is undefined)
+      or (albextras_internal_iswindows|bool is sameas false)"
+
+- name: "devel-nginx | install | start and enable: nginx"
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  when:
+    - "(albextras_internal_iswindows is undefined)
+      or (albextras_internal_iswindows|bool is sameas false)"

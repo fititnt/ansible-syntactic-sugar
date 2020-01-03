@@ -115,6 +115,13 @@
   tags:
     - albextras-php
 
+- name: "AP-ALB Extras | devel-nginx"
+  include: devel-nginx/main.yml
+  when:
+    - "(albextras_internal_devel_nginx_manange is sameas true)"
+  tags:
+    - albextras-devel-nginx
+
 - name: "AP-ALB Extras | adminer"
   include: adminer/main.yml
   tags:

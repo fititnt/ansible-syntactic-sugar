@@ -27,7 +27,7 @@ def test_users(host):
     assert "cdns" in host.user("cdn-site-b").groups
 
 
-def test_sample_concent_cdns(host):
+def test_sample_content_cdns(host):
     fa = host.file('/home/cdn-site-a/public_html/index.html')
     assert fa.exists
     assert fa.user == 'cdn-site-a'
@@ -37,3 +37,16 @@ def test_sample_concent_cdns(host):
     assert fb.exists
     assert fb.user == 'cdn-site-b'
     assert fb.group == "cdns"
+
+
+def test_devel_nginx_is_installed(host):
+    assert host.package("nginx").is_installed
+
+
+def test_devel_nginx_is_enabled(host):
+    is_conteiner = 'ISCONTEINER' in os.environ
+    assert not is_conteiner or host.service("nginx").is_enabled
+
+
+def test_devel_nginx_is_running(host):
+    assert host.service("nginx").is_running

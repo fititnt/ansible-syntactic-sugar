@@ -10,6 +10,10 @@ albextras_default_group: "{{ albextras_internal_root_group }}"
 albextras_default_directory_mode: "0755"
 albextras_default_file_mode: "0644"
 
+## If using devel-nginx AND running on containers without systemd
+# Set albextras_isconteiner: true to not make this role try enable a service
+albextras_isconteiner: false
+
 ### Old values from AP-ALB-Extras v0.1-alpha (DEPRECATED) ______________________
 
 # Set this to false/no if want for disable ap-application-load-balancer-extras

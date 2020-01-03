@@ -34,8 +34,16 @@
       - dest: /home/php-demo/public_html
         owner: php-demo
 
-    albextras_rclone: true
-    # albextras_devel_nginx: true
+    albextras_rclone: false
+    albextras_devel_nginx: true
+
+    ## If using devel-nginx AND running on containers without systemd
+    # Set albextras_isconteiner: true to not make this role try enable a service
+    albextras_isconteiner: false
 
   roles:
     - role: ap-application-load-balancer-extras
+
+  pre_tasks:
+    - name: "Set ISCONTEINER=1"
+      shell: "export ISCONTEINER=1"

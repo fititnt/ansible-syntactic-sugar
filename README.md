@@ -1,5 +1,7 @@
 # ap-application-load-balancer-extras - v0.2.0-alpha
 
+[![Ansible Role](https://img.shields.io/ansible/role/45587)](https://galaxy.ansible.com/fititnt/ap-application-load-balancer-extras)
+
 [not-production-ready] Ansible Role with extra optimal features for the
 **[AP Application Load Balancer ("AP-ALB")](https://github.com/fititnt/ap-application-load-balancer)**.
 
@@ -15,6 +17,8 @@
         - [`albextras_sample_content_static_sites`](#albextras_sample_content_static_sites)
         - [`albextras_sample_content_phps`](#albextras_sample_content_phps)
         - [`albextras_users`](#albextras_users)
+    - [Devel APIs](#devel-apis)
+        - [`albextras_devel_nginx_*`](#albextras_devel_nginx_)
     - [Defaults](#defaults)
         - [albextras_default_*](#albextras_default_)
             - [`albextras_default_user`](#albextras_default_user)
@@ -99,6 +103,16 @@ Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/module
 [user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
 and [win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
 
+### Devel APIs
+Different of [Public APIs](#public-apis), the **Devel APIs**, even if may be
+used to bootstrap very quickly some system that defaults would aready be great,
+do not have the same compromises with **backward compatibility** of non-major
+releases (aka a new release of AP-ALB-Extras may remove a feature)
+
+[Public APIs](#public-apis)
+
+
+#### `albextras_devel_nginx_*`
 ### Defaults
 
 See [defaults/main.yml](defaults/main.yml).
