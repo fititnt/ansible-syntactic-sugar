@@ -5,28 +5,31 @@
   vars:
 
     albextras_groups:
-      - name: group1
-      - name: group2
+      - name: cdns
 
     albextras_users:
-      - name: user1
-      - name: user2
+      - name: cdn-site-a
         groups:
-          - group2
-      - name: cdn
-      - name: php-example
+          - cdns
+      - name: cdn-site-b
+        groups:
+          - cdns
+      - name: site-a
+      - name: php-demo
 
     albextras_sample_content_static_sites:
-      - dest: /home/user2/public_html
-        user: user2
+      - dest: /home/site-a/public_html
+        user: site-a
 
     albextras_sample_content_cdns:
-      - dest: /home/cdn/public_html
-        user: cdn
+      - dest: /home/cdn-site-a/public_html
+        user: cdn-site-a
+      - dest: /home/cdn-site-b/public_html
+        user: cdn-site-b
 
     albextras_sample_content_phps:
-      - dest: /home/php-example/public_html
-        user: php-example
+      - dest: /home/php-demo/public_html
+        user: php-demo
 
   roles:
     - role: ap-application-load-balancer-extras
