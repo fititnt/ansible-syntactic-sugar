@@ -65,6 +65,18 @@
     - alb
     - always
 
+- name: "AP-ALB Extras | Result of pre-calculated variables on this play"
+  debug:
+    msg:
+      albextras_default_user: "{{ albextras_default_user | default('undefined') }}"
+      albextras_default_group: "{{ albextras_default_group | default('undefined') }}"
+      albextras_default_directory_mode: "{{ albextras_default_directory_mode | default('undefined') }}"
+      albextras_default_file_mode: "{{ albextras_default_file_mode | default('undefined') }}"
+      albextras_isconteiner: "{{ albextras_isconteiner | default('undefined') }}"
+  tags:
+    - alb
+    - always
+
 ## Run each ALB Extra subcomponent _____________________________________________
 
 - name: "AP-ALB Extras | groups"

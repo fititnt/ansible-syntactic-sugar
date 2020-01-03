@@ -2,8 +2,12 @@
 
 [![Ansible Role](https://img.shields.io/ansible/role/45587)](https://galaxy.ansible.com/fititnt/ap-application-load-balancer-extras)
 
-[not-production-ready] Ansible Role with extra optimal features for the
-**[AP Application Load Balancer ("AP-ALB")](https://github.com/fititnt/ap-application-load-balancer)**.
+**[not-production-ready] AP-ALB Extras is a well tested cross-platform Ansible
+role that implements non-core and testing features for
+[AP-ALB Role](https://github.com/fititnt/ap-application-load-balancer), but as
+independent role it can be used by other proposes.**
+
+Note: this project may eventually be renamed.
 
 ---
 

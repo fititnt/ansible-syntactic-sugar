@@ -5,7 +5,15 @@
 #
 # SEE:             https://docs.ansible.com/ansible/latest/modules/package_module.html
 
-# TODO: remove ignore_errors: true later (fititnt, 2020-01-01 10:45 BRT)
+- name: "devel-nginx | install: prerequisite packages"
+  package:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ albextras_internal_devel_nginx_prerequisites_packages }}"
+  when:
+    - "(albextras_internal_devel_nginx_prerequisites_packages is defined)
+       and (albextras_internal_devel_nginx_prerequisites_packages[0] is defined)"
+
 - name: "devel-nginx | install | (*nix) install: package install nginx"
   package:
     name: "nginx"
