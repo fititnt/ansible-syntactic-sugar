@@ -22,6 +22,9 @@
           - cdns
       - name: site-a
       - name: php-demo
+      - name: fititnt
+        authorized_key:
+          key: https://github.com/fititnt.keys
 
     albextras_sample_content_static_sites:
       - dest: /home/site-a/public_html

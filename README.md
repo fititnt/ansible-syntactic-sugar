@@ -22,6 +22,7 @@ Note: this project may eventually be renamed.
         - [`albextras_sample_content_static_sites`](#albextras_sample_content_static_sites)
         - [`albextras_sample_content_phps`](#albextras_sample_content_phps)
         - [`albextras_users`](#albextras_users)
+        - [`albextras_users[n]authorized_key`](#albextras_usersnauthorized_key)
     - [Devel APIs](#devel-apis)
         - [`albextras_devel_nginx_*`](#albextras_devel_nginx_)
     - [Defaults](#defaults)
@@ -119,6 +120,15 @@ Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/module
 [user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
 and [win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
 
+#### `albextras_users[n]authorized_key`
+**Adds or removes an SSH authorized key for the user.** Values from Ansible modules
+[authorized_key](https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html)
+
+This option is just an syntax sugar to, on same definition about an user to add
+to the system, if you sent a key named `authorized_key`, it will call the
+Ansible authorized_key_module. If you omit `albextras_users[n]authorized_key.user`
+it will use the `albextras_users[n].name` as default.
+
 ### Devel APIs
 Different of [Public APIs](#public-apis), the **Devel APIs**, even if may be
 used to bootstrap very quickly some system that defaults would aready be great,
@@ -207,6 +217,9 @@ This role does not depend on other Ansible roles. Not even the
       - name: user2
         groups:
           - group2
+      - name: fititnt
+        authorized_key:
+          key: https://github.com/fititnt.keys
 
     albextras_sample_content_static_sites:
       - path: /home/user2/public_html

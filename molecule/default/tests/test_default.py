@@ -30,11 +30,20 @@ def test_groups(host):
     # assert host.group("group1").exists
 
 
-def test_users(host):
-    assert host.user("cdn-site-a").exists
+def test_users_user(host):
+    assert host.user("fititnt").exists
     assert host.user("cdn-site-b").exists
+    assert host.user("fititnt").exists
     assert "cdns" in host.user("cdn-site-a").groups
     assert "cdns" in host.user("cdn-site-b").groups
+
+
+def test_users_authorized_key(host):
+    f = host.file('/home/fititnt/.ssh/authorized_keys')
+
+    assert f.exists
+    assert f.user == 'fititnt'
+    assert f.group == 'fititnt'
 
 
 def test_sample_content_cdns(host):
