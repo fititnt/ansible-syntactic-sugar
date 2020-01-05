@@ -9,10 +9,10 @@
   package:
     name: "{{ item.name }}"
     state: "{{ item.state | default('present') }}"
-  with_items: "{{ albextras_internal_devel_nginx_prerequisites_packages }}"
+  with_items: "{{ a2s_internal_devel_nginx_prerequisites_packages }}"
   when:
-    - "(albextras_internal_devel_nginx_prerequisites_packages is defined)
-       and (albextras_internal_devel_nginx_prerequisites_packages[0] is defined)"
+    - "(a2s_internal_devel_nginx_prerequisites_packages is defined)
+       and (a2s_internal_devel_nginx_prerequisites_packages[0] is defined)"
 
 - name: "devel-nginx | install | (*nix) install: package install nginx"
   package:
@@ -20,8 +20,8 @@
     state: "present"
   # ignore_errors: true
   when:
-    - "(albextras_internal_iswindows is undefined)
-      or (albextras_internal_iswindows|bool is sameas false)"
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"
 
 - name: "devel-nginx | install | start and enable: nginx"
   service:
@@ -29,5 +29,5 @@
     state: started
     enabled: yes
   when:
-    - "(albextras_internal_iswindows is undefined)
-      or (albextras_internal_iswindows|bool is sameas false)"
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"

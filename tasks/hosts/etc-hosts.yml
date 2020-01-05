@@ -8,5 +8,5 @@
     dest: /etc/hosts
     line: "{{ item }}"
     state: present
-    unsafe_writes: "{{ albextras_internal_isconteiner }}" # If is container, we allow unsafe_writes 
-  with_items: "{{ albextras_hosts_etchosts }}"
+    unsafe_writes: "{{ a2s_internal_isconteiner }}" # If is container, we allow unsafe_writes
+  with_items: "{{ a2s_hosts_etchosts }}"

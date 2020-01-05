@@ -10,8 +10,8 @@
 
 # For me: https://www.cyberciti.biz/faq/how-to-prepare-freebsd-server-to-be-managed-by-ansible-tool/
 
-albextras_internal_root_user: 'root'
-albextras_internal_root_group: 'wheel'
-albextras_internal_package_manager_group: "pkgng"
+a2s_internal_root_user: 'root'
+a2s_internal_root_group: 'wheel'
+a2s_internal_package_manager_group: "pkgng"
 
-albextras_internal_iswindows: false
+a2s_internal_iswindows: false

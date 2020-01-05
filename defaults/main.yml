@@ -3,17 +3,17 @@
 
 # Customize these values if you don't want specify always on subcomponents like
 # sample-content-cdn, sample-content-php, sample-content-static-site ...
-albextras_default_user: "{{ albextras_internal_root_user }}"
-albextras_default_group: "{{ albextras_internal_root_group }}"
+a2s_default_user: "{{ a2s_internal_root_user }}"
+a2s_default_group: "{{ a2s_internal_root_group }}"
 
 # Permission; Check mode param from https://docs.ansible.com/ansible/latest/modules/file_module.html
-albextras_default_directory_mode: "0755"
-albextras_default_file_mode: "0644"
+a2s_default_directory_mode: "0755"
+a2s_default_file_mode: "0644"
 
 ## If using devel-nginx AND running on containers without systemd
 ## If using hosts and have have issues to write on /etc/hosts
-# Set albextras_isconteiner: true to not make this role try enable a service
-albextras_isconteiner: false
+# Set a2s_isconteiner: true to not make this role try enable a service
+a2s_isconteiner: false
 
 ### Old values from AP-ALB-Extras v0.1-alpha (DEPRECATED) ______________________
 
@@ -21,15 +21,15 @@ albextras_isconteiner: false
 albextras: yes
 
 # Should AP-ALB-Extras make new changes to PHP related features?
-albextras_php: no
+a2s_php: no
 
 ### PHP ________________________________________________________________________
-albextras_php_debug: no
+a2s_php_debug: no
 
 ## PHP 5.6
-albextras_php_php56_enabled: false
-albextras_php_php56_state: present
-albextras_php_php56_packages:
+a2s_php_php56_enabled: false
+a2s_php_php56_state: present
+a2s_php_php56_packages:
   - php5.6-common
   - php5.6-fpm
   - php5.6-gd
@@ -42,9 +42,9 @@ albextras_php_php56_packages:
   - php5.6-mbstring
 
 ## PHP 7.0
-albextras_php_php70_enabled: false
-albextras_php_php70_state: present
-albextras_php_php70_packages:
+a2s_php_php70_enabled: false
+a2s_php_php70_state: present
+a2s_php_php70_packages:
   - php7.0-common
   - php7.0-fpm
   - php7.0-gd
@@ -57,9 +57,9 @@ albextras_php_php70_packages:
   - php7.0-mbstring
 
 ## PHP 7.1
-albextras_php_php71_enabled: false
-albextras_php_php71_state: present
-albextras_php_php71_packages:
+a2s_php_php71_enabled: false
+a2s_php_php71_state: present
+a2s_php_php71_packages:
   - php7.1-common
   - php7.1-fpm
   - php7.1-gd
@@ -72,9 +72,9 @@ albextras_php_php71_packages:
   - php7.1-mbstring
 
 ## PHP 7.2
-albextras_php_php72_enabled: false
-albextras_php_php72_state: present
-albextras_php_php72_packages:
+a2s_php_php72_enabled: false
+a2s_php_php72_state: present
+a2s_php_php72_packages:
   - php7.2-common
   - php7.2-fpm
   - php7.2-gd
@@ -87,9 +87,9 @@ albextras_php_php72_packages:
   - php7.2-mbstring
 
 # PHP 7.3
-albextras_php_php73_enabled: false
-albextras_php_php73_state: present
-albextras_php_php73_packages:
+a2s_php_php73_enabled: false
+a2s_php_php73_state: present
+a2s_php_php73_packages:
   - php7.3-common
   - php7.3-fpm
   - php7.3-gd
@@ -101,9 +101,9 @@ albextras_php_php73_packages:
   - php7.3-intl
   - php7.3-mbstring
 
-albextras_php_php74_enabled: false
-albextras_php_php74_state: present
-albextras_php_php74_packages:
+a2s_php_php74_enabled: false
+a2s_php_php74_state: present
+a2s_php_php74_packages:
   - php7.4-common
   - php7.4-fpm
   - php7.4-gd

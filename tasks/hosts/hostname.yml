@@ -6,9 +6,9 @@
 
 ## Hostnames should comply with RFC822. In special, should not have dashes
 ##
-# albextras_hosts_hostname_nodashes: "{{ albextras_hosts_hostname | replace('_', '-') }}"
+# a2s_hosts_hostname_nodashes: "{{ a2s_hosts_hostname | replace('_', '-') }}"
 
 - name: "hosts | hostname.yml: set hostname"
   hostname:
-    name: "{{ albextras_hosts_hostname_rfc822 }}"
-    use: "{{ albextras_internal_hostname_use | default(omit) }}"
+    name: "{{ a2s_hosts_hostname_rfc822 }}"
+    use: "{{ a2s_internal_hostname_use | default(omit) }}"

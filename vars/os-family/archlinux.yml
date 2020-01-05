@@ -5,9 +5,9 @@
 # DESCRIPTION:     This file is loaded by default for at least these OSs:
 #                  'Archlinux': ['Archlinux', 'Antergos', 'Manjaro'],
 
-albextras_internal_root_user: 'root'
-albextras_internal_root_group: 'root'
-albextras_internal_package_manager_group: "pacman"
+a2s_internal_root_user: 'root'
+a2s_internal_root_group: 'root'
+a2s_internal_package_manager_group: "pacman"
 # ansible_python_interpreter: /usr/bin/python
 
-albextras_internal_iswindows: false
+a2s_internal_iswindows: false

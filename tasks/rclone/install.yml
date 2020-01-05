@@ -14,5 +14,5 @@
     state: "present"
   ignore_errors: true
   when:
-    - "(albextras_internal_iswindows is undefined)
-      or (albextras_internal_iswindows|bool is sameas false)"
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"

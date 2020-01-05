@@ -5,7 +5,7 @@
 - name: "AP-ALB Extras | Welcome message"
   debug:
     msg:
-      albextras_version: "{{ albextras_version }}"
+      a2s_version: "{{ a2s_version }}"
       node:
         os: "{{ ansible_os_family | default('undefined') | lower }}"
         dist: "{{ ansible_distribution | default('undefined') | lower }}"
@@ -23,8 +23,8 @@
 - name: "AP-ALB Extras | OS Family variables"
   include_vars: "{{ item }}"
   with_first_found:
-    - "{{ (albextras_iswindows is defined and albextras_iswindows|bool) | ternary('os-family/windows.yml', 'name-of-a-file-that-does-not-exist.yml') }}"
-    - "{{ (albextras_vars_osfamily is defined) | ternary(albextras_vars_osfamily, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "{{ (a2s_iswindows is defined and a2s_iswindows|bool) | ternary('os-family/windows.yml', 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "{{ (a2s_vars_osfamily is defined) | ternary(a2s_vars_osfamily, 'name-of-a-file-that-does-not-exist.yml') }}"
     - "os-family/{{ ansible_os_family | default('undefined') | lower }}.yml"
     - "os-family/{{ (ansible_os_family is defined) | ternary('untested','unknown') }}.yml"
   tags:
@@ -34,7 +34,7 @@
 - name: "AP-ALB Extras | OS Family version variables"
   include_vars: "{{ item }}"
   with_first_found:
-    - "{{ (albextras_vars_osfamilyversion is defined) | ternary(albextras_vars_osfamilyversion, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "{{ (a2s_vars_osfamilyversion is defined) | ternary(a2s_vars_osfamilyversion, 'name-of-a-file-that-does-not-exist.yml') }}"
     - "os-family/os-family-version/{{ ansible_os_family | default('undefined') | lower }}-{{ ansible_distribution_major_version
       | default('undefined')
       | lower }}.yml"
@@ -46,7 +46,7 @@
 - name: "AP-ALB Extras | Distribution variables (may override OS Family variables, if exist)"
   include_vars: "{{ item }}"
   with_first_found:
-    - "{{ (albextras_vars_distribution is defined) | ternary(albextras_vars_distribution, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "{{ (a2s_vars_distribution is defined) | ternary(a2s_vars_distribution, 'name-of-a-file-that-does-not-exist.yml') }}"
     - "os-family/distribution/{{ ansible_distribution | default('undefined') | lower }}.yml"
     - "os-family/distribution/no-os-family-customization.yml"
   tags:
@@ -56,7 +56,7 @@
 - name: "AP-ALB Extras | Specific version distribution variables (may override OS Family and Distribution variables, if exist)"
   include_vars: "{{ item }}"
   with_first_found:
-    - "{{ (albextras_vars_distribution_version is defined) | ternary(albextras_vars_distribution_version, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "{{ (a2s_vars_distribution_version is defined) | ternary(a2s_vars_distribution_version, 'name-of-a-file-that-does-not-exist.yml') }}"
     - "os-family/distribution/version/{{ ansible_distribution | default('undefined') | lower }}-{{ ansible_distribution_major_version
       | default('undefined')
       | lower }}.yml"
@@ -68,11 +68,11 @@
 - name: "AP-ALB Extras | Result of pre-calculated variables on this play"
   debug:
     msg:
-      albextras_default_user: "{{ albextras_default_user | default('undefined') }}"
-      albextras_default_group: "{{ albextras_default_group | default('undefined') }}"
-      albextras_default_directory_mode: "{{ albextras_default_directory_mode | default('undefined') }}"
-      albextras_default_file_mode: "{{ albextras_default_file_mode | default('undefined') }}"
-      albextras_isconteiner: "{{ albextras_isconteiner | default('undefined') }}"
+      a2s_default_user: "{{ a2s_default_user | default('undefined') }}"
+      a2s_default_group: "{{ a2s_default_group | default('undefined') }}"
+      a2s_default_directory_mode: "{{ a2s_default_directory_mode | default('undefined') }}"
+      a2s_default_file_mode: "{{ a2s_default_file_mode | default('undefined') }}"
+      a2s_isconteiner: "{{ a2s_isconteiner | default('undefined') }}"
   tags:
     - alb
     - always
@@ -82,16 +82,16 @@
 - name: "AP-ALB Extras | groups"
   include: groups/main.yml
   when:
-    - "(albextras_groups is defined)
-      and (albextras_groups[0] is defined)
-      and (albextras_groups[0].name is defined)"
+    - "(a2s_groups is defined)
+      and (a2s_groups[0] is defined)
+      and (a2s_groups[0].name is defined)"
 
 - name: "AP-ALB Extras | users"
   include: users/main.yml
   when:
-    - "(albextras_users is defined)
-      and (albextras_users[0] is defined)
-      and (albextras_users[0].name is defined)"
+    - "(a2s_users is defined)
+      and (a2s_users[0] is defined)
+      and (a2s_users[0].name is defined)"
   tags:
     - albextras-users
 
@@ -103,27 +103,27 @@
 - name: "AP-ALB Extras | sample-content-static-site"
   include: sample-content-static-site/main.yml
   when:
-    - "(albextras_sample_content_static_sites is defined)
-      and (albextras_sample_content_static_sites[0] is defined)
-      and (albextras_sample_content_static_sites[0].dest is defined)"
+    - "(a2s_sample_content_static_sites is defined)
+      and (a2s_sample_content_static_sites[0] is defined)
+      and (a2s_sample_content_static_sites[0].dest is defined)"
   tags:
     - albextras-sample-content-static-site
 
 - name: "AP-ALB Extras | sample-content-cdn"
   include: sample-content-cdn/main.yml
   when:
-    - "(albextras_sample_content_cdns is defined)
-      and (albextras_sample_content_cdns[0] is defined)
-      and (albextras_sample_content_cdns[0].dest is defined)"
+    - "(a2s_sample_content_cdns is defined)
+      and (a2s_sample_content_cdns[0] is defined)
+      and (a2s_sample_content_cdns[0].dest is defined)"
   tags:
     - albextras-sample-content-cdn
 
 - name: "AP-ALB Extras | sample-content-php"
   include: sample-content-php/main.yml
   when:
-    - "(albextras_sample_content_phps is defined)
-      and (albextras_sample_content_phps[0] is defined)
-      and (albextras_sample_content_phps[0].dest is defined)"
+    - "(a2s_sample_content_phps is defined)
+      and (a2s_sample_content_phps[0] is defined)
+      and (a2s_sample_content_phps[0].dest is defined)"
   tags:
     - albextras-sample-content-php
 
@@ -135,7 +135,7 @@
 - name: "AP-ALB Extras | devel-nginx"
   include: devel-nginx/main.yml
   when:
-    - "(albextras_internal_devel_nginx_manange is sameas true)"
+    - "(a2s_internal_devel_nginx_manange is sameas true)"
   tags:
     - albextras-devel-nginx
 
@@ -147,6 +147,6 @@
 - name: "AP-ALB Extras | rclone"
   include: rclone/main.yml
   when:
-    - "(albextras_internal_rclone_manange is sameas true)"
+    - "(a2s_internal_rclone_manange is sameas true)"
   tags:
     - albextras-rclone

@@ -3,4 +3,4 @@
 # LICENSE:         Public Domain
 
 # CentOS 7 does not have any version of NGinx without epel-release. Fedora all versions have
-albextras_internal_devel_nginx_prerequisites_packages: []
+a2s_internal_devel_nginx_prerequisites_packages: []

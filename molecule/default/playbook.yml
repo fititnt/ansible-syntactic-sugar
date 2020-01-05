@@ -4,16 +4,16 @@
   remote_user: root
   vars:
 
-    albextras_hosts_etchosts:
+    a2s_hosts_etchosts:
       - "127.0.0.1  site-a.local"
       - "127.0.0.1  cdn.site-a.local"
       - "127.0.0.1  site-b.local"
       - "127.0.0.1  cdn.site-b.local"
 
-    albextras_groups:
+    a2s_groups:
       - name: cdns
 
-    albextras_users:
+    a2s_users:
       - name: cdn-site-a
         groups:
           - cdns
@@ -26,12 +26,12 @@
         authorized_key:
           key: https://github.com/fititnt.keys
 
-    albextras_sample_content_static_sites:
+    a2s_sample_content_static_sites:
       - dest: /home/site-a/public_html
         owner: site-a
         group: site-a
 
-    albextras_sample_content_cdns:
+    a2s_sample_content_cdns:
       - dest: /home/cdn-site-a/public_html
         owner: cdn-site-a
         group: cdns
@@ -39,17 +39,17 @@
         owner: cdn-site-b
         group: cdns
 
-    albextras_sample_content_phps:
+    a2s_sample_content_phps:
       - dest: /home/php-demo/public_html
         owner: php-demo
 
-    albextras_rclone: false
-    albextras_devel_nginx: true
+    a2s_rclone: false
+    a2s_devel_nginx: true
 
     ## If using devel-nginx AND running on containers without systemd
     ## If using hosts and have have issues to write on /etc/hosts
-    # Set albextras_isconteiner: true to not make this role try enable a service
-    albextras_isconteiner: true
+    # Set a2s_isconteiner: true to not make this role try enable a service
+    a2s_isconteiner: true
 
   roles:
     - role: ap-application-load-balancer-extras

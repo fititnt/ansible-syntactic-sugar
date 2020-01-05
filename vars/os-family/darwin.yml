@@ -5,8 +5,8 @@
 # DESCRIPTION:     This file is loaded by default for at least these OSs:
 #                  'Darwin': ['MacOSX'],
 
-albextras_internal_root_user: 'root'
-albextras_internal_root_group: 'wheel'
-albextras_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
+a2s_internal_root_user: 'root'
+a2s_internal_root_group: 'wheel'
+a2s_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
 
-albextras_internal_iswindows: false
+a2s_internal_iswindows: false

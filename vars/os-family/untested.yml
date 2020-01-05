@@ -35,8 +35,8 @@
 # Note, actually  more systems are detected than these ones (the
 # distribution.py mention OpenBSD for example)
 
-albextras_internal_root_user: 'root'
-albextras_internal_root_group: 'root'
-albextras_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
+a2s_internal_root_user: 'root'
+a2s_internal_root_group: 'root'
+a2s_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
 
-albextras_internal_iswindows: false
+a2s_internal_iswindows: false

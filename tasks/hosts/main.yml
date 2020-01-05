@@ -11,14 +11,14 @@
 - name: "hosts | main.yml: load etc-hosts.yml ?"
   include: "{{ role_path }}/tasks/hosts/etc-hosts.yml"
   when:
-    - "(albextras_hosts_etchosts is defined) and (albextras_hosts_etchosts[0] is defined)"
+    - "(a2s_hosts_etchosts is defined) and (a2s_hosts_etchosts[0] is defined)"
 
 - name: "hosts | main.yml: load hostname.yml ?"
   include: "{{ role_path }}/tasks/hosts/hostname.yml"
   vars:
-    albextras_hosts_hostname_rfc822: "{{ albextras_hosts_hostname | replace('_', '-') }}"
+    a2s_hosts_hostname_rfc822: "{{ a2s_hosts_hostname | replace('_', '-') }}"
   when:
-    - "(albextras_hosts_hostname is defined) and (albextras_hosts_hostname | length > 2)"
+    - "(a2s_hosts_hostname is defined) and (a2s_hosts_hostname | length > 2)"
 
 # - name: "etchosts | Add "
 #   lineinfile:

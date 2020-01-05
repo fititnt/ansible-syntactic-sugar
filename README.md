@@ -1,13 +1,27 @@
-# ap-application-load-balancer-extras - v0.2.0-alpha
+# ansible-syntactic-sugar ("a2s") - v0.3.0-alpha
 
 [![Ansible Role](https://img.shields.io/ansible/role/45587)](https://galaxy.ansible.com/fititnt/ap_application_load_balancer_extras)
 
+**[not-production-ready] `a2s` is a non-official optionated cross-platform
+Ansible role that acts as _syntactic sugar_ for some [ansible modules](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html),
+populate sample content and install some common software to help with quick tests**.
+The main initial reason was to allow build inventories to
+[AP-ALB](https://github.com/fititnt/ap-application-load-balancer)
+with much less lines of YAML without need to add several independent roles.
+
+> **Warning: this is a pre-release**. A stable version may never be released
+with this exact name. Variable naming conventions are likely to change
+drasticaly.
+
+<!--
 **[not-production-ready] AP-ALB Extras is a well tested cross-platform Ansible
 role that implements non-core and testing features for
 [AP-ALB Role](https://github.com/fititnt/ap-application-load-balancer), but as
 independent role it can be used by other proposes.**
 
 Note: this project may eventually be renamed.
+-->
+
 
 ---
 
@@ -16,21 +30,21 @@ Note: this project may eventually be renamed.
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
     - [Public APIs](#public-apis)
-        - [`albextras_groups`](#albextras_groups)
-        - [`albextras_hosts_etchosts` <sup>(work in progress)</sup>](#albextras_hosts_etchosts-supwork-in-progresssup)
-        - [`albextras_sample_content_cdns`](#albextras_sample_content_cdns)
-        - [`albextras_sample_content_static_sites`](#albextras_sample_content_static_sites)
-        - [`albextras_sample_content_phps`](#albextras_sample_content_phps)
-        - [`albextras_users`](#albextras_users)
-        - [`albextras_users[n]authorized_key`](#albextras_usersnauthorized_key)
+        - [`a2s_groups`](#a2s_groups)
+        - [`a2s_hosts_etchosts` <sup>(work in progress)</sup>](#a2s_hosts_etchosts-supwork-in-progresssup)
+        - [`a2s_sample_content_cdns`](#a2s_sample_content_cdns)
+        - [`a2s_sample_content_static_sites`](#a2s_sample_content_static_sites)
+        - [`a2s_sample_content_phps`](#a2s_sample_content_phps)
+        - [`a2s_users`](#a2s_users)
+        - [`a2s_users[n]authorized_key`](#a2s_usersnauthorized_key)
     - [Devel APIs](#devel-apis)
-        - [`albextras_devel_nginx_*`](#albextras_devel_nginx_)
+        - [`a2s_devel_nginx_*`](#a2s_devel_nginx_)
     - [Defaults](#defaults)
-        - [albextras_default_*](#albextras_default_)
-            - [`albextras_default_user`](#albextras_default_user)
-            - [`albextras_default_group`](#albextras_default_group)
-            - [`albextras_default_directory_mode`](#albextras_default_directory_mode)
-            - [`albextras_default_file_mode`](#albextras_default_file_mode)
+        - [a2s_default_*](#a2s_default_)
+            - [`a2s_default_user`](#a2s_default_user)
+            - [`a2s_default_group`](#a2s_default_group)
+            - [`a2s_default_directory_mode`](#a2s_default_directory_mode)
+            - [`a2s_default_file_mode`](#a2s_default_file_mode)
     - [Internal variables](#internal-variables)
 - [Dependencies](#dependencies)
 - [Example Playbooks](#example-playbooks)
@@ -74,60 +88,60 @@ A description of the settable variables for this role should go here, including 
 
 ### Public APIs
 
-#### `albextras_groups`
+#### `a2s_groups`
 > Create operational system groups.
 
 **List of groups to add/remove.** Values from Ansible modules
 [group](https://docs.ansible.com/ansible/latest/modules/group_module.html)
 and [win_group](https://docs.ansible.com/ansible/latest/modules/win_group_module.html)
 
-#### `albextras_hosts_etchosts` <sup>(work in progress)</sup>
+#### `a2s_hosts_etchosts` <sup>(work in progress)</sup>
 > List of strings to be added on /etc/hosts file
 
 **List of strings**. Example:
 
 ```yaml
-albextras_hosts_etchosts:
+a2s_hosts_etchosts:
   - "127.0.0.1  site-a.local"
   - "198.51.100.0  example.org example.com"
 ```
 
-#### `albextras_sample_content_cdns`
+#### `a2s_sample_content_cdns`
 > Deploy sample content on target paths designed to test a CDN (Content
 Delivery Network).
 
 **List of paths to deploy sample content of [files/videos](files/videos) and [files/images](files/images)**.
 Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
 
-#### `albextras_sample_content_static_sites`
+#### `a2s_sample_content_static_sites`
 > Deploy sample content of HTML+CSS+JS static website on target paths to be be
 used as test. The string `Hello, world!` is granteed to always exist.
 
 **List of paths to deploy sample content of [files/static-site](files/static-site)**.
 Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
 
-#### `albextras_sample_content_phps`
+#### `a2s_sample_content_phps`
 > Deploy sample content of PHP files on target paths to be used to test if PHP
 is working.
 
 **List of paths to deploy sample content of [files/php](files/php)**.
 Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
 
-#### `albextras_users`
+#### `a2s_users`
 > Create operational system users.
 
 **List of users to add/remove.** Values from Ansible modules
 [user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
 and [win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
 
-#### `albextras_users[n]authorized_key`
+#### `a2s_users[n]authorized_key`
 **Adds or removes an SSH authorized key for the user.** Values from Ansible modules
 [authorized_key](https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html)
 
 This option is just an syntax sugar to, on same definition about an user to add
 to the system, if you sent a key named `authorized_key`, it will call the
-Ansible authorized_key_module. If you omit `albextras_users[n]authorized_key.user`
-it will use the `albextras_users[n].name` as default.
+Ansible authorized_key_module. If you omit `a2s_users[n]authorized_key.user`
+it will use the `a2s_users[n].name` as default.
 
 ### Devel APIs
 Different of [Public APIs](#public-apis), the **Devel APIs**, even if may be
@@ -138,7 +152,7 @@ releases (aka a new release of AP-ALB-Extras may remove a feature)
 [Public APIs](#public-apis)
 
 
-#### `albextras_devel_nginx_*`
+#### `a2s_devel_nginx_*`
 ### Defaults
 
 See [defaults/main.yml](defaults/main.yml).
@@ -147,12 +161,12 @@ The variables on this file, different from the ones of _Internal variables_
 that have a more strong suggestion based on Operational System, may extend
 features of the _Public APIs_.
 
-#### albextras_default_*
-The default values from `albextras_default_*` exist to provide consistence
+#### a2s_default_*
+The default values from `a2s_default_*` exist to provide consistence
 across operational systems and will be used in some places if you did not
 explicitly provide a value.
 
-> **backward compatibility notice**: the values from `albextras_default_*`
+> **backward compatibility notice**: the values from `a2s_default_*`
 > **may** be updated betwen minor versions ("MINOR" on the `MAJOR.MINOR.PATCH`
 > format of [SemVer](https://semver.org/) intead of just majors versions of the
 > AP-ALB-Extras. If you have strong requeriments, we recommend you to either
@@ -165,10 +179,10 @@ explicitly provide a value.
 > if you customize them, user/owner and groups are likely depend of the more
 > specific case.
 
-##### `albextras_default_user`
-##### `albextras_default_group`
-##### `albextras_default_directory_mode`
-##### `albextras_default_file_mode`
+##### `a2s_default_user`
+##### `a2s_default_group`
+##### `a2s_default_directory_mode`
+##### `a2s_default_file_mode`
 
 ### Internal variables
 
@@ -190,7 +204,7 @@ This role does not depend on other Ansible roles. Not even the
 ### Minimal Playbook
 
 > Note: If you run this role without explicitly
-> use any [Public APIs](#public-apis) (variables starte with `albextras_` that
+> use any [Public APIs](#public-apis) (variables starte with `a2s_` that
 > are not defaults) this Ansible role will make no changes on your system.
 
 ```yaml
@@ -198,7 +212,7 @@ This role does not depend on other Ansible roles. Not even the
 #       need to specify variables
 - hosts: all
   roles:
-    - { role: fititnt.ap-application-load-balancer-extras }
+    - { role: fititnt.ansible-syntactic-sugar }
 ```
 
 ### Playbook using all Public APIs
@@ -208,11 +222,11 @@ This role does not depend on other Ansible roles. Not even the
   remote_user: root
   vars:
 
-    albextras_groups:
+    a2s_groups:
       - name: group1
       - name: group2
 
-    albextras_users:
+    a2s_users:
       - name: user1
       - name: user2
         groups:
@@ -221,11 +235,11 @@ This role does not depend on other Ansible roles. Not even the
         authorized_key:
           key: https://github.com/fititnt.keys
 
-    albextras_sample_content_static_sites:
+    a2s_sample_content_static_sites:
       - path: /home/user2/public_html
         user: user2
 
-    # albextras_iswindows: true # Uncomment next variable only for Windows hosts.
+    # a2s_iswindows: true # Uncomment next variable only for Windows hosts.
   roles:
     - { role: fititnt.ap-application-load-balancer-extras }
 ```
