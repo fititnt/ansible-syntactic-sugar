@@ -2,10 +2,13 @@
 # FILE:            {{ role_path }}/tasks/main.yml
 # LICENSE:         Public Domain
 
-- name: "AP-ALB Extras | Welcome message"
+- name: "Welcome message"
   debug:
     msg:
       a2s_version: "{{ a2s_version }}"
+      a2s_betatesting: "{{ a2s_betatesting | default('undefined') }}"
+      a2s_autoinstall_dependencies: "{{ a2s_autoinstall_dependencies | default('undefined') }}"
+      a2s_autoinstall_repositories: "{{ a2s_autoinstall_repositories | default('undefined') }}"
       node:
         os: "{{ ansible_os_family | default('undefined') | lower }}"
         dist: "{{ ansible_distribution | default('undefined') | lower }}"
@@ -16,11 +19,10 @@
         # Alternative: https://docs.ansible.com/ansible/latest/modules/ipify_facts_module.html
         ansible_default_ipv4: "{{ ansible_default_ipv4.address | default('undefined') }}"
   tags:
-    - alb
     - always
 
 ## Variable loading based on node Operational System ___________________________
-- name: "AP-ALB Extras | OS Family variables"
+- name: "OS Family variables"
   include_vars: "{{ item }}"
   with_first_found:
     - "{{ (a2s_iswindows is defined and a2s_iswindows|bool) | ternary('os-family/windows.yml', 'name-of-a-file-that-does-not-exist.yml') }}"
@@ -28,10 +30,9 @@
     - "os-family/{{ ansible_os_family | default('undefined') | lower }}.yml"
     - "os-family/{{ (ansible_os_family is defined) | ternary('untested','unknown') }}.yml"
   tags:
-    - alb
     - always
 
-- name: "AP-ALB Extras | OS Family version variables"
+- name: "OS Family version variables"
   include_vars: "{{ item }}"
   with_first_found:
     - "{{ (a2s_vars_osfamilyversion is defined) | ternary(a2s_vars_osfamilyversion, 'name-of-a-file-that-does-not-exist.yml') }}"
@@ -40,20 +41,18 @@
       | lower }}.yml"
     - "os-family/os-family-version/no-os-family-version-customization.yml"
   tags:
-    - alb
     - always
 
-- name: "AP-ALB Extras | Distribution variables (may override OS Family variables, if exist)"
+- name: "Distribution variables (may override OS Family variables, if exist)"
   include_vars: "{{ item }}"
   with_first_found:
     - "{{ (a2s_vars_distribution is defined) | ternary(a2s_vars_distribution, 'name-of-a-file-that-does-not-exist.yml') }}"
     - "os-family/distribution/{{ ansible_distribution | default('undefined') | lower }}.yml"
     - "os-family/distribution/no-os-family-customization.yml"
   tags:
-    - alb
     - always
 
-- name: "AP-ALB Extras | Specific version distribution variables (may override OS Family and Distribution variables, if exist)"
+- name: "Specific version distribution variables (may override OS Family and Distribution variables, if exist)"
   include_vars: "{{ item }}"
   with_first_found:
     - "{{ (a2s_vars_distribution_version is defined) | ternary(a2s_vars_distribution_version, 'name-of-a-file-that-does-not-exist.yml') }}"
@@ -62,10 +61,9 @@
       | lower }}.yml"
     - "os-family/distribution/version/no-distribution-customization.yml"
   tags:
-    - alb
     - always
 
-- name: "AP-ALB Extras | Result of pre-calculated variables on this play"
+- name: "Result of pre-calculated variables on this play"
   debug:
     msg:
       a2s_default_user: "{{ a2s_default_user | default('undefined') }}"
@@ -73,48 +71,57 @@
       a2s_default_directory_mode: "{{ a2s_default_directory_mode | default('undefined') }}"
       a2s_default_file_mode: "{{ a2s_default_file_mode | default('undefined') }}"
       a2s_isconteiner: "{{ a2s_isconteiner | default('undefined') }}"
+      a2s_php_install: "{{ a2s_php_install | default('undefined') }}"
   tags:
-    - alb
     - always
 
 ## Run each ALB Extra subcomponent _____________________________________________
 
-- name: "AP-ALB Extras | groups"
+- name: "groups"
   include: groups/main.yml
   when:
     - "(a2s_groups is defined)
       and (a2s_groups[0] is defined)
       and (a2s_groups[0].name is defined)"
+  tags:
+    - a2s-groups
 
-- name: "AP-ALB Extras | users"
+- name: "users"
   include: users/main.yml
   when:
     - "(a2s_users is defined)
       and (a2s_users[0] is defined)
       and (a2s_users[0].name is defined)"
   tags:
-    - albextras-users
+    - a2s-users
 
-- name: "AP-ALB Extras | hosts"
+- name: "hosts"
   include: hosts/main.yml
   tags:
-    - albextras-hosts
+    - a2s-hosts
 
-- name: "AP-ALB Extras | devel-nginx"
+- name: "devel-nginx"
   include: devel-nginx/main.yml
   when:
     - "(a2s_internal_devel_nginx_manange is sameas true)"
   tags:
-    - albextras-devel-nginx
+    - a2s-devel-nginx
 
-- name: "AP-ALB Extras | adminer"
+- name: "php"
+  include: php/main.yml
+  when:
+    - "(a2s_betatesting|bool is sameas true)"
+  tags:
+    - a2s-php
+
+- name: "adminer"
   include: adminer/main.yml
   tags:
-    - albextras-adminer
+    - a2s-adminer
 
-- name: "AP-ALB Extras | rclone"
+- name: "rclone"
   include: rclone/main.yml
   when:
     - "(a2s_internal_rclone_manange is sameas true)"
   tags:
-    - albextras-rclone
+    - a2s-rclone

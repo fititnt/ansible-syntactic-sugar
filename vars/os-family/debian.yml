@@ -11,3 +11,35 @@ a2s_internal_root_group: 'root'
 a2s_internal_package_manager_group: "apt"
 
 a2s_internal_iswindows: false
+
+### PHP ________________________________________________________________________
+
+a2s_internal_php_apt_key: null
+
+a2s_internal_php_apt_repository:
+  repo: ppa:ondrej/php
+  state: present
+
+a2s__php74:
+  - php7.4-fpm
+  - php7.4-common
+  - php7.4-mbstring
+  - php7.4-mysql
+  - php7.4-bcmath
+  - php7.4-curl
+
+a2s__php73:
+  - php7.3-fpm
+  - php7.3-common
+  - php7.3-mbstring
+  - php7.3-mysql
+  - php7.3-bcmath
+  - php7.3-curl
+
+a2s__php72:
+  - php7.2-fpm
+  - php7.2-common
+  - php7.2-mbstring
+  - php7.2-mysql
+  - php7.2-bcmath
+  - php7.2-curl

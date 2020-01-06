@@ -1,7 +1,7 @@
 # ansible-syntactic-sugar ("a2s") - v0.4.0-alpha
 
-[![Ansible Role](https://img.shields.io/ansible/role/45587)](https://galaxy.ansible.com/fititnt/syntactic_sugar)
-[![Ansible Quality Score](https://img.shields.io/ansible/quality/45587)](https://galaxy.ansible.com/fititnt/syntactic_sugar)
+[![Ansible Role](https://img.shields.io/ansible/role/45694)](https://galaxy.ansible.com/fititnt/syntactic_sugar)
+[![Ansible Quality Score](https://img.shields.io/ansible/quality/45694)](https://galaxy.ansible.com/fititnt/syntactic_sugar)
 [![Build Status](https://travis-ci.com/fititnt/ansible-syntactic-sugar.svg?branch=master)](https://travis-ci.com/fititnt/ansible-syntactic-sugar)
 
 **[not-production-ready] `a2s` is a non-official optionated cross-platform
@@ -36,12 +36,14 @@ Note: this project may eventually be renamed.
         - [`a2s_hosts_etchosts` <sup>(work in progress)</sup>](#a2s_hosts_etchosts-supwork-in-progresssup)
         - [`a2s_users`](#a2s_users)
         - [`a2s_users[n]authorized_key`](#a2s_usersnauthorized_key)
+        - [`a2s_php_install`](#a2s_php_install)
     - [Devel APIs](#devel-apis)
         - [`a2s_devel_nginx_*`](#a2s_devel_nginx_)
     - [Sample Content](#sample-content)
     - [Special APIs](#special-apis)
         - [`a2s_autoinstall_dependencies`](#a2s_autoinstall_dependencies)
         - [`a2s_autoinstall_repositories`](#a2s_autoinstall_repositories)
+        - [`a2s_betatesting`](#a2s_betatesting)
         - [a2s_default_*](#a2s_default_)
             - [`a2s_default_user`](#a2s_default_user)
             - [`a2s_default_group`](#a2s_default_group)
@@ -131,6 +133,18 @@ to the system, if you sent a key named `authorized_key`, it will call the
 Ansible authorized_key_module. If you omit `a2s_users[n]authorized_key.user`
 it will use the `a2s_users[n].name` as default.
 
+#### `a2s_php_install`
+- Default: `undefined`
+- Type of value: List; list of objects (name, state)
+- Examples of values: `{{ a2s__php74 }}`,  `{{ a2s__php73 }}`,
+  `{{ a2s__php72 }}`, `['php-fpm', 'php-common']` <sup>(assumes state: present)</sup>
+  `[{name: 'php-fpm', state: 'present'}, name: 'php-mssql', state: 'absent']`
+
+> Install a list of PHP packages on the system
+
+Variables `a2s__php74`, `a2s__php73`, `a2s__php72`... are a _syntactic sugar_
+to install common packages to run Wordpress, Joomla, Drupal and laravel.
+
 ### Devel APIs
 Different of [Public APIs](#public-apis), the **Devel APIs**, even if may be
 used to bootstrap very quickly some system that defaults would aready be great,
@@ -169,6 +183,15 @@ that have a more strong suggestion based on Operational System, may extend
 features of the _Public APIs_.
 
 -->
+
+#### `a2s_betatesting`
+- Default: `false`
+
+To keep master branch resonable stable (even if is end users areexpected to use
+official releases), some APIs will require set `a2s_betatesting: true`.
+
+These APIs are likely to not support all targeted OSs and not have full
+integrations testing.
 
 #### a2s_default_*
 The default values from `a2s_default_*` exist to provide consistence

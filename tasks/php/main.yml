@@ -6,3 +6,21 @@
 - name: "php | main.yml"
   debug:
     msg: "This is a draft. Not implemented at the moment"
+  when:
+    - "(a2s_betatesting|bool is sameas false)"
+
+- name: "php | repository"
+  include: "{{ role_path }}/tasks/php/repository/main.yml"
+  when:
+    - "(a2s_betatesting|bool is sameas true)"
+    - "(a2s_autoinstall_repositories|bool is sameas true)"
+  tags:
+    - s2s-php-repository
+
+- name: "php | install"
+  include: "{{ role_path }}/tasks/php/install/main.yml"
+  when:
+    - "(a2s_betatesting|bool is sameas true)"
+    - "(a2s_php_install is defined and a2s_php_install[0] is defined)"
+  tags:
+    - s2s-php-install

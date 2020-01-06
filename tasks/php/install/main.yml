@@ -1,0 +1,16 @@
+---
+
+# FILE:            {{ role_path }}/tasks/php/repository/main.yml
+# LICENSE:         Public Domain
+
+# https://computingforgeeks.com/how-to-install-php-7-4-on-centos-rhel-8/
+# https://computingforgeeks.com/how-to-install-php-on-ubuntu/
+
+# TODO: consider optimize this loop when all itens have same state to not use loop (fititnt, 2019-12-08 02:06 BRT)
+- name: "php | install | package"
+  package:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default(omit) }}"
+  with_items: "{{ a2s_php_install }}"
+  when:
+    - "(a2s_php_install is defined) and (a2s_php_install[0] is defined)"
