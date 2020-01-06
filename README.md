@@ -11,7 +11,7 @@ with much less lines of YAML without need to add several independent roles.
 
 > **Warning: this is a pre-release**. A stable version may never be released
 with this exact name. Variable naming conventions are likely to change
-drasticaly.
+drastically.
 
 <!--
 **[not-production-ready] AP-ALB Extras is a well tested cross-platform Ansible
@@ -30,6 +30,8 @@ Note: this project may eventually be renamed.
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
     - [Public APIs](#public-apis)
+        - [`a2s_autoinstall_dependencies`](#a2s_autoinstall_dependencies)
+        - [`a2s_autoinstall_repositories`](#a2s_autoinstall_repositories)
         - [`a2s_groups`](#a2s_groups)
         - [`a2s_hosts_etchosts` <sup>(work in progress)</sup>](#a2s_hosts_etchosts-supwork-in-progresssup)
         - [`a2s_sample_content_cdns`](#a2s_sample_content_cdns)
@@ -88,12 +90,33 @@ A description of the settable variables for this role should go here, including 
 
 ### Public APIs
 
+#### `a2s_autoinstall_dependencies`
+- Default: `false`
+
+Some A2S public APIs may require packages that already are not automaticaly
+installed with Ansible. With this option set to true/yes A2S will install for
+you.
+
+#### `a2s_autoinstall_repositories`
+- Default: `false`
+
+Some A2S public APIs may require dependencies that are not available on some
+versions of some operational systems without installation of some external
+repositories. With this option set to true/yes A2S will autoinstall for
+you.
+
 #### `a2s_groups`
 > Create operational system groups.
 
 **List of groups to add/remove.** Values from Ansible modules
 [group](https://docs.ansible.com/ansible/latest/modules/group_module.html)
 and [win_group](https://docs.ansible.com/ansible/latest/modules/win_group_module.html)
+
+```yaml
+a2s_groups:
+  - name: "www-data"
+  - name: "haproxy"
+```
 
 #### `a2s_hosts_etchosts` <sup>(work in progress)</sup>
 > List of strings to be added on /etc/hosts file
