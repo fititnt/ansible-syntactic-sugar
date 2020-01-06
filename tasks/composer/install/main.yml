@@ -1,0 +1,14 @@
+---
+
+# FILE:            {{ role_path }}/tasks/composer/install/main.yml
+# LICENSE:         Public Domain
+#
+# SEE:             https://www.digitalocean.com/community/tutorials/como-instalar-e-usar-o-composer-no-ubuntu-18-04-pt
+# SEE:             https://getcomposer.org/download/
+# SEE:             https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
+
+- name: "composer | install"
+  debug:
+    msg: "This is a draft. Not implemented at the moment"
+  when:
+    - "(a2s_betatesting|bool is sameas false)"

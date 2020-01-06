@@ -21,6 +21,8 @@ a2s__php74:
   - php7.4-mysql
   - php7.4-bcmath
   - php7.4-curl
+  - php7.4-gd
+  - php-imagick
 
 a2s__php73:
   - php7.3-fpm
@@ -29,6 +31,8 @@ a2s__php73:
   - php7.3-mysql
   - php7.3-bcmath
   - php7.3-curl
+  - php7.3-gd
+  - php-imagick
 
 a2s__php72:
   - php7.2-fpm
@@ -37,3 +41,5 @@ a2s__php72:
   - php7.2-mysql
   - php7.2-bcmath
   - php7.2-curl
+  - php7.2-gd
+  - php-imagick

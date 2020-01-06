@@ -1,0 +1,20 @@
+---
+
+# FILE:            {{ role_path }}/tasks/composer/main.yml
+# LICENSE:         Public Domain
+
+- name: "composer | main.yml"
+  debug:
+    msg: "This is a draft. Not implemented at the moment"
+  when:
+    - "(a2s_betatesting|bool is sameas false)"
+
+- name: "composer | install composer"
+  include: "{{ role_path }}/tasks/composer/install/main.yml"
+  when:
+    - "(a2s_betatesting|bool is sameas true)"
+    - "(a2s_install_composer is defined)
+      and ((a2s_install_composer|bool is sameas true)
+        or (a2s_install_composer.path is defined))"
+  tags:
+    - s2s-install-composer

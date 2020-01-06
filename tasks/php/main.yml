@@ -17,10 +17,10 @@
   tags:
     - s2s-php-repository
 
-- name: "php | install"
+- name: "php | install php"
   include: "{{ role_path }}/tasks/php/install/main.yml"
   when:
     - "(a2s_betatesting|bool is sameas true)"
-    - "(a2s_php_install is defined and a2s_php_install[0] is defined)"
+    - "(a2s_install_php is defined and a2s_install_php[0] is defined)"
   tags:
-    - s2s-php-install
+    - s2s-install-php

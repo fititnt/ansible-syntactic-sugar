@@ -33,7 +33,8 @@ Note: this project may eventually be renamed.
 - [Role Variables](#role-variables)
     - [Public APIs](#public-apis)
         - [`a2s_groups`](#a2s_groups)
-        - [`a2s_hosts_etchosts` <sup>(work in progress)</sup>](#a2s_hosts_etchosts-supwork-in-progresssup)
+        - [`a2s_etchosts`](#a2s_etchosts)
+        - [`a2s_hostname`](#a2s_hostname)
         - [`a2s_users`](#a2s_users)
         - [`a2s_users[n]authorized_key`](#a2s_usersnauthorized_key)
         - [`a2s_php_install`](#a2s_php_install)
@@ -106,16 +107,22 @@ a2s_groups:
   - name: "haproxy"
 ```
 
-#### `a2s_hosts_etchosts` <sup>(work in progress)</sup>
-> List of strings to be added on /etc/hosts file
+#### `a2s_etchosts`
+> List of strings to be added on /etc/hosts file.
 
 **List of strings**. Example:
 
 ```yaml
-a2s_hosts_etchosts:
+a2s_etchosts:
   - "127.0.0.1  site-a.local"
   - "198.51.100.0  example.org example.com"
 ```
+
+#### `a2s_hostname`
+> Set hostname respecting [RFC822](https://www.w3.org/Protocols/rfc822/). Uses
+[Ansible hostname module](https://docs.ansible.com/ansible/latest/modules/hostname_module.html).
+
+To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
 
 #### `a2s_users`
 > Create operational system users.
@@ -135,7 +142,7 @@ it will use the `a2s_users[n].name` as default.
 
 #### `a2s_php_install`
 - Default: `undefined`
-- Type of value: List; list of objects (name, state)
+- Type of value: List of Strings; List of Objects (name, state)
 - Examples of values: `{{ a2s__php74 }}`,  `{{ a2s__php73 }}`,
   `{{ a2s__php72 }}`, `['php-fpm', 'php-common']` <sup>(assumes state: present)</sup>
   `[{name: 'php-fpm', state: 'present'}, name: 'php-mssql', state: 'absent']`
@@ -144,6 +151,9 @@ it will use the `a2s_users[n].name` as default.
 
 Variables `a2s__php74`, `a2s__php73`, `a2s__php72`... are a _syntactic sugar_
 to install common packages to run Wordpress, Joomla, Drupal and laravel.
+
+In Ansible is possible append arrays values with `+` (objects you use
+`| combine()`), e.g `a2s_php_install: "{{ a2s__php74 + ['php7.4-dev', 'php7.4-ldap'] }}"`
 
 ### Devel APIs
 Different of [Public APIs](#public-apis), the **Devel APIs**, even if may be

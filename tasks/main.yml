@@ -9,6 +9,7 @@
       a2s_betatesting: "{{ a2s_betatesting | default('undefined') }}"
       a2s_autoinstall_dependencies: "{{ a2s_autoinstall_dependencies | default('undefined') }}"
       a2s_autoinstall_repositories: "{{ a2s_autoinstall_repositories | default('undefined') }}"
+      a2s_internal_iswindows: "{{ a2s_internal_iswindows | default('undefined') }}"
       node:
         os: "{{ ansible_os_family | default('undefined') | lower }}"
         dist: "{{ ansible_distribution | default('undefined') | lower }}"
@@ -95,10 +96,25 @@
   tags:
     - a2s-users
 
+- name: "directory"
+  include: directory/main.yml
+  when:
+    - "(a2s_directories is defined)
+      and (a2s_directories[0] is defined)
+      and (a2s_directories[0].path is defined)"
+  tags:
+    - a2s-directory
+    - a2s-directories
+
 - name: "hosts"
   include: hosts/main.yml
   tags:
     - a2s-hosts
+
+# - name: "etchosts"
+#   include: etchosts/main.yml
+#   tags:
+#     - a2s-etchosts
 
 - name: "devel-nginx"
   include: devel-nginx/main.yml
@@ -113,6 +129,13 @@
     - "(a2s_betatesting|bool is sameas true)"
   tags:
     - a2s-php
+
+- name: "composer"
+  include: php/main.yml
+  when:
+    - "(a2s_betatesting|bool is sameas true)"
+  tags:
+    - a2s-composer
 
 - name: "adminer"
   include: adminer/main.yml

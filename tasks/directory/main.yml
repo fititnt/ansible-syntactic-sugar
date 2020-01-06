@@ -6,33 +6,37 @@
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_file_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_owner_module.html
 
-# TODO: finish this file
-
 - name: "directory | (*nix): add/remove directories"
-  group:
-    name: "{{ item.name }}"
-    gid: "{{ item.gid | default(omit) }}"
-    non_unique: "{{ item.non_unique | default(omit) }}"
-    system: "{{ item.system | default(omit) }}"
-    state: "{{ item.state | default(omit) }}"
-  with_items: "{{ a2s_groups }}"
+  file:
+    path: "{{ item.path }}"
+    state: "{{ item.state | default('directory') }}"
+    access_time: "{{ item.access_time | default(omit) }}"
+    access_time_format: "{{ item.access_time_format | default(omit) }}"
+    attributes: "{{ item.attributes | default(omit) }}"
+    follow: "{{ item.follow | default(omit) }}"
+    force: "{{ item.force | default(omit) }}"
+    group: "{{ item.group | default(a2s_default_group) }}"
+    mode: "{{ item.mode | default(a2s_default_directory_mode) }}"
+    modification_time: "{{ item.modification_time | default(omit) }}"
+    modification_time_format: "{{ item.modification_time_format | default(omit) }}"
+    owner: "{{ item.owner | default(a2s_default_user) }}"
+    recurse: "{{ item.recurse | default(omit) }}"
+    selevel: "{{ item.selevel | default(omit) }}"
+    serole: "{{ item.serole | default(omit) }}"
+    setype: "{{ item.setype | default(omit) }}"
+    seuser: "{{ item.seuser | default(omit) }}"
+    src: "{{ item.src | default(omit) }}"
+    unsafe_writes: "{{ item.unsafe_writes | default(omit) }}"
+  with_items: "{{ a2s_directories }}"
   when:
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
 
 - name: "directory | (Windows): add/remove directories"
-  win_group:
-    name: "{{ item.name }}"
-    description: "{{ item.description | default(omit) }}"
-    state: "{{ item.state | default(omit) }}"
-  with_items: "{{ F }}"
+  win_file:
+    path: "{{ item.path }}"
+    state: "{{ item.state | default('directory') }}"
+  with_items: "{{ a2s_directories }}"
   when:
     - "(a2s_internal_iswindows is defined)
       and (a2s_internal_iswindows|bool is sameas true)"
-
-
-# - name: "{{ role_path }}/tasks/directory/directory.yml"
-#   include: "{{ role_path }}/tasks/directory/directory.yml"
-#   tags:
-#     - a2s-file-directory
-
