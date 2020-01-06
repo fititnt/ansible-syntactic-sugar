@@ -1,6 +1,8 @@
-# ansible-syntactic-sugar ("a2s") - v0.3.0-alpha
+# ansible-syntactic-sugar ("a2s") - v0.4.0-alpha
 
-[![Ansible Role](https://img.shields.io/ansible/role/45587)](https://galaxy.ansible.com/fititnt/ap_application_load_balancer_extras)
+[![Ansible Role](https://img.shields.io/ansible/role/45587)](https://galaxy.ansible.com/fititnt/syntactic_sugar)
+[![Ansible Quality Score](https://img.shields.io/ansible/quality/45587)](https://galaxy.ansible.com/fititnt/syntactic_sugar)
+[![Build Status](https://travis-ci.com/fititnt/ansible-syntactic-sugar.svg?branch=master)](https://travis-ci.com/fititnt/ansible-syntactic-sugar)
 
 **[not-production-ready] `a2s` is a non-official optionated cross-platform
 Ansible role that acts as _syntactic sugar_ for some [ansible modules](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html),
@@ -30,18 +32,16 @@ Note: this project may eventually be renamed.
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
     - [Public APIs](#public-apis)
-        - [`a2s_autoinstall_dependencies`](#a2s_autoinstall_dependencies)
-        - [`a2s_autoinstall_repositories`](#a2s_autoinstall_repositories)
         - [`a2s_groups`](#a2s_groups)
         - [`a2s_hosts_etchosts` <sup>(work in progress)</sup>](#a2s_hosts_etchosts-supwork-in-progresssup)
-        - [`a2s_sample_content_cdns`](#a2s_sample_content_cdns)
-        - [`a2s_sample_content_static_sites`](#a2s_sample_content_static_sites)
-        - [`a2s_sample_content_phps`](#a2s_sample_content_phps)
         - [`a2s_users`](#a2s_users)
         - [`a2s_users[n]authorized_key`](#a2s_usersnauthorized_key)
     - [Devel APIs](#devel-apis)
         - [`a2s_devel_nginx_*`](#a2s_devel_nginx_)
-    - [Defaults](#defaults)
+    - [Sample Content](#sample-content)
+    - [Special APIs](#special-apis)
+        - [`a2s_autoinstall_dependencies`](#a2s_autoinstall_dependencies)
+        - [`a2s_autoinstall_repositories`](#a2s_autoinstall_repositories)
         - [a2s_default_*](#a2s_default_)
             - [`a2s_default_user`](#a2s_default_user)
             - [`a2s_default_group`](#a2s_default_group)
@@ -90,20 +90,6 @@ A description of the settable variables for this role should go here, including 
 
 ### Public APIs
 
-#### `a2s_autoinstall_dependencies`
-- Default: `false`
-
-Some A2S public APIs may require packages that already are not automaticaly
-installed with Ansible. With this option set to true/yes A2S will install for
-you.
-
-#### `a2s_autoinstall_repositories`
-- Default: `false`
-
-Some A2S public APIs may require dependencies that are not available on some
-versions of some operational systems without installation of some external
-repositories. With this option set to true/yes A2S will autoinstall for
-you.
 
 #### `a2s_groups`
 > Create operational system groups.
@@ -129,27 +115,6 @@ a2s_hosts_etchosts:
   - "198.51.100.0  example.org example.com"
 ```
 
-#### `a2s_sample_content_cdns`
-> Deploy sample content on target paths designed to test a CDN (Content
-Delivery Network).
-
-**List of paths to deploy sample content of [files/videos](files/videos) and [files/images](files/images)**.
-Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
-
-#### `a2s_sample_content_static_sites`
-> Deploy sample content of HTML+CSS+JS static website on target paths to be be
-used as test. The string `Hello, world!` is granteed to always exist.
-
-**List of paths to deploy sample content of [files/static-site](files/static-site)**.
-Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
-
-#### `a2s_sample_content_phps`
-> Deploy sample content of PHP files on target paths to be used to test if PHP
-is working.
-
-**List of paths to deploy sample content of [files/php](files/php)**.
-Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
-
 #### `a2s_users`
 > Create operational system users.
 
@@ -170,13 +135,32 @@ it will use the `a2s_users[n].name` as default.
 Different of [Public APIs](#public-apis), the **Devel APIs**, even if may be
 used to bootstrap very quickly some system that defaults would aready be great,
 do not have the same compromises with **backward compatibility** of non-major
-releases (aka a new release of AP-ALB-Extras may remove a feature)
+releases (aka a new release of A2S may remove a feature)
 
 [Public APIs](#public-apis)
 
-
 #### `a2s_devel_nginx_*`
-### Defaults
+
+### Sample Content
+### Special APIs
+
+#### `a2s_autoinstall_dependencies`
+- Default: `false`
+
+Some A2S public APIs may require packages that already are not automaticaly
+installed with Ansible. With this option set to true/yes A2S will install for
+you.
+
+#### `a2s_autoinstall_repositories`
+- Default: `false`
+
+Some A2S public APIs may require dependencies that are not available on some
+versions of operational systems without installation of some external
+repositories. With this option set to true/yes A2S will autoinstall for
+you.
+
+<!--
+--- ### Defaults
 
 See [defaults/main.yml](defaults/main.yml).
 
@@ -184,11 +168,14 @@ The variables on this file, different from the ones of _Internal variables_
 that have a more strong suggestion based on Operational System, may extend
 features of the _Public APIs_.
 
+-->
+
 #### a2s_default_*
 The default values from `a2s_default_*` exist to provide consistence
 across operational systems and will be used in some places if you did not
 explicitly provide a value.
 
+<!--
 > **backward compatibility notice**: the values from `a2s_default_*`
 > **may** be updated betwen minor versions ("MINOR" on the `MAJOR.MINOR.PATCH`
 > format of [SemVer](https://semver.org/) intead of just majors versions of the
@@ -201,6 +188,7 @@ explicitly provide a value.
 > permissions of commands like `mkdir`) may be insecure in some contexts. Even
 > if you customize them, user/owner and groups are likely depend of the more
 > specific case.
+-->
 
 ##### `a2s_default_user`
 ##### `a2s_default_group`

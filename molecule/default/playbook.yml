@@ -26,23 +26,6 @@
         authorized_key:
           key: https://github.com/fititnt.keys
 
-    a2s_sample_content_static_sites:
-      - dest: /home/site-a/public_html
-        owner: site-a
-        group: site-a
-
-    a2s_sample_content_cdns:
-      - dest: /home/cdn-site-a/public_html
-        owner: cdn-site-a
-        group: cdns
-      - dest: /home/cdn-site-b/public_html
-        owner: cdn-site-b
-        group: cdns
-
-    a2s_sample_content_phps:
-      - dest: /home/php-demo/public_html
-        owner: php-demo
-
     a2s_rclone: false
     a2s_devel_nginx: true
 
@@ -52,7 +35,7 @@
     a2s_isconteiner: true
 
   roles:
-    - role: ap-application-load-balancer-extras
+    - role: ansible-syntactic-sugar
 
   pre_tasks:
     - name: "Set ISCONTEINER=1"

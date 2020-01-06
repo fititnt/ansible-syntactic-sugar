@@ -100,38 +100,6 @@
   tags:
     - albextras-hosts
 
-- name: "AP-ALB Extras | sample-content-static-site"
-  include: sample-content-static-site/main.yml
-  when:
-    - "(a2s_sample_content_static_sites is defined)
-      and (a2s_sample_content_static_sites[0] is defined)
-      and (a2s_sample_content_static_sites[0].dest is defined)"
-  tags:
-    - albextras-sample-content-static-site
-
-- name: "AP-ALB Extras | sample-content-cdn"
-  include: sample-content-cdn/main.yml
-  when:
-    - "(a2s_sample_content_cdns is defined)
-      and (a2s_sample_content_cdns[0] is defined)
-      and (a2s_sample_content_cdns[0].dest is defined)"
-  tags:
-    - albextras-sample-content-cdn
-
-- name: "AP-ALB Extras | sample-content-php"
-  include: sample-content-php/main.yml
-  when:
-    - "(a2s_sample_content_phps is defined)
-      and (a2s_sample_content_phps[0] is defined)
-      and (a2s_sample_content_phps[0].dest is defined)"
-  tags:
-    - albextras-sample-content-php
-
-- name: "AP-ALB Extras | php"
-  include: php/main.yml
-  tags:
-    - albextras-php
-
 - name: "AP-ALB Extras | devel-nginx"
   include: devel-nginx/main.yml
   when:

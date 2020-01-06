@@ -46,18 +46,6 @@ def test_users_authorized_key(host):
     assert f.group == 'fititnt'
 
 
-def test_sample_content_cdns(host):
-    fa = host.file('/home/cdn-site-a/public_html/index.html')
-    assert fa.exists
-    assert fa.user == 'cdn-site-a'
-    assert fa.group == "cdns"
-
-    fb = host.file('/home/cdn-site-b/public_html/index.html')
-    assert fb.exists
-    assert fb.user == 'cdn-site-b'
-    assert fb.group == "cdns"
-
-
 def test_devel_nginx_is_installed(host):
     assert host.package("nginx").is_installed
 
