@@ -5,15 +5,36 @@
 [![Build Status](https://travis-ci.com/fititnt/ansible-syntactic-sugar.svg?branch=master)](https://travis-ci.com/fititnt/ansible-syntactic-sugar)
 
 **[not-production-ready] `a2s` is a non-official optionated cross-platform
-Ansible role that acts as _syntactic sugar_ for some [ansible modules](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html),
-populate sample content and install some common software to help with quick tests**.
-The main initial reason was to allow build inventories to
-[AP-ALB](https://github.com/fititnt/ap-application-load-balancer)
-with much less lines of YAML without need to add several independent roles.
+Ansible role that acts as _syntactic sugar_ for 1) some [ansible modules](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html),
+2) <s>populate sample content</s><sup>(now on [ansible-faker](https://github.com/fititnt/ansible-faker))</sup>
+and 3) install some common software to help with quick tests**.
 
-> **Warning: this is a pre-release**. A stable version may never be released
-with this exact name. Variable naming conventions are likely to change
-drastically.
+> **Warning: this is a pre-release**. Variable naming conventions may change.
+Feedback is welcome!
+
+**Why?**
+
+The main initial reason (in fact, the initial name was AP-ALB-Extras) was allow
+users of [AP-ALB](https://github.com/fititnt/ap-application-load-balancer)
+implement with less YAML lines of code common tasks on nodes that not act only
+as load balancer.
+
+It was renamed to "Syntactic sugar" since what it does is not exclusive to
+AP-ALB and most of what is implemented is possible to do using ad-hoc or single
+tasks scripts and yet, different from most Ansible roles, it is not specialized
+to a single final task.
+
+Tip: while a2s allows autoinstall some requeriments, both
+`a2s_autoinstall_repositories` and `a2s_autoinstall_dependencies` are disabled
+by default.
+
+<!--
+The main initial reason was to allow non-experts build inventories powerfull
+enough to deploy some features not available on [AP-ALB](https://github.com/fititnt/ap-application-load-balancer)
+with less lines of YAML. Another reason is that on average most community roles
+support less platforms than AP-ALB
+-->
+
 
 <!--
 **[not-production-ready] AP-ALB Extras is a well tested cross-platform Ansible
@@ -35,9 +56,10 @@ Note: this project may eventually be renamed.
         - [`a2s_groups`](#a2s_groups)
         - [`a2s_etchosts`](#a2s_etchosts)
         - [`a2s_hostname`](#a2s_hostname)
+        - [`a2s_install_composer` <sup>a2s_betatesting</sup>](#a2s_install_composer-supa2s_betatestingsup)
+        - [`a2s_install_php` <sup>a2s_betatesting</sup>](#a2s_install_php-supa2s_betatestingsup)
         - [`a2s_users`](#a2s_users)
         - [`a2s_users[n]authorized_key`](#a2s_usersnauthorized_key)
-        - [`a2s_php_install`](#a2s_php_install)
     - [Devel APIs](#devel-apis)
         - [`a2s_devel_nginx_*`](#a2s_devel_nginx_)
     - [Sample Content](#sample-content)
@@ -57,8 +79,6 @@ Note: this project may eventually be renamed.
     - [Playbook using all Public APIs](#playbook-using-all-public-apis)
     - [Playbook full example with Continuos Integration and testinfra](#playbook-full-example-with-continuos-integration-and-testinfra)
 - [License](#license)
-    - [ap-application-load-balancer-extras](#ap-application-load-balancer-extras)
-    - [files/static-site](#filesstatic-site)
 
 <!-- /TOC -->
 
@@ -108,7 +128,8 @@ a2s_groups:
 ```
 
 #### `a2s_etchosts`
-> List of strings to be added on /etc/hosts file.
+> List of strings to be added on /etc/hosts file. It will not replace older
+values.
 
 **List of strings**. Example:
 
@@ -118,11 +139,30 @@ a2s_etchosts:
   - "198.51.100.0  example.org example.com"
 ```
 
+Note: `a2s_etchosts` is very likely to be improved before a2s stable release.
+
 #### `a2s_hostname`
 > Set hostname respecting [RFC822](https://www.w3.org/Protocols/rfc822/). Uses
 [Ansible hostname module](https://docs.ansible.com/ansible/latest/modules/hostname_module.html).
 
 To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
+
+#### `a2s_install_composer` <sup>a2s_betatesting</sup>
+
+#### `a2s_install_php` <sup>a2s_betatesting</sup>
+- Default: `undefined`
+- Type of value: List of Strings; List of Objects (name, state)
+- Examples of values: `{{ a2s__php74 }}`,  `{{ a2s__php73 }}`,
+  `{{ a2s__php72 }}`, `['php-fpm', 'php-common']` <sup>(assumes state: present)</sup>
+  `[{name: 'php-fpm', state: 'present'}, name: 'php-mssql', state: 'absent']`
+
+> Install a list of PHP packages on the system
+
+Variables `a2s__php74`, `a2s__php73`, `a2s__php72`... are a _syntactic sugar_
+to install common packages to run Wordpress, Joomla, Drupal and laravel.
+
+In Ansible is possible append arrays values with `+` (objects you use
+`| combine()`), e.g `a2s_php_install: "{{ a2s__php74 + ['php7.4-dev', 'php7.4-ldap'] }}"`
 
 #### `a2s_users`
 > Create operational system users.
@@ -140,21 +180,6 @@ to the system, if you sent a key named `authorized_key`, it will call the
 Ansible authorized_key_module. If you omit `a2s_users[n]authorized_key.user`
 it will use the `a2s_users[n].name` as default.
 
-#### `a2s_php_install`
-- Default: `undefined`
-- Type of value: List of Strings; List of Objects (name, state)
-- Examples of values: `{{ a2s__php74 }}`,  `{{ a2s__php73 }}`,
-  `{{ a2s__php72 }}`, `['php-fpm', 'php-common']` <sup>(assumes state: present)</sup>
-  `[{name: 'php-fpm', state: 'present'}, name: 'php-mssql', state: 'absent']`
-
-> Install a list of PHP packages on the system
-
-Variables `a2s__php74`, `a2s__php73`, `a2s__php72`... are a _syntactic sugar_
-to install common packages to run Wordpress, Joomla, Drupal and laravel.
-
-In Ansible is possible append arrays values with `+` (objects you use
-`| combine()`), e.g `a2s_php_install: "{{ a2s__php74 + ['php7.4-dev', 'php7.4-ldap'] }}"`
-
 ### Devel APIs
 Different of [Public APIs](#public-apis), the **Devel APIs**, even if may be
 used to bootstrap very quickly some system that defaults would aready be great,
@@ -166,6 +191,10 @@ releases (aka a new release of A2S may remove a feature)
 #### `a2s_devel_nginx_*`
 
 ### Sample Content
+
+Since ansible-syntactic-sugar v0.4.0-alpha, sample content was moved to a
+dedicated role, [ansible-faker](https://github.com/fititnt/ansible-faker).
+
 ### Special APIs
 
 #### `a2s_autoinstall_dependencies`
@@ -299,20 +328,9 @@ testinfra tests file at
 [molecule/default/tests/test_default.py](molecule/default/tests/test_default.py).
 
 ## License
-This Ansible role have content from several places with different licenses and
-authors.
-
-### ap-application-load-balancer-extras
 
 [![Public Domain](https://i.creativecommons.org/p/zero/1.0/88x31.png)](UNLICENSE)
 
 To the extent possible under law, [Emerson Rocha](https://github.com/fititnt)
 has waived all copyright and related or neighboring rights to this work to
 [Public Domain](UNLICENSE).
-
-### files/static-site
-**Code licensed MIT, docs CC BY 3.0.**
-
-[files/static-site/index.html](files/static-site/index.html) and it's assets are
-Sample Content from Bootstrap documentation. Source:
-<https://v4-alpha.getbootstrap.com/examples/jumbotron/>

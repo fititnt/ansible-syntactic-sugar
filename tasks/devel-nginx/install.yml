@@ -23,11 +23,21 @@
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
 
-- name: "devel-nginx | install | start and enable: nginx"
+- name: "devel-nginx | install | start nginx"
   service:
     name: nginx
     state: started
+  # ignore_errors: yes
+  ignore_errors: "{{ a2s_isconteiner | default(false) }}"
+  when:
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"
+
+- name: "devel-nginx | install | enable nginx"
+  service:
+    name: nginx
     enabled: yes
   when:
+    - "(a2s_isconteiner is undefined) or (a2s_isconteiner|bool is not sameas true)"
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"

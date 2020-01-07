@@ -4,7 +4,9 @@
   remote_user: root
   vars:
 
-    a2s_hosts_etchosts:
+    a2s_hostname: "test-host.example.org"
+
+    a2s_etchosts:
       - "127.0.0.1  site-a.local"
       - "127.0.0.1  cdn.site-a.local"
       - "127.0.0.1  site-b.local"
