@@ -177,7 +177,7 @@ A description of the settable variables for this role should go here, including 
     a2s_etchosts:
       - "127.0.0.1  site-a.local"
       - "198.51.100.0  example.org example.com"
-  ```
+    ```
 
 Note: `a2s_etchosts` is very likely to be improved before a2s stable release.
 

@@ -1,0 +1,56 @@
+---
+
+# FILE:            {{ role_path }}/tasks/synchronize/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/synchronize_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_robocopy_module.html
+
+- name: "synchronize | (*nix): synchronize"
+  synchronize:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    archive: "{{ item.archive | default(omit) }}"
+    checksum: "{{ item.checksum | default(omit) }}"
+    compress: "{{ item.compress | default(omit) }}"
+    copy_links: "{{ item.copy_links | default(omit) }}"
+    dest_port: "{{ item.dest_port | default(omit) }}"
+    dirs: "{{ item.dirs | default(omit) }}"
+    existing_only: "{{ item.existing_only | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    link_dest: "{{ item.link_dest | default(omit) }}"
+    links: "{{ item.links | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    owner: "{{ item.owner | default(omit) }}"
+    partial: "{{ item.partial | default(omit) }}"
+    perms: "{{ item.perms | default(omit) }}"
+    private_key: "{{ item.private_key | default(omit) }}"
+    recursive: "{{ item.recursive | default(omit) }}"
+    rsync_opts: "{{ item.rsync_opts | default(omit) }}"
+    rsync_path: "{{ item.rsync_path | default(omit) }}"
+    rsync_timeout: "{{ item.rsync_timeout | default(omit) }}"
+    set_remote_user: "{{ item.set_remote_user | default(omit) }}"
+    times: "{{ item.times | default(omit) }}"
+    use_ssh_args: "{{ item.use_ssh_args | default(omit) }}"
+    verify_host: "{{ item.verify_host | default(omit) }}"
+  with_items: "{{ a2s_synchronizes }}"
+  when:
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"
+  tags:
+    - a2s-synchronize-synchronizes
+
+# Note: this actually is not a complete replacement for synchronize, so a2s may
+#       need to rethink this implementation or not (fititnt, 2020-01-08 09:11 BRT)
+- name: "syncronize | (Windows) win_robocopy"
+  win_robocopy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    flags: "{{ item.flags | default(omit) }}"
+    purge: "{{ item.purge | default(omit) }}"
+    recurse: "{{ item.recurse | default(omit) }}"
+  with_items: "{{ a2s_directories }}"
+  when:
+    - "(a2s_internal_iswindows is defined)
+      and (a2s_internal_iswindows|bool is sameas true)"
+  tags:
+    - a2s-synchronize-synchronizes

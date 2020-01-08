@@ -107,6 +107,24 @@
     - a2s-directory
     - a2s-directories
 
+- name: "copy"
+  include: copy/main.yml
+  when:
+    - "(a2s_copies is defined)
+      and (a2s_copies[0] is defined)
+      and (a2s_copies[0].dest is defined)"
+  tags:
+    - a2s-copy
+
+- name: "synchronize"
+  include: synchronize/main.yml
+  when:
+    - "(a2s_synchronizes is defined)
+      and (a2s_synchronizes[0] is defined)
+      and (a2s_synchronizes[0].dest is defined)"
+  tags:
+    - a2s-copy
+
 - name: "hostname"
   include: hostname/main.yml
   when:

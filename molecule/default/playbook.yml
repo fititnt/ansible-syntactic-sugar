@@ -25,8 +25,8 @@
       - name: site-a
       - name: php-demo
       - name: fititnt
-        authorized_key:
-          key: https://github.com/fititnt.keys
+        authorized_keys:
+          - key: https://github.com/fititnt.keys
 
     a2s_rclone: false
     a2s_devel_nginx: true
