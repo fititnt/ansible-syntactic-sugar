@@ -15,3 +15,6 @@ a2s_internal_root_group: 'Administrators'
 a2s_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
 
 a2s_internal_iswindows: true
+
+a2s_internal_httpuser: "www-data" # not sure
+a2s_internal_httpgroup: "www-data" # not sure

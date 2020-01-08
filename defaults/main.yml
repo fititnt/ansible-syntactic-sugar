@@ -10,6 +10,8 @@ a2s_autoinstall_repositories: false
 # sample-content-cdn, sample-content-php, sample-content-static-site ...
 a2s_default_user: "{{ a2s_internal_root_user }}"
 a2s_default_group: "{{ a2s_internal_root_group }}"
+a2s_default_httpuser: "{{ a2s_internal_httpuser }}" # very likely 'www-data'
+a2s_default_httpgroup: "{{ a2s_internal_httpgroup }}" # very likely 'www-data'
 
 # Permission; Check mode param from https://docs.ansible.com/ansible/latest/modules/file_module.html
 a2s_default_directory_mode: "0755"
@@ -119,3 +121,19 @@ a2s_php_php74_packages:
   - php7.4-geoip
   - php7.4-intl
   - php7.4-mbstring
+
+a2s__template_phpfpmworker: "{{ role_path }}/templates/template/php-fpm-worker.conf.j2"
+# a2s__phpfpm_worker_name: 'www'
+a2s__phpfpm_user: "{{ a2s_default_httpuser }}"
+a2s__phpfpm_group: "{{ a2s_default_httpgroup }}"
+a2s__phpfpm_listen: '/run/php/php7.4-fpm.sock'
+a2s__phpfpm_listen_owner: "{{ a2s__phpfpm_user }}"
+a2s__phpfpm_listen_group: "{{ a2s__phpfpm_group }}"
+a2s__phpfpm_listen_mode: "0660"
+a2s__phpfpm_allowed_clients: 127.0.0.1
+a2s__phpfpm_pm: 'dynamic'
+a2s__phpfpm_pm_max_children: 5
+a2s__phpfpm_pm_start_servers: 2
+a2s__phpfpm_pm_min_spare_servers: 1
+a2s__phpfpm_pm_max_spare_servers: 3
+a2s__phpfpm_pm_max_requests: 3

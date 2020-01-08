@@ -9,6 +9,8 @@
     a2s_hostname_rfc822: "{{ a2s_hostname | replace('_', '-') }}"
   when:
     - "(a2s_hostname is defined) and (a2s_hostname | length > 2)"
+  tags:
+    - a2s-hostname-hostname
 
 # TODO: fix 'ignore_errors: yes' (fititnt, 2020-01-06 21:02)
 - name: "hostname | set hostname"
@@ -19,3 +21,7 @@
   ignore_errors: "{{ a2s_isconteiner | default(false) }}"
   when:
     - "(a2s_hostname_rfc822 is defined)"
+  notify:
+    - "a2s-hostname-hostname changed"
+  tags:
+    - a2s-hostname-hostname

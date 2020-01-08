@@ -171,3 +171,12 @@
     - "(a2s_internal_rclone_manange is sameas true)"
   tags:
     - a2s-rclone
+
+- name: "template"
+  include: template/main.yml
+  when:
+    - "(a2s_templates is defined)
+      and (a2s_templates[0] is defined)
+      and (a2s_templates[0].dest is defined)"
+  tags:
+    - a2s-template

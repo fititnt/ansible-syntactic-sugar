@@ -14,6 +14,10 @@
     keyring: "{{ a2s_internal_php_apt_key.keyring | default(omit) }}"
   when:
     - "(a2s_internal_php_apt_key is defined) and (a2s_internal_php_apt_key.url is defined)"
+  notify:
+    - "a2s-php-repository changed"
+  tags:
+    - a2s-php-repository
 
 - name: "php | repository | apt_repository (Debian Family)"
   apt_repository:
@@ -24,3 +28,7 @@
   # ignore_errors: true #TODO remove this later
   when:
     - "(a2s_internal_php_apt_repository is defined) and (a2s_internal_php_apt_repository.repo is defined)"
+  notify:
+    - "a2s-php-repository changed"
+  tags:
+    - a2s-php-repository

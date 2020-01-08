@@ -12,6 +12,9 @@ a2s_internal_package_manager_group: "apt"
 
 a2s_internal_iswindows: false
 
+a2s_internal_httpuser: "www-data"
+a2s_internal_httpgroup: "www-data"
+
 ### PHP ________________________________________________________________________
 
 a2s_internal_php_apt_key: null

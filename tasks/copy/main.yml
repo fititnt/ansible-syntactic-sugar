@@ -5,9 +5,13 @@
 # SEE:             https://docs.ansible.com/ansible/latest/modules/copy_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_copy_module.html
 
+# TODO: implement state: absent for both a2s_copys and a2s_templates even if
+#       copy and template does not support it. Check https://github.com/ansible/ansible/issues/6929
+#       (fititnt, 2019-01-08 11:48 BRT)
+
 - name: "directory | (*nix): add/remove directories"
   copy:
-    path: "{{ item.dest }}"
+    dest: "{{ item.dest }}"
     attributes: "{{ item.attributes | default(omit) }}"
     backup: "{{ item.backup | default(omit) }}"
     checksum: "{{ item.checksum | default(omit) }}"
@@ -32,6 +36,8 @@
   when:
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
+  notify:
+    - "a2s-copy-copies changed"
   tags:
     - a2s-copy-copies
 
@@ -49,5 +55,7 @@
   when:
     - "(a2s_internal_iswindows is defined)
       and (a2s_internal_iswindows|bool is sameas true)"
+  notify:
+    - "a2s-copy-copies changed"
   tags:
     - a2s-copy-copies

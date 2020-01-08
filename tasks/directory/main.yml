@@ -31,6 +31,10 @@
   when:
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
+  notify:
+    - "a2s-directory-directories changed"
+  tags:
+    - a2s-directory-directories
 
 - name: "directory | (Windows): add/remove directories"
   win_file:
@@ -40,3 +44,7 @@
   when:
     - "(a2s_internal_iswindows is defined)
       and (a2s_internal_iswindows|bool is sameas true)"
+  notify:
+    - "a2s-directory-directories changed"
+  tags:
+    - a2s-directory-directories

@@ -14,3 +14,7 @@
   with_items: "{{ a2s_php_install }}"
   when:
     - "(a2s_php_install is defined) and (a2s_php_install[0] is defined)"
+  notify:
+    - "a2s-php-install changed"
+  tags:
+    - a2s-php-install

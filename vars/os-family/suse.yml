@@ -11,3 +11,6 @@ a2s_internal_root_group: 'root'
 a2s_internal_package_manager_group: "zypper"
 
 a2s_internal_iswindows: false
+
+a2s_internal_httpuser: "www-data"
+a2s_internal_httpgroup: "www-data"

@@ -44,6 +44,10 @@
   when:
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
+  notify:
+    - "a2s-user-users changed"
+  tags:
+    - a2s-user-users
 
 - name: "users | user (Windows): add/remove users"
   win_user:
@@ -63,3 +67,7 @@
   when:
     - "(a2s_internal_iswindows is defined)
       and (a2s_internal_iswindows|bool is sameas true)"
+  notify:
+    - "a2s-user-users changed"
+  tags:
+    - a2s-user-users
