@@ -9,9 +9,22 @@
 - name: "{{ role_path }}/tasks/users/user.yml"
   include: "{{ role_path }}/tasks/users/user.yml"
   tags:
-    - albextras-users-user
+    - a2s-user-users
 
 - name: "{{ role_path }}/tasks/users/authorized_key.yml"
   include: "{{ role_path }}/tasks/users/authorized_key.yml"
   tags:
-    - albextras-users-authorized-key
+    - a2s-user-authorized-keys
+
+# - name: "debug3"
+#   debug:
+#     msg:
+#       - "{{ item }}"
+#   loop: "{{ a2s_users }}"
+
+# - name: "debug4"
+#   debug:
+#     msg:
+#       - "{{ a2s_users }}"
+#   tags:
+#     - a2s-user-authorized-keys

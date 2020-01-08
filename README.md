@@ -68,15 +68,14 @@ Note: this project may eventually be renamed.
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
     - [Public APIs](#public-apis)
+        - [`a2s_directories`](#a2s_directories)
         - [`a2s_groups`](#a2s_groups)
         - [`a2s_etchosts`](#a2s_etchosts)
         - [`a2s_hostname`](#a2s_hostname)
         - [`a2s_install_composer` <sup>a2s_betatesting</sup>](#a2s_install_composer-supa2s_betatestingsup)
         - [`a2s_install_php` <sup>a2s_betatesting</sup>](#a2s_install_php-supa2s_betatestingsup)
         - [`a2s_users`](#a2s_users)
-        - [`a2s_users[n]authorized_key`](#a2s_usersnauthorized_key)
-    - [Devel APIs](#devel-apis)
-        - [`a2s_devel_nginx_*`](#a2s_devel_nginx_)
+        - [`a2s_users[n]authorized_keys`](#a2s_usersnauthorized_keys)
     - [Sample Content](#sample-content)
     - [Special APIs](#special-apis)
         - [`a2s_autoinstall_dependencies`](#a2s_autoinstall_dependencies)
@@ -128,37 +127,66 @@ A description of the settable variables for this role should go here, including 
 
 ### Public APIs
 
+#### `a2s_directories`
+- **Short Description**: _file – Manage <s>files</s> directories and <s>file</s>
+  directories properties_
+- **Ansible Modules**:
+  - [file](https://docs.ansible.com/ansible/latest/modules/file_module.html)
+- **Type of values**: list of dictionaries accepted by the underlining Ansible
+  module. `state` value will default `directory`. Other missing values will be
+  ommited.
+- **Examples**
+  - Example 1:
+    ```yaml
+    a2s_directories:
+      - path: /var/www/my-app
+        owner: app
+        group: www-data
+        mode: '0755'
+      - path: /var/www/my-old-app-folder-to-delete
+        state: absent
+    ```
 
 #### `a2s_groups`
-> Create operational system groups.
-
-**List of groups to add/remove.** Values from Ansible modules
-[group](https://docs.ansible.com/ansible/latest/modules/group_module.html)
-and [win_group](https://docs.ansible.com/ansible/latest/modules/win_group_module.html)
-
-```yaml
-a2s_groups:
-  - name: "www-data"
-  - name: "haproxy"
-```
+- **Short Description**: _group – Add or remove groups / win_group – Add and
+  remove local groups_
+- **Ansible Modules**:
+  - [group](https://docs.ansible.com/ansible/latest/modules/group_module.html)
+  - [win_group](https://docs.ansible.com/ansible/latest/modules/win_group_module.html)
+- **Type of values**: list of dictionaries accepted by the underlining Ansible
+  modules. Missing values will be ommited.
+- **Examples**
+  - Example 1:
+    ```yaml
+    a2s_groups:
+      - name: "www-data"
+      - name: "haproxy"
+      - name: "user-to-remove"
+        state: "absent"
+  ```
 
 #### `a2s_etchosts`
-> List of strings to be added on /etc/hosts file. It will not replace older
-values.
-
-**List of strings**. Example:
-
-```yaml
-a2s_etchosts:
-  - "127.0.0.1  site-a.local"
-  - "198.51.100.0  example.org example.com"
-```
+- **Short Description**: _List of strings to be added on /etc/hosts file. The
+  current implementation will not will not replace older values._
+- **Ansible Modules**:
+  - None. This is a custom implementation.
+- **Type of values**: List of strings.
+- **Examples**
+  - Example 1:
+    ```yaml
+    a2s_etchosts:
+      - "127.0.0.1  site-a.local"
+      - "198.51.100.0  example.org example.com"
+  ```
 
 Note: `a2s_etchosts` is very likely to be improved before a2s stable release.
 
 #### `a2s_hostname`
-> Set hostname respecting [RFC822](https://www.w3.org/Protocols/rfc822/). Uses
-[Ansible hostname module](https://docs.ansible.com/ansible/latest/modules/hostname_module.html).
+- **Short Description**: _hostname – Manage hostname, enforcing
+  [RFC822](https://www.w3.org/Protocols/rfc822/ format to avoid fail_
+- **Ansible Modules**:
+  - [hostname](https://docs.ansible.com/ansible/latest/modules/hostname_module.html)
+- **Type of values**: Dictionary. Same values of Ansible module hostname.
 
 To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
 
@@ -180,22 +208,25 @@ In Ansible is possible append arrays values with `+` (objects you use
 `| combine()`), e.g `a2s_php_install: "{{ a2s__php74 + ['php7.4-dev', 'php7.4-ldap'] }}"`
 
 #### `a2s_users`
-> Create operational system users.
+- **Short Description**: _user – Manage user accounts / win_user – Manages local
+  Windows user accounts_
+- **Ansible Modules**:
+  - [user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
+  - [win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
+- **Type of values**: list of dictionaries accepted by the underlining Ansible
+  modules. Missing values will be ommited.
 
-**List of users to add/remove.** Values from Ansible modules
-[user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
-and [win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
+#### `a2s_users[n]authorized_keys`
+- **Short Description**: _authorized_key – Adds or removes an SSH authorized key_
+- **Ansible Modules**:
+  - [authorized_key](https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html)
+- **Type of values**: list of dictionaries accepted by the underlining Ansible
+  modules. Missing required `user` (`a2s_users[n]authorized_keys[m]user`) will
+  default to `name` (`a2s_users[n]name`). Other missing values will be ommited
 
-#### `a2s_users[n]authorized_key`
-**Adds or removes an SSH authorized key for the user.** Values from Ansible modules
-[authorized_key](https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html)
+<!--
 
-This option is just an syntax sugar to, on same definition about an user to add
-to the system, if you sent a key named `authorized_key`, it will call the
-Ansible authorized_key_module. If you omit `a2s_users[n]authorized_key.user`
-it will use the `a2s_users[n].name` as default.
-
-### Devel APIs
+-- ### Devel APIs
 Different of [Public APIs](#public-apis), the **Devel APIs**, even if may be
 used to bootstrap very quickly some system that defaults would aready be great,
 do not have the same compromises with **backward compatibility** of non-major
@@ -203,7 +234,9 @@ releases (aka a new release of A2S may remove a feature)
 
 [Public APIs](#public-apis)
 
-#### `a2s_devel_nginx_*`
+-- #### `a2s_devel_nginx_*`
+
+-->
 
 ### Sample Content
 
@@ -310,6 +343,14 @@ This role does not depend on other Ansible roles. Not even the
   remote_user: root
   vars:
 
+    a2s_directories:
+      - path: /var/www/my-app
+        owner: app
+        group: www-data
+        mode: '0755'
+      - path: /var/www/my-old-app-folder-to-delete
+        state: absent
+
     a2s_groups:
       - name: group1
       - name: group2
@@ -320,16 +361,12 @@ This role does not depend on other Ansible roles. Not even the
         groups:
           - group2
       - name: fititnt
-        authorized_key:
+        authorized_keys:
           key: https://github.com/fititnt.keys
-
-    a2s_sample_content_static_sites:
-      - path: /home/user2/public_html
-        user: user2
 
     # a2s_iswindows: true # Uncomment next variable only for Windows hosts.
   roles:
-    - { role: fititnt.ap-application-load-balancer-extras }
+    - { role: fititnt.syntactic_sugar }
 ```
 ### Playbook full example with Continuos Integration and testinfra
 

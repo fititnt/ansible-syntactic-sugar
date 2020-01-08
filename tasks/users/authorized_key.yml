@@ -4,18 +4,61 @@
 # LICENSE:         Public Domain
 # SEE:             https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html
 
-- name: "users | authorized_key: add/remove users"
+# - name: "users | authorized_key: add/remove users"
+#   authorized_key:
+#     user: "{{ item.authorized_key.user | default(item.name) }}"
+#     key: "{{ item.authorized_key.key }}"
+#     state: "{{ item.authorized_key.state | default(omit) }}"
+#     comment: "{{ item.authorized_key.comment | default(omit) }}"
+#     exclusive: "{{ item.authorized_key.exclusive | default(omit) }}"
+#     follow: "{{ item.authorized_key.follow | default(omit) }}"
+#     key_options: "{{ item.authorized_key.key_options | default(omit) }}"
+#     manage_dir: "{{ item.authorized_key.manage_dir | default(omit) }}"
+#     path: "{{ item.authorized_key.path | default(omit) }}"
+#     validate_certs: "{{ item.authorized_key.validate_certs | default(omit) }}"
+#   with_items: "{{ a2s_users }}"
+#   when:
+#     - "(item.authorized_key is defined)"
+
+- name: "user | authorized_keys: add/remove authorized_keys"
   authorized_key:
-    user: "{{ item.authorized_key.user | default(item.name) }}"
-    key: "{{ item.authorized_key.key }}"
-    state: "{{ item.authorized_key.state | default(omit) }}"
-    comment: "{{ item.authorized_key.comment | default(omit) }}"
-    exclusive: "{{ item.authorized_key.exclusive | default(omit) }}"
-    follow: "{{ item.authorized_key.follow | default(omit) }}"
-    key_options: "{{ item.authorized_key.key_options | default(omit) }}"
-    manage_dir: "{{ item.authorized_key.manage_dir | default(omit) }}"
-    path: "{{ item.authorized_key.path | default(omit) }}"
-    validate_certs: "{{ item.authorized_key.validate_certs | default(omit) }}"
-  with_items: "{{ a2s_users }}"
-  when:
-    - "(item.authorized_key is defined)"
+    # If the a2s_users[n]authorized_keys[m]user is missing, we use a2s_users[n]name
+    user: "{{ item.1.user | default(item.0.name) }}"
+    state: "{{ item.1.state | default(omit) }}"
+    key: "{{ item.1.key }}"
+    comment: "{{ item.1.comment | default(omit) }}"
+    exclusive: "{{ item.1.exclusive | default(omit) }}"
+    follow: "{{ item.1.follow | default(omit) }}"
+    key_options: "{{ item.1.key_options | default(omit) }}"
+    manage_dir: "{{ item.1.manage_dir | default(omit) }}"
+    path: "{{ item.1.path | default(omit) }}"
+    validate_certs: "{{ item.1.validate_certs | default(omit) }}"
+    asdasdasdasd: "{{ item.1.validate_certs | default(omit) }}"
+  with_subelements:
+    - "{{ a2s_users }}"
+    - "authorized_keys"
+    - skip_missing: true
+  tags:
+    - a2s-user-authorized-keys
+
+# - name: "debug"
+#   debug:
+#     msg:
+#       - zero: "{{ item[0] }}"
+#       - one: "{{ item[1] }}"
+#   with_subelements:
+#     - "{{ a2s_users }}"
+#     - "authorized_keys"
+#     - skip_missing: true
+#   tags:
+#     - a2s-user-authorized-keys
+
+# - name: "debug2 "
+#   debug:
+#     msg:
+#       - "{{ item }}"
+#       - "{{ item.1 }}"
+#       - "{{ item.2 }}"
+#   loop: "{{ a2s_users }}"
+#   tags:
+#     - a2s-user-authorized-keys
