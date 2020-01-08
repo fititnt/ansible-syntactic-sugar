@@ -11,10 +11,10 @@
   package:
     name: "{{ item.name | default(item) }}"
     state: "{{ item.state | default(omit) }}"
-  with_items: "{{ a2s_php_install }}"
+  with_items: "{{ a2s_install_php }}"
   when:
-    - "(a2s_php_install is defined) and (a2s_php_install[0] is defined)"
+    - "(a2s_install_php is defined) and (a2s_install_php[0] is defined)"
   notify:
-    - "a2s-php-install changed"
+    - "a2s-install-php changed"
   tags:
-    - a2s-php-install
+    - a2s-install-php

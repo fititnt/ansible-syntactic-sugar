@@ -1,0 +1,32 @@
+---
+
+# FILE:            {{ role_path }}/tasks/php/repository/main.yml
+# LICENSE:         Public Domain
+
+# https://computingforgeeks.com/how-to-install-php-7-4-on-centos-rhel-8/
+# https://computingforgeeks.com/how-to-install-php-on-ubuntu/
+
+# Note: the quick check about if need to reinstall is done on upper level, not
+#       here.
+
+- name: "adminer | Create base directory (if a2s__adminer.install_directory_create is defined)"
+  file:
+    path: "{{ a2s_install_adminer.install_directory | default('/opt/adminer') }}"
+    state: "directory"
+    owner: "{{ a2s_install_adminer.install_directory_create.owner | default(omit) }}"
+    group: "{{ a2s_install_adminer.install_directory_create.group | default(omit) }}"
+    mode: "{{ a2s_install_adminer.install_directory_create.mode | default(omit) }}"
+  when:
+    - "(a2s_install_adminer.install_directory_create is defined)"
+  tags:
+    - a2s-install-adminer
+
+- name: "adminer | Download Adminer"
+  get_url:
+    url: "{{ a2s_install_adminer.download_url | default('https://www.adminer.org/latest.php') }}"
+    dest: "{{ (a2s_install_adminer.install_directory | default('/opt/adminer/'))
+      + (a2s_install_adminer.install_file | default('index.php')) }}"
+    force: "{{ (a2s_install_adminer.force_update is defined) | ternary(a2s_install_adminer.force_update|bool, false) }}"
+  tags:
+    - a2s-install-adminer
+

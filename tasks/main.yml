@@ -6,7 +6,7 @@
   debug:
     msg:
       a2s_version: "{{ a2s_version }}"
-      a2s_betatesting: "{{ a2s_betatesting | default('undefined') }}"
+      a2s_betatesting: "{{ a2s_betatesting | default(omit) }}"
       a2s_autoinstall_dependencies: "{{ a2s_autoinstall_dependencies | default('undefined') }}"
       a2s_autoinstall_repositories: "{{ a2s_autoinstall_repositories | default('undefined') }}"
       a2s_internal_iswindows: "{{ a2s_internal_iswindows | default('undefined') }}"
@@ -72,8 +72,8 @@
       a2s_default_directory_mode: "{{ a2s_default_directory_mode | default('undefined') }}"
       a2s_default_file_mode: "{{ a2s_default_file_mode | default('undefined') }}"
       a2s_isconteiner: "{{ a2s_isconteiner | default('undefined') }}"
-      a2s_install_composer: "{{ a2s_install_composer | default('undefined') }}"
-      a2s_install_php: "{{ a2s_install_php | default('undefined') }}"
+      a2s_install_composer: "{{ a2s_install_composer | default(omit) }}"
+      a2s_install_php: "{{ a2s_install_php | default(omit) }}"
   tags:
     - always
 
@@ -154,7 +154,7 @@
     - a2s-php
 
 - name: "composer"
-  include: php/main.yml
+  include: composer/main.yml
   when:
     - "(a2s_betatesting|bool is sameas true)"
   tags:
@@ -162,6 +162,12 @@
 
 - name: "adminer"
   include: adminer/main.yml
+  when:
+    - "(a2s_betatesting|bool is sameas true)"
+    - "(a2s_install_adminer is defined)
+      and (a2s_install_adminer.download_url is defined)
+      and (a2s_install_adminer.install_directory is defined)
+      and (a2s_install_adminer.install_file is defined)"
   tags:
     - a2s-adminer
 

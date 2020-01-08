@@ -72,6 +72,7 @@ Note: this project may eventually be renamed.
         - [`a2s_groups`](#a2s_groups)
         - [`a2s_etchosts`](#a2s_etchosts)
         - [`a2s_hostname`](#a2s_hostname)
+        - [`a2s_install_adminer` <sup>a2s_betatesting</sup>](#a2s_install_adminer-supa2s_betatestingsup)
         - [`a2s_install_composer` <sup>a2s_betatesting</sup>](#a2s_install_composer-supa2s_betatestingsup)
         - [`a2s_install_php` <sup>a2s_betatesting</sup>](#a2s_install_php-supa2s_betatestingsup)
         - [`a2s_users`](#a2s_users)
@@ -189,6 +190,15 @@ Note: `a2s_etchosts` is very likely to be improved before a2s stable release.
 - **Type of values**: Dictionary. Same values of Ansible module hostname.
 
 To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
+
+#### `a2s_install_adminer` <sup>a2s_betatesting</sup>
+- Default: `undefined`
+- Type of value: Dictionary (name, state)
+- Examples of values: `{{ a2s__adminer }}`
+
+> Install adminer
+
+Variable `{{ a2s__adminer }}` are a _syntactic sugar_ for the default parameters
 
 #### `a2s_install_composer` <sup>a2s_betatesting</sup>
 

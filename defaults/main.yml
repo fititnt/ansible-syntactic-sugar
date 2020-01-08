@@ -22,13 +22,19 @@ a2s_default_file_mode: "0644"
 # Set a2s_isconteiner: true to not make this role try enable a service
 a2s_isconteiner: false
 
-### Old values from AP-ALB-Extras v0.1-alpha (DEPRECATED) ______________________
-
-# Set this to false/no if want for disable ap-application-load-balancer-extras
-albextras: yes
-
-# Should AP-ALB-Extras make new changes to PHP related features?
-a2s_php: no
+### Adminer ____________________________________________________________________
+a2s__adminer:
+  # download_url: "https://github.com/vrana/adminer/releases/download/v4.7.5/adminer-4.7.5.php"
+  download_url: "https://www.adminer.org/latest.php"
+  install_directory: "/opt/adminer/"
+  # install_directory_create: true # this is also a valid value if you don't whant customize
+  # Remove install_directory_create if you dont want create install directory
+  install_directory_create:
+    owner: "{{ a2s_internal_root_user }}"
+    group: "{{ a2s_internal_root_group }}"
+    mode: "0755"
+  install_file: "index.php"
+  force_update: true
 
 ### PHP ________________________________________________________________________
 a2s_php_debug: no

@@ -1,2 +1,17 @@
 ---
-# handlers file for ap-application-load-balancer-extras
+# handlers file for ansible-syntactic-sugar
+
+- meta: noop
+  listen:
+    - "a2s-copy-copies changed"
+    - "a2s-directory-directories changed"
+    - "a2s-etchosts-etchosts changed"
+    - "a2s-groups changed"
+    - "a2s-hostname changed"
+    - "a2s-install-php changed"
+    - "a2s-synchronize-synchronizes changed"
+    - "a2s-template-templates changed"
+    - "a2s-user-users changed"
+    - "a2s-user-users changed"
+    - "a2s-install-adminer"
+  when: false

@@ -10,5 +10,7 @@
     state: present
     unsafe_writes: "{{ a2s_internal_isconteiner }}" # If is container, we allow unsafe_writes
   with_items: "{{ a2s_etchosts }}"
-  # when:
-  #   - "(a2s_etchosts is defined) and (a2s_etchosts[0] is defined)"
+  notify:
+    - "a2s-etchosts changed"
+  tags:
+    - a2s-etchosts

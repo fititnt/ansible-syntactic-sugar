@@ -16,6 +16,10 @@
   when:
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
+  notify:
+    - "a2s-groups changed"
+  tags:
+    - a2s-groups
 
 - name: "groups | (Windows): add/remove groups"
   win_group:
@@ -26,3 +30,7 @@
   when:
     - "(a2s_internal_iswindows is defined)
       and (a2s_internal_iswindows|bool is sameas true)"
+  notify:
+    - "a2s-groups changed"
+  tags:
+    - a2s-groups

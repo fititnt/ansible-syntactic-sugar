@@ -6,3 +6,34 @@
 - name: "adminer | main.yml"
   debug:
     msg: "This is a draft. Not implemented at the moment"
+
+# - name: "adminer | check if already installed and a2s_install_adminer.force_update != true"
+- name: "adminer | check if already installed"
+  stat:
+    path: "{{ a2s_install_adminer.install_directory }}/{{ a2s_install_adminer.install_file }}"
+  register: adminer_installation
+#  when:
+#    - "(a2s_install_adminer.force_update is undefined)
+#      or (a2s_install_adminer.force_update|bool is sameas false)"
+  tags:
+    - a2s-install-adminer
+
+- name: "adminer | install adminer"
+  include: "{{ role_path }}/tasks/adminer/install/main.yml"
+  when:
+    - "(not adminer_installation.stat.exists)
+      or ((a2s_install_adminer.force_update is defined)
+        and (a2s_install_adminer.force_update|bool is sameas true))"
+  tags:
+    - a2s-install-adminer
+
+# - name: "adminer | debug"
+#   debug:
+#     msg:
+#       - "{{ adminer_installation }}"
+#       - result1: "{{ (not adminer_installation.stat.exists) }}"
+#       - result2: "{{ (adminer_installation.stat.exists is sameas false)
+#       or ((a2s_install_adminer.force_update is defined)
+#         and (a2s_install_adminer.force_update|bool is sameas true)) }}"
+#   tags:
+#     - a2s-install-adminer
