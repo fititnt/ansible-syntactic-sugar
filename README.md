@@ -17,18 +17,33 @@ Feedback is welcome!
 The main initial reason (in fact, the initial name was AP-ALB-Extras) was allow
 users of [AP-ALB](https://github.com/fititnt/ap-application-load-balancer)
 implement with less YAML lines of code common tasks on nodes that not act only
-as load balancer.
+as load balancer and may have apps installed on them. For example, while AP-ALB
+abstract proxy rules to HAProxy & OpenResty, it does not abstract create users,
+groups & folders from a node. This role does this type of _extra_ task.
 
-It was renamed to "Syntactic sugar" since what it does is not exclusive to
+It was renamed to _"syntactic sugar"_ since what it does is not exclusive to
 AP-ALB and most of what is implemented is possible to do using ad-hoc or single
 tasks scripts and yet, different from most Ansible roles, it is not specialized
 to a single final task.
 
+**Quick info about compatibility with other roles and how this role try to play nice**
+
+1. One idea behind a2s is be able to _"a2s_autoinstall"_ repositories and
+   non-explicitly dependencies _on demand_, but both cases are disabled by
+   default.
+2. All variables are namespaced, prefixed with `a2s_`; when they end with 's'
+   and uses a name similar to an Ansible module, is likely that it acepts a list
+   of options availible on the Ansible module equivalent **but** are tolerant
+   to add a option that the underlining module does not support
+   - e.g [`a2s_users`](#a2s_users) vs [Ansible user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
+     \+ [Ansible win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
+3. (TODO: add more topics)
+
+<!--
 Tip: while a2s allows autoinstall some requeriments, both
 `a2s_autoinstall_repositories` and `a2s_autoinstall_dependencies` are disabled
 by default.
 
-<!--
 The main initial reason was to allow non-experts build inventories powerfull
 enough to deploy some features not available on [AP-ALB](https://github.com/fititnt/ap-application-load-balancer)
 with less lines of YAML. Another reason is that on average most community roles
@@ -285,7 +300,7 @@ This role does not depend on other Ansible roles. Not even the
 #       need to specify variables
 - hosts: all
   roles:
-    - { role: fititnt.ansible-syntactic-sugar }
+    - { role: fititnt.syntactic_sugar }
 ```
 
 ### Playbook using all Public APIs
