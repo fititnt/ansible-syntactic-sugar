@@ -39,7 +39,7 @@
     - "authorized_keys"
     - skip_missing: true
   notify:
-    - "a2s user authorized-keys changed"
+    - "a2s-user-authorized-keys changed"
   tags:
     - a2s-user-authorized-keys
 
