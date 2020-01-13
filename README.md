@@ -1,4 +1,4 @@
-# ansible-syntactic-sugar ("a2s") - v0.4.0-alpha
+# ansible-syntactic-sugar ("a2s") - v0.5.0-alpha
 
 [![Ansible Role](https://img.shields.io/ansible/role/45694)](https://galaxy.ansible.com/fititnt/syntactic_sugar)
 [![Ansible Quality Score](https://img.shields.io/ansible/quality/45694)](https://galaxy.ansible.com/fititnt/syntactic_sugar)
@@ -7,7 +7,8 @@
 **[not-production-ready] `a2s` is a non-official optionated cross-platform
 Ansible role that acts as _syntactic sugar_ for 1) some [ansible modules](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html),
 2) <s>populate sample content</s><sup>(now on [ansible-faker](https://github.com/fititnt/ansible-faker))</sup>
-and 3) install some common software to help with quick tests**.
+and 3) install some common software to help with quick tests and 4) even explain
+/implement [how to run only a subset of an Ansible role](#a2s_only)**.
 
 > **Warning: this is a pre-release**. Variable naming conventions may change.
 Feedback is welcome!
@@ -87,10 +88,12 @@ Note: this project may eventually be renamed.
             - [`a2s_default_group`](#a2s_default_group)
             - [`a2s_default_directory_mode`](#a2s_default_directory_mode)
             - [`a2s_default_file_mode`](#a2s_default_file_mode)
+            - [`a2s_only`](#a2s_only)
     - [Internal variables](#internal-variables)
 - [Dependencies](#dependencies)
 - [Example Playbooks](#example-playbooks)
     - [Minimal Playbook](#minimal-playbook)
+    - [_Run only these APIs_ playbook example](#_run-only-these-apis_-playbook-example)
     - [Playbook using all Public APIs](#playbook-using-all-public-apis)
     - [Playbook full example with Continuos Integration and testinfra](#playbook-full-example-with-continuos-integration-and-testinfra)
 - [License](#license)
@@ -314,6 +317,12 @@ explicitly provide a value.
 ##### `a2s_default_group`
 ##### `a2s_default_directory_mode`
 ##### `a2s_default_file_mode`
+##### `a2s_only`
+- **Short Description**: _Allow run only a subset of a a2s_
+- **Ansible Modules**:
+  - None. Uses simple `when` trick to overcome tags limitation
+- **Type of values**: list of a2s public APIs
+- **Example**: see [_Run only these APIs_ playbook example](#_run-only-these-apis_-playbook-example).
 
 ### Internal variables
 
@@ -344,6 +353,32 @@ This role does not depend on other Ansible roles. Not even the
 - hosts: all
   roles:
     - { role: fititnt.syntactic_sugar }
+```
+
+### _Run only these APIs_ playbook example
+
+a2s have so many features that you play may become bigger. As explained in
+[Ansible Playbook Tags](https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html)
+the Ansible default behavior do not allow run only a subset of a Role withtout
+using --tags / --skip-tags from command line:
+
+> _"There is no way to ‘import only these tags’; you probably want to split into
+  smaller roles/includes if you find yourself looking for such a feature."_
+
+**BUT with a2s you can!**. We provide one workaround using an special variable
+`a2s_only`. The best way to use is not define `a2s_only` on your inventory, but
+only when importing this role.
+
+```yaml
+# On this a2s example, even if your inventory have more than a2s_groups and
+# a2s_users defined and not using command line --tags, only a subset of a2s will
+# run
+- hosts: all
+  - role: fititnt.syntactic_sugar
+    vars:
+      a2s_only:
+        - a2s_groups
+        - a2s_users
 ```
 
 ### Playbook using all Public APIs

@@ -3,10 +3,6 @@
 # FILE:            {{ role_path }}/tasks/adminer/main.yml
 # LICENSE:         Public Domain
 
-- name: "adminer | main.yml"
-  debug:
-    msg: "This is a draft. Not implemented at the moment"
-
 # - name: "adminer | check if already installed and a2s_install_adminer.force_update != true"
 - name: "adminer | check if already installed"
   stat:
@@ -21,6 +17,7 @@
 - name: "adminer | install adminer"
   include: "{{ role_path }}/tasks/adminer/install/main.yml"
   when:
+    - "(adminer_installation is defined)" # This should not be necessary. May be removed later
     - "(not adminer_installation.stat.exists)
       or ((a2s_install_adminer.force_update is defined)
         and (a2s_install_adminer.force_update|bool is sameas true))"

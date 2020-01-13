@@ -7,9 +7,12 @@
     msg:
       a2s_version: "{{ a2s_version }}"
       a2s_betatesting: "{{ a2s_betatesting | default(omit) }}"
+      a2s_only: "{{ a2s_only | default('undefined') }}"
       a2s_autoinstall_dependencies: "{{ a2s_autoinstall_dependencies | default('undefined') }}"
       a2s_autoinstall_repositories: "{{ a2s_autoinstall_repositories | default('undefined') }}"
       a2s_internal_iswindows: "{{ a2s_internal_iswindows | default('undefined') }}"
+      ansible_run_tags: "{{ ansible_run_tags | default('undefined') }}"
+      ansible_skip_tags: "{{ ansible_skip_tags | default('undefined') }}"
       node:
         os: "{{ ansible_os_family | default('undefined') | lower }}"
         dist: "{{ ansible_distribution | default('undefined') | lower }}"
@@ -85,6 +88,7 @@
     - "(a2s_groups is defined)
       and (a2s_groups[0] is defined)
       and (a2s_groups[0].name is defined)"
+    - "(a2s_only is undefined) or ('a2s_groups' in a2s_only)"
   tags:
     - a2s-groups
 
@@ -94,6 +98,7 @@
     - "(a2s_users is defined)
       and (a2s_users[0] is defined)
       and (a2s_users[0].name is defined)"
+    - "(a2s_only is undefined) or ('a2s_users' in a2s_only)"
   tags:
     - a2s-users
 
@@ -103,8 +108,9 @@
     - "(a2s_directories is defined)
       and (a2s_directories[0] is defined)
       and (a2s_directories[0].path is defined)"
+    - "(a2s_only is undefined) or ('a2s_directories' in a2s_only)"
   tags:
-    - a2s-directory
+    # - a2s-directory
     - a2s-directories
 
 - name: "copy"
@@ -113,8 +119,10 @@
     - "(a2s_copies is defined)
       and (a2s_copies[0] is defined)
       and (a2s_copies[0].dest is defined)"
+    - "(a2s_only is undefined) or ('a2s_copies' in a2s_only)"
   tags:
-    - a2s-copy
+    # - a2s-copy
+    - a2s-copies
 
 - name: "synchronize"
   include: synchronize/main.yml
@@ -122,13 +130,15 @@
     - "(a2s_synchronizes is defined)
       and (a2s_synchronizes[0] is defined)
       and (a2s_synchronizes[0].dest is defined)"
+    - "(a2s_only is undefined) or ('a2s_synchronizes' in a2s_only)"
   tags:
-    - a2s-copy
+    - a2s-synchronizes
 
 - name: "hostname"
   include: hostname/main.yml
   when:
     - "(a2s_hostname is defined)"
+    - "(a2s_only is undefined) or ('a2s_hostname' in a2s_only)"
   tags:
     - a2s-hostname
 
@@ -136,6 +146,7 @@
   include: etchosts/main.yml
   when:
     - "(a2s_etchosts is defined) and (a2s_etchosts[0] is defined)"
+    - "(a2s_only is undefined) or ('a2s_etchosts' in a2s_only)"
   tags:
     - a2s-etchosts
 
@@ -143,6 +154,7 @@
   include: devel-nginx/main.yml
   when:
     - "(a2s_internal_devel_nginx_manange is sameas true)"
+    - "(a2s_only is undefined) or ('a2s_devel_nginx' in a2s_only)"
   tags:
     - a2s-devel-nginx
 
@@ -150,6 +162,7 @@
   include: php/main.yml
   when:
     - "(a2s_betatesting|bool is sameas true)"
+    - "(a2s_only is undefined) or ('a2s_install_php' in a2s_only)"
   tags:
     - a2s-php
 
@@ -157,8 +170,9 @@
   include: composer/main.yml
   when:
     - "(a2s_betatesting|bool is sameas true)"
+    - "(a2s_only is undefined) or ('a2s_install_composer' in a2s_only)"
   tags:
-    - a2s-composer
+    - a2s-composers
 
 - name: "adminer"
   include: adminer/main.yml
@@ -168,6 +182,7 @@
       and (a2s_install_adminer.download_url is defined)
       and (a2s_install_adminer.install_directory is defined)
       and (a2s_install_adminer.install_file is defined)"
+    - "(a2s_only is undefined) or ('a2s_install_adminer' in a2s_only)"
   tags:
     - a2s-adminer
 
@@ -175,6 +190,7 @@
   include: rclone/main.yml
   when:
     - "(a2s_internal_rclone_manange is sameas true)"
+    - "(a2s_only is undefined) or ('a2s_rclone' in a2s_only)"
   tags:
     - a2s-rclone
 
@@ -184,5 +200,6 @@
     - "(a2s_templates is defined)
       and (a2s_templates[0] is defined)
       and (a2s_templates[0].dest is defined)"
+    - "(a2s_only is undefined) or ('a2s_templates' in a2s_only)"
   tags:
-    - a2s-template
+    - a2s-templates
