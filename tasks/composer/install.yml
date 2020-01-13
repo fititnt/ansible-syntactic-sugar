@@ -1,0 +1,86 @@
+---
+
+# FILE:            {{ role_path }}/tasks/composer/install/main.yml
+# LICENSE:         Public Domain
+#
+# SEE:             https://www.digitalocean.com/community/tutorials/como-instalar-e-usar-o-composer-no-ubuntu-18-04-pt
+# SEE:             https://getcomposer.org/download/
+# SEE:             https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
+
+# TODO: break install in 2 files, since is necessary win_tempfile. win_shell and
+#       win_get_url (fititnt, 2020-01-13 04:46 BRT)
+
+# TODO: fix indepondence (fititnt, 2020-01-13 04:19 BRT)
+
+- name: "composer | install"
+  debug:
+    msg:
+      - "This is a draft. Not implemented at the moment"
+      - "{{ composer_options }}"
+  tags:
+    - s2s-install-composer
+    - s2s-install-composers
+
+- name: "composer | install.yml (*nix): temp file"
+  tempfile:
+    state: file
+    prefix: "composer-setup"
+    suffix: ".php"
+  register: composer_temp_file
+  become_user: "{{ composer_options.user | default(omit) }}"
+  when:
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"
+  tags:
+    - s2s-install-composer
+    - s2s-install-composers
+
+# - name: "composer | install.yml (Windows): temp file"
+#   win_tempfile:
+#     state: file
+#     prefix: "composer-setup"
+#     suffix: ".php"
+#   register: composer_temp_file
+#   when:
+#     - "(a2s_internal_iswindows is defined)
+#       and (a2s_internal_iswindows|bool is sameas true)"
+#   tags:
+#     - s2s-install-composer
+#     - s2s-install-composers
+
+- name: "debug"
+  debug:
+    msg:
+      composer_temp_file: "{{ composer_temp_file }}"
+  tags:
+    - s2s-install-composer
+    - s2s-install-composers
+
+- name: "composer | install.yml: download installer"
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: "{{ composer_temp_file.path }}"
+    mode: '0440'
+  become_user: "{{ composer_options.user | default(omit) }}"
+  tags:
+    - s2s-install-composer
+    - s2s-install-composers
+
+# TODO: what if php binary is not php? (fititnt, 2020-01-13 04:45 BRT)
+- name: "composer | install.yml: php composer-setup.php (...)"
+  shell: "php {{ composer_temp_file.path }} --install-dir='{{ composer_options.path }}' --filename=composer {{ (composer_options.version is defined) and (composer_options.version) | ternary('--version=' + composer_options.version, '') }}"
+  register: composer_shell_run
+  become_user: "{{ composer_options.user | default(omit) }}"
+  tags:
+    - s2s-install-composer
+    - s2s-install-composers
+
+- name: "composer | install.yml: shell result"
+  debug:
+    msg:
+      composer_shell_run: "{{ composer_shell_run }}"
+  when:
+    - "(composer_shell_run is defined)"
+  tags:
+    - s2s-install-composer
+    - s2s-install-composers

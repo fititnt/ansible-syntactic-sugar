@@ -36,6 +36,14 @@ a2s__adminer:
   install_file: "index.php"
   force_update: true
 
+### Composer ____________________________________________________________________
+a2s__composer:
+  # download_url: "https://getcomposer.org/installer"
+  version: '' # Change this to specify a custom version if don't want lastest
+  force_update: false
+  path: /usr/local/bin
+  user: "{{ a2s_internal_root_user }}" # root
+
 ### PHP ________________________________________________________________________
 a2s_php_debug: no
 

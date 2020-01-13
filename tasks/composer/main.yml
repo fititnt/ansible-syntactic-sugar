@@ -9,12 +9,41 @@
   when:
     - "(a2s_betatesting|bool is sameas false)"
 
-- name: "composer | install composer"
-  include: "{{ role_path }}/tasks/composer/install/main.yml"
+- name: "composer | install composer (a2s_install_composer is boolean)"
+  include: "{{ role_path }}/tasks/composer/install.yml"
+  vars:
+    composer_options: "{{ a2s__composer }}"
   when:
     - "(a2s_betatesting|bool is sameas true)"
     - "(a2s_install_composer is defined)
       and ((a2s_install_composer|bool is sameas true)
-        or (a2s_install_composer.path is defined))"
+        or (a2s_install_composer.path is not defined))"
   tags:
     - s2s-install-composer
+    - s2s-install-composers
+
+- name: "composer | install composer (a2s_install_composer is dictionary)"
+  include: "{{ role_path }}/tasks/composer/install.yml"
+  vars:
+    composer_options: "{{ a2s_install_composer }}"
+  when:
+    - "(a2s_betatesting|bool is sameas true)"
+    - "(a2s_install_composer is defined)
+      and ((a2s_install_composer|bool is sameas true)
+        or (a2s_install_composer.path is not defined))"
+  tags:
+    - s2s-install-composer
+    - s2s-install-composers
+
+- name: "composer | install composer (a2s_install_composers is list of dictionaries)"
+  include: "{{ role_path }}/tasks/composer/install.yml"
+  vars:
+    composer_options: "{{ item }}"
+  with_items: "{{ a2s_install_composers }}"
+  when:
+    - "(a2s_betatesting|bool is sameas true)"
+    - "(a2s_install_composers is defined)
+      and (a2s_install_composers[0] is defined)"
+  tags:
+    - s2s-install-composer
+    - s2s-install-composers

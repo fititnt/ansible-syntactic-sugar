@@ -76,6 +76,7 @@
       a2s_default_file_mode: "{{ a2s_default_file_mode | default('undefined') }}"
       a2s_isconteiner: "{{ a2s_isconteiner | default('undefined') }}"
       a2s_install_composer: "{{ a2s_install_composer | default(omit) }}"
+      a2s_install_composers: "{{ a2s_install_composers | default(omit) }}"
       a2s_install_php: "{{ a2s_install_php | default(omit) }}"
   tags:
     - always
@@ -170,9 +171,12 @@
   include: composer/main.yml
   when:
     - "(a2s_betatesting|bool is sameas true)"
-    - "(a2s_only is undefined) or ('a2s_install_composer' in a2s_only)"
+    - "(a2s_only is undefined)
+      or ('a2s_install_composer' in a2s_only)
+      or ('a2s_install_composers' in a2s_only)"
   tags:
-    - a2s-composers
+    - s2s-install-composer
+    - s2s-install-composers
 
 - name: "adminer"
   include: adminer/main.yml

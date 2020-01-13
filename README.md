@@ -7,8 +7,8 @@
 **[not-production-ready] `a2s` is a non-official optionated cross-platform
 Ansible role that acts as _syntactic sugar_ for 1) some [ansible modules](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html),
 2) <s>populate sample content</s><sup>(now on [ansible-faker](https://github.com/fititnt/ansible-faker))</sup>
-and 3) install some common software to help with quick tests and 4) even explain
-/implement [how to run only a subset of an Ansible role](#a2s_only)**.
+and 3) install some common software to help with quick tests and 4) even
+explain/implement [how to run only a subset of an Ansible role](#a2s_only)**.
 
 > **Warning: this is a pre-release**. Variable naming conventions may change.
 Feedback is welcome!
@@ -75,6 +75,7 @@ Note: this project may eventually be renamed.
         - [`a2s_hostname`](#a2s_hostname)
         - [`a2s_install_adminer` <sup>a2s_betatesting</sup>](#a2s_install_adminer-supa2s_betatestingsup)
         - [`a2s_install_composer` <sup>a2s_betatesting</sup>](#a2s_install_composer-supa2s_betatestingsup)
+        - [`a2s_install_composers` <sup>a2s_betatesting</sup>](#a2s_install_composers-supa2s_betatestingsup)
         - [`a2s_install_php` <sup>a2s_betatesting</sup>](#a2s_install_php-supa2s_betatestingsup)
         - [`a2s_users`](#a2s_users)
         - [`a2s_users[n]authorized_keys`](#a2s_usersnauthorized_keys)
@@ -204,6 +205,43 @@ To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
 Variable `{{ a2s__adminer }}` are a _syntactic sugar_ for the default parameters
 
 #### `a2s_install_composer` <sup>a2s_betatesting</sup>
+- **Short Description**: _Install [composer](https://getcomposer.org/) required
+  by [Ansible composer](https://docs.ansible.com/ansible/latest/modules/composer_module.html)
+  by default on global path_
+- **Ansible Modules**:
+  - None
+- **Type of values**: Boolean, Dictionary
+
+All these examples have the same effect (install on global scope)
+
+```yaml
+a2s_install_composer: true
+```
+```yaml
+a2s_install_composer: "{{ a2s__composer }}"
+```
+```yaml
+a2s_install_composer:
+  - path: /usr/local/bin
+    user: root
+```
+
+#### `a2s_install_composers` <sup>a2s_betatesting</sup>
+- **Short Description**: _Install [composer](https://getcomposer.org/) required
+  by [Ansible composer](https://docs.ansible.com/ansible/latest/modules/composer_module.html)
+  for more than one user_
+- **Ansible Modules**:
+  - None
+- **Type of values**: List of Dictionaries
+
+```yaml
+a2s_install_composers:
+  - "{{ a2s__composer }}" # Global, as root
+  - path: '/home/user1/bin'
+    user: user1
+  - path: '/home/user2/bin'
+    user: user2
+```
 
 #### `a2s_install_php` <sup>a2s_betatesting</sup>
 - Default: `undefined`
