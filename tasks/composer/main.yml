@@ -3,12 +3,6 @@
 # FILE:            {{ role_path }}/tasks/composer/main.yml
 # LICENSE:         Public Domain
 
-- name: "composer | main.yml"
-  debug:
-    msg: "This is a draft. Not implemented at the moment"
-  when:
-    - "(a2s_betatesting|bool is sameas false)"
-
 - name: "composer | install composer (a2s_install_composer is boolean)"
   include: "{{ role_path }}/tasks/composer/install.yml"
   vars:

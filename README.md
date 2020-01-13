@@ -74,9 +74,11 @@ Note: this project may eventually be renamed.
         - [`a2s_etchosts`](#a2s_etchosts)
         - [`a2s_hostname`](#a2s_hostname)
         - [`a2s_install_adminer` <sup>a2s_betatesting</sup>](#a2s_install_adminer-supa2s_betatestingsup)
-        - [`a2s_install_composer` <sup>a2s_betatesting</sup>](#a2s_install_composer-supa2s_betatestingsup)
-        - [`a2s_install_composers` <sup>a2s_betatesting</sup>](#a2s_install_composers-supa2s_betatestingsup)
+        - [`a2s_install_composer`](#a2s_install_composer)
+        - [`a2s_install_composers`](#a2s_install_composers)
         - [`a2s_install_php` <sup>a2s_betatesting</sup>](#a2s_install_php-supa2s_betatestingsup)
+        - [`a2s_mysql_dbs`](#a2s_mysql_dbs)
+        - [`a2s_mysql_users`](#a2s_mysql_users)
         - [`a2s_users`](#a2s_users)
         - [`a2s_users[n]authorized_keys`](#a2s_usersnauthorized_keys)
     - [Sample Content](#sample-content)
@@ -89,6 +91,7 @@ Note: this project may eventually be renamed.
             - [`a2s_default_group`](#a2s_default_group)
             - [`a2s_default_directory_mode`](#a2s_default_directory_mode)
             - [`a2s_default_file_mode`](#a2s_default_file_mode)
+            - [`a2s_except`](#a2s_except)
             - [`a2s_only`](#a2s_only)
     - [Internal variables](#internal-variables)
 - [Dependencies](#dependencies)
@@ -196,20 +199,20 @@ Note: `a2s_etchosts` is very likely to be improved before a2s stable release.
 To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
 
 #### `a2s_install_adminer` <sup>a2s_betatesting</sup>
-- Default: `undefined`
-- Type of value: Dictionary (name, state)
-- Examples of values: `{{ a2s__adminer }}`
-
-> Install adminer
+- **Short Description**: _Install [adminer](https://www.adminer.org/), "Database
+  management in a single PHP file"_
+- **Default**: `undefined`
+- **Type of value**: Dictionary (name, state)
+- **Examples of values**: `{{ a2s__adminer }}`
 
 Variable `{{ a2s__adminer }}` are a _syntactic sugar_ for the default parameters
 
-#### `a2s_install_composer` <sup>a2s_betatesting</sup>
+#### `a2s_install_composer`
 - **Short Description**: _Install [composer](https://getcomposer.org/) required
   by [Ansible composer](https://docs.ansible.com/ansible/latest/modules/composer_module.html)
   by default on global path_
 - **Ansible Modules**:
-  - None
+  - None. Custom implementation.
 - **Type of values**: Boolean, Dictionary
 
 All these examples have the same effect (install on global scope)
@@ -224,9 +227,12 @@ a2s_install_composer: "{{ a2s__composer }}"
 a2s_install_composer:
   - path: /usr/local/bin
     user: root
+    force: false # true force reinstall
+    version: '' # use custom version to install
+    php: 'php' # php binary to use. If is not 'php' customize here
 ```
 
-#### `a2s_install_composers` <sup>a2s_betatesting</sup>
+#### `a2s_install_composers`
 - **Short Description**: _Install [composer](https://getcomposer.org/) required
   by [Ansible composer](https://docs.ansible.com/ansible/latest/modules/composer_module.html)
   for more than one user_
@@ -257,6 +263,14 @@ to install common packages to run Wordpress, Joomla, Drupal and laravel.
 
 In Ansible is possible append arrays values with `+` (objects you use
 `| combine()`), e.g `a2s_php_install: "{{ a2s__php74 + ['php7.4-dev', 'php7.4-ldap'] }}"`
+
+#### `a2s_mysql_dbs`
+
+> TODO: document a2s_mysql_dbs (fititnt, 2020-01-13 06:01 BRT)
+
+#### `a2s_mysql_users`
+
+> TODO: document a2s_mysql_users (fititnt, 2020-01-13 06:01 BRT)
 
 #### `a2s_users`
 - **Short Description**: _user – Manage user accounts / win_user – Manages local
@@ -355,6 +369,14 @@ explicitly provide a value.
 ##### `a2s_default_group`
 ##### `a2s_default_directory_mode`
 ##### `a2s_default_file_mode`
+##### `a2s_except`
+- **Short Description**: _Restrict a subset of a a2s to not run even if
+  variables are defined_
+- **Ansible Modules**:
+  - None. Uses simple `when` trick to overcome tags limitation
+- **Type of values**: list of a2s public APIs
+- **Example**: see [_Run only these APIs_ playbook example](#_run-only-these-apis_-playbook-example).
+
 ##### `a2s_only`
 - **Short Description**: _Allow run only a subset of a a2s_
 - **Ansible Modules**:
@@ -412,11 +434,22 @@ only when importing this role.
 # a2s_users defined and not using command line --tags, only a subset of a2s will
 # run
 - hosts: all
-  - role: fititnt.syntactic_sugar
+  role: fititnt.syntactic_sugar
     vars:
       a2s_only:
         - a2s_groups
         - a2s_users
+```
+
+```yaml
+# Instead of using a2s_only, is possible to specify what a2s apis to not run.
+# On this example ones related to database are skipped
+- hosts: all
+  role: fititnt.syntactic_sugar
+    vars:
+      a2s_except:
+        - a2s_mysql_dbs
+        - a2s_mysql_users
 ```
 
 ### Playbook using all Public APIs

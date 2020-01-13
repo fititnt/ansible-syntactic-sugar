@@ -12,14 +12,39 @@
 
 # TODO: fix indepondence (fititnt, 2020-01-13 04:19 BRT)
 
-- name: "composer | install"
-  debug:
-    msg:
-      - "This is a draft. Not implemented at the moment"
-      - "{{ composer_options }}"
+# - name: "composer | install"
+#   debug:
+#     msg:
+#       - "This is a draft. Not implemented at the moment"
+#       - "{{ composer_options }}"
+#   tags:
+#     - s2s-install-composer
+#     - s2s-install-composers
+
+- name: "composer | install.yml: check if already installed"
+  stat:
+    path: "{{ composer_options.path }}/composer"
+  register: composer_previus_installation
   tags:
     - s2s-install-composer
     - s2s-install-composers
+
+- name: "debug"
+  debug:
+    msg:
+      composer_previus_installation: "{{ composer_previus_installation }}"
+      composer_options: "{{ composer_options }}"
+      path: "{{ composer_options.path }}/composer"
+  tags:
+    - s2s-install-composer
+    - s2s-install-composers
+
+- name: "composer: install.yml: decide if should force install or not"
+  set_fact:
+    composer_continue_install: "{{ ((composer_options.force is defined)
+     and (composer_options.force|bool))
+     or (not composer_previus_installation.stat.exists) }}"
+  changed_when: false
 
 - name: "composer | install.yml (*nix): temp file"
   tempfile:
@@ -31,6 +56,7 @@
   when:
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
+    - "composer_continue_install|bool"
   tags:
     - s2s-install-composer
     - s2s-install-composers
@@ -48,13 +74,13 @@
 #     - s2s-install-composer
 #     - s2s-install-composers
 
-- name: "debug"
-  debug:
-    msg:
-      composer_temp_file: "{{ composer_temp_file }}"
-  tags:
-    - s2s-install-composer
-    - s2s-install-composers
+# - name: "debug"
+#   debug:
+#     msg:
+#       composer_temp_file: "{{ composer_temp_file }}"
+#   tags:
+#     - s2s-install-composer
+#     - s2s-install-composers
 
 - name: "composer | install.yml: download installer"
   get_url:
@@ -62,15 +88,18 @@
     dest: "{{ composer_temp_file.path }}"
     mode: '0440'
   become_user: "{{ composer_options.user | default(omit) }}"
+  when:
+    - "composer_continue_install|bool"
   tags:
     - s2s-install-composer
     - s2s-install-composers
 
-# TODO: what if php binary is not php? (fititnt, 2020-01-13 04:45 BRT)
 - name: "composer | install.yml: php composer-setup.php (...)"
-  shell: "php {{ composer_temp_file.path }} --install-dir='{{ composer_options.path }}' --filename=composer {{ (composer_options.version is defined) and (composer_options.version) | ternary('--version=' + composer_options.version, '') }}"
+  shell: "{{ composer_options.php | default('php') }} {{ composer_temp_file.path }} --install-dir='{{ composer_options.path }}' --filename=composer {{ (composer_options.version is defined) and (composer_options.version) | ternary('--version=' + composer_options.version, '') }}"
   register: composer_shell_run
   become_user: "{{ composer_options.user | default(omit) }}"
+  when:
+    - "composer_continue_install|bool"
   tags:
     - s2s-install-composer
     - s2s-install-composers
@@ -81,6 +110,7 @@
       composer_shell_run: "{{ composer_shell_run }}"
   when:
     - "(composer_shell_run is defined)"
+    - "composer_continue_install|bool"
   tags:
     - s2s-install-composer
     - s2s-install-composers

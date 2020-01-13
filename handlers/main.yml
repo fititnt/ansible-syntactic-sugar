@@ -16,5 +16,7 @@
     - "a2s-user-authorized-keys changed"
     - "a2s-install-php changed"
     - "a2s-php-repository changed"
+    - "a2s-mysql-dbs changed"
+    - "a2s-mysql-users changed"
     - "a2s-install-adminer"
   when: false
