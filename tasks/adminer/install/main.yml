@@ -29,4 +29,3 @@
     force: "{{ (a2s_install_adminer.force_update is defined) | ternary(a2s_install_adminer.force_update|bool, false) }}"
   tags:
     - a2s-install-adminer
-

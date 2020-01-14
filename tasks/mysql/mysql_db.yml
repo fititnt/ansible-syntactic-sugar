@@ -5,7 +5,7 @@
 # SEE:             https://docs.ansible.com/ansible/latest/modules/mysql_db_module.html
 
 - name: "mysql | mysql_db.yml: Add or remove MariaDB/MySQL databases from a remote host"
-  file:
+  mysql_db:
     name: "{{ item.name }}"
     state: "{{ item.state | default(omit) }}"
     ca_cert: "{{ item.ca_cert | default(omit) }}"

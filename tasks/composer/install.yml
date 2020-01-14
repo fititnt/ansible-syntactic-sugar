@@ -52,6 +52,7 @@
     prefix: "composer-setup"
     suffix: ".php"
   register: composer_temp_file
+  become: yes
   become_user: "{{ composer_options.user | default(omit) }}"
   when:
     - "(a2s_internal_iswindows is undefined)
@@ -87,6 +88,7 @@
     url: https://getcomposer.org/installer
     dest: "{{ composer_temp_file.path }}"
     mode: '0440'
+  become: yes
   become_user: "{{ composer_options.user | default(omit) }}"
   when:
     - "composer_continue_install|bool"
@@ -95,9 +97,11 @@
     - s2s-install-composers
 
 - name: "composer | install.yml: php composer-setup.php (...)"
-  shell: "{{ composer_options.php | default('php') }} {{ composer_temp_file.path }} --install-dir='{{ composer_options.path }}' --filename=composer {{ (composer_options.version is defined) and (composer_options.version) | ternary('--version=' + composer_options.version, '') }}"
+  command: "{{ composer_options.php | default('php') }} {{ composer_temp_file.path }} --install-dir='{{ composer_options.path }}' --filename=composer {{ (composer_options.version is defined) and (composer_options.version) | ternary('--version=' + composer_options.version, '') }}" # noqa 204
   register: composer_shell_run
+  become: yes
   become_user: "{{ composer_options.user | default(omit) }}"
+  # Ansible does not offer 'php' module. So ignore warns about using shell
   when:
     - "composer_continue_install|bool"
   tags:

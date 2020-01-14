@@ -1,6 +1,7 @@
 ---
 # FILE: {{ role_path }}/defaults/main.yml
 
+a2s_debug: false
 a2s_betatesting: false
 
 a2s_autoinstall_dependencies: false
@@ -16,6 +17,9 @@ a2s_default_httpgroup: "{{ a2s_internal_httpgroup }}" # very likely 'www-data'
 # Permission; Check mode param from https://docs.ansible.com/ansible/latest/modules/file_module.html
 a2s_default_directory_mode: "0755"
 a2s_default_file_mode: "0644"
+
+a2s_default_no_log: false
+# a2s_mysql_users_no_log
 
 ## If using devel-nginx AND running on containers without systemd
 ## If using hosts and have have issues to write on /etc/hosts

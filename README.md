@@ -13,6 +13,10 @@ explain/implement [how to run only a subset of an Ansible role](#a2s_only)**.
 > **Warning: this is a pre-release**. Variable naming conventions may change.
 Feedback is welcome!
 
+<!--
+@TODO test module_defaults https://docs.ansible.com/ansible/latest/user_guide/playbooks_module_defaults.html
+>
+
 **Why?**
 
 The main initial reason (in fact, the initial name was AP-ALB-Extras) was allow

@@ -41,6 +41,6 @@
 
   pre_tasks:
     - name: "Set ISCONTEINER=1"
-      shell: "export ISCONTEINER=1"
+      shell: "export ISCONTEINER=1" # noqa 305
+      # command: "export ISCONTEINER=1"
       changed_when: false # This specific pre_task break Idempotence if not ignored
-

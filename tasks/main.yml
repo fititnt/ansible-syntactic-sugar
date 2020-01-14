@@ -7,6 +7,8 @@
     msg:
       a2s_version: "{{ a2s_version }}"
       a2s_betatesting: "{{ a2s_betatesting | default(omit) }}"
+      a2s_debug: "{{ a2s_debug | default('undefined') }}"
+      a2s_internal_no_log: "{{ a2s_debug | default('undefined') }}"
       a2s_only: "{{ a2s_only | default('undefined') }}"
       a2s_except: "{{ a2s_except | default('undefined') }}"
       a2s_autoinstall_dependencies: "{{ a2s_autoinstall_dependencies | default('undefined') }}"
