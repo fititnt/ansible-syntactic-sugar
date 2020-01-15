@@ -1,0 +1,31 @@
+---
+
+# FILE:            {{ role_path }}/tasks/mysql/cron/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/cron_module.html
+
+- name: "cron | main.yml: Manage cron.d and crontab entries [a2s_crons_defaults: {{ a2s_crons_defaults }}]"
+  cron:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default(a2s_crons_defaults.state | default(omit)) }}"
+    backup: "{{ item.backup | default(a2s_crons_defaults.backup | default(omit)) }}"
+    cron_file: "{{ item.cron_file | default(a2s_crons_defaults.cron_file | default(omit)) }}"
+    day: "{{ item.day | default(a2s_crons_defaults.day | default(omit)) }}"
+    disabled: "{{ item.disabled | default(a2s_crons_defaults.disabled | default(omit)) }}"
+    env: "{{ item.env | default(a2s_crons_defaults.env | default(omit)) }}"
+    hour: "{{ item.hour | default(a2s_crons_defaults.hour | default(omit)) }}"
+    insertafter: "{{ item.insertafter | default(a2s_crons_defaults.insertafter | default(omit)) }}"
+    insertbefore: "{{ item.insertbefore | default(a2s_crons_defaults.insertbefore | default(omit)) }}"
+    job: "{{ item.job | default(a2s_crons_defaults.job | default(omit)) }}"
+    minute: "{{ item.minute | default(a2s_crons_defaults.minute | default(omit)) }}"
+    month: "{{ item.month | default(a2s_crons_defaults.month | default(omit)) }}"
+    name: "{{ item.name | default(a2s_crons_defaults.name | default(omit)) }}"
+    reboot: "{{ item.reboot | default(a2s_crons_defaults.reboot | default(omit)) }}"
+    special_time: "{{ item.special_time | default(a2s_crons_defaults.special_time | default(omit)) }}"
+    user: "{{ item.user | default(a2s_crons_defaults.user | default(omit)) }}"
+    weekday: "{{ item.weekday | default(a2s_crons_defaults.weekday | default(omit)) }}"
+  with_items: "{{ a2s_crons }}"
+  notify:
+    - "a2s-crons changed"
+  tags:
+    - a2s-crons

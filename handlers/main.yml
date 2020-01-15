@@ -19,4 +19,5 @@
     - "a2s-mysql-dbs changed"
     - "a2s-mysql-users changed"
     - "a2s-install-adminer"
+    - "a2s-crons changed"
   when: false

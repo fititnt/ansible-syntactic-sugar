@@ -235,3 +235,13 @@
     - "(a2s_except is undefined) or ('a2s_templates' not in a2s_except)"
   tags:
     - a2s-templates
+
+- name: "cron"
+  include: cron/main.yml
+  when:
+    - "(a2s_crons is defined)
+      and (a2s_crons[0] is defined)"
+    - "(a2s_only is undefined) or ('a2s_crons' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_crons' not in a2s_except)"
+  tags:
+    - a2s-crons

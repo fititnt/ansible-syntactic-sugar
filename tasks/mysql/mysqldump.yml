@@ -1,0 +1,3 @@
+---
+# TODO: create an alias to mysql_db that focus on just dumping the database (fititnt, 2020-01-14 23:33 BRT)
+# TODO: allow autoinstall mysqldump dependency (fititnt, 2020-01-14 23:37 BRT)
