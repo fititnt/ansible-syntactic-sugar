@@ -7,6 +7,10 @@ a2s_betatesting: false
 a2s_autoinstall_dependencies: false
 a2s_autoinstall_repositories: false
 
+# Defaults
+a2s_users_defaults: {}
+a2s_directories_defaults: {}
+
 # Customize these values if you don't want specify always on subcomponents like
 # sample-content-cdn, sample-content-php, sample-content-static-site ...
 a2s_default_user: "{{ a2s_internal_root_user }}"
