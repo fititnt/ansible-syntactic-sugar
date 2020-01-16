@@ -10,6 +10,11 @@ Welcome to Ansible Syntactic Sugar ("a2s")'s documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   installation
+   api
+   playbooks
+   basic
+   admonition
 
 
 Indices and tables

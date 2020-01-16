@@ -13,6 +13,11 @@ explain/implement [how to run only a subset of an Ansible role](#a2s_only)**.
 > **Warning: this is a pre-release**. Variable naming conventions may change.
 Feedback is welcome!
 
+## Documentation
+
+Please check <https://ansible-syntactic-sugar.readthedocs.io/>. The contents of
+this README file will eventually be migrated.
+
 <!--
 @TODO test module_defaults https://docs.ansible.com/ansible/latest/user_guide/playbooks_module_defaults.html
 >
@@ -70,6 +75,7 @@ Note: this project may eventually be renamed.
 
 <!-- TOC depthFrom:2 -->
 
+- [Documentation](#documentation)
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
     - [Public APIs](#public-apis)
