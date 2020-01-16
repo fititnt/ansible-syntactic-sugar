@@ -40,6 +40,7 @@ If you are new to Ansible, we recommend read our :ref:`installation-guide`. But
    installation
    api
    playbooks
+   alternatives
    basic
    admonition
 
