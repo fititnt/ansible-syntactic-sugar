@@ -1,10 +1,6 @@
 Example Playbooks
 =================================
 
-.. code-block:: ruby
-
-  Some Ruby code.
-
 
 Minimal Playbook
 -------------
@@ -49,7 +45,7 @@ only when importing this role.
   # a2s_users defined and not using command line --tags, only a subset of a2s will
   # run
   - hosts: all
-  role: fititnt.syntactic_sugar
+    role: fititnt.syntactic_sugar
       vars:
       a2s_only:
           - a2s_groups
