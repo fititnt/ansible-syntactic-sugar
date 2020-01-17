@@ -20,4 +20,5 @@
     - "a2s-mysql-users changed"
     - "a2s-install-adminer"
     - "a2s-crons changed"
+    - "a2s-rclone-conf changed"
   when: false

@@ -4,3 +4,8 @@
 
 - name: "rclone | main.yml"
   include: "{{ role_path }}/tasks/rclone/install.yml"
+
+- name: "rclone | main.yml"
+  include: "{{ role_path }}/tasks/rclone/config.yml"
+  when:
+    - "(a2s_rclone is defined) and (a2s_rclone.confs is defined)"

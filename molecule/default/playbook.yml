@@ -28,7 +28,7 @@
         authorized_keys:
           - key: https://github.com/fititnt.keys
 
-    a2s_rclone: false
+    # a2s_rclone: false
     a2s_devel_nginx: true
 
     ## If using devel-nginx AND running on containers without systemd

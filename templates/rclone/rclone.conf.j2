@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+{% for section in item.confs %}
+[{{ section }}]
+{% for value in item.confs[section] -%}
+{{ value }}
+{%- endfor %}
+
+{% endfor %}

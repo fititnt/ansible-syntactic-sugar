@@ -19,7 +19,6 @@
     job: "{{ item.job | default(a2s_crons_defaults.job | default(omit)) }}"
     minute: "{{ item.minute | default(a2s_crons_defaults.minute | default(omit)) }}"
     month: "{{ item.month | default(a2s_crons_defaults.month | default(omit)) }}"
-    name: "{{ item.name | default(a2s_crons_defaults.name | default(omit)) }}"
     reboot: "{{ item.reboot | default(a2s_crons_defaults.reboot | default(omit)) }}"
     special_time: "{{ item.special_time | default(a2s_crons_defaults.special_time | default(omit)) }}"
     user: "{{ item.user | default(a2s_crons_defaults.user | default(omit)) }}"

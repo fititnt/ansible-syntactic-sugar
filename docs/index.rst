@@ -30,6 +30,59 @@ If you are new to Ansible, we recommend read our :doc:`installation`. TL;DR:
 And then, look at our :doc:`api` and :doc:`playbooks`. TL;DR:
 
 .. code-block:: yaml
+  :caption: playbook-basic.yml
+  :name: playbook
+  :linenos:
+
+  # TODO: improve this quickstart example (fititnt, 2020-01-17 01:11 BRT)
+  # $ ansible-playbook -i myserver.com, playbook-basic.yml
+
+  - hosts: all
+    remote_user: root
+    vars:
+
+      # Create operational system group (if already does not exist)
+      a2s_groups:
+        - name: 'www-data'
+
+      # Create operational system users
+      a2s_users:
+        - name: app
+          groups: ['www-data']
+
+      # Create/delete directories
+      a2s_directories:
+        - path: /var/www/my-app
+          owner: app
+          group: www-data
+        - path: /var/www/my-old-app-folder-to-delete
+          state: absent
+
+      # Install PHP with packages that allow run popular softwares like
+      # Drupal, Joomla, Wordpress & Laravel
+      a2s_install_php:
+        - php7.4-fpm
+        - php7.4-common
+        - php7.4-mbstring
+        - php7.4-mysql
+        - php7.4-bcmath
+        - php7.4-curl
+        - php7.4-gd
+        - php7.4-xml
+        - php-imagick
+
+      # Uncomment next variable only for Windows hosts.
+      # a2s_iswindows: true
+    roles:
+      - { role: fititnt.syntactic_sugar }
+
+But playbook-basic.yml, while may help you to undestand a2s (or even Ansible)
+may be less powerfull than a2s offer. One tricky that a2s uses to avoid be too
+optionated on defaults is simply create an equivalent to most `a2s_APINAME` as
+`a2s_APINAME_defaults` and suggest you to keep near your  `a2s_APINAME`
+definitions:
+
+.. code-block:: yaml
   :caption: playbook.yml
   :name: playbook
   :linenos:
@@ -57,7 +110,7 @@ And then, look at our :doc:`api` and :doc:`playbooks`. TL;DR:
         - name: wordpress-site
         - name: fititnt
           authorized_keys:
-            key: https://github.com/fititnt.keys
+            - key: https://github.com/fititnt.keys
 
       # Create folders (with some defaults)
       # "{{ item.myspecialvar }}" is an example of valid default
@@ -81,7 +134,7 @@ And then, look at our :doc:`api` and :doc:`playbooks`. TL;DR:
 
       # Install PHP with packages that allow run popular softwares like
       # Drupal, Joomla, Wordpress & Laravel
-      a2s_install_php: " {{ a2s__php74 }}"
+      a2s_install_php: "{{ a2s__php74 }}"
 
       # Uncomment next variable only for Windows hosts.
       # a2s_iswindows: true
