@@ -53,5 +53,9 @@ html_theme_path = [sphinx_theme.get_html_theme_path('stanford-theme')]
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+def setup(app):
+    app.add_stylesheet("css/theme.css")
+
+
 # See https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=master_doc
 master_doc = 'index'
