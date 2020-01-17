@@ -3,6 +3,16 @@
 Installation guides
 =================================
 
+**a2s** extends **Ansible**. Ansible uses **Python** on the "control node" (for example
+your notebook running Linux, Mac or `Windows via WSL <https://docs.ansible.com/ansible/latest/user_guide/windows_faq.html>`_)
+to control remote machines over **SSH** (these machines could be Windows, Linux,
+BSD, Raspbery Pi, your home router, etc).
+
+Both **a2s** and Ansible does not require to be installed on controlled nodes,
+but they require that the control node can be acessed over SSH and have any
+version of Python installed (even older Python 2 would work fine, the versions
+installed on control node are more important).
+
 Python
 -------
 

@@ -20,12 +20,23 @@ Ansible Syntactic Sugar ("a2s") documentation
 for `Ansible <https://www.ansible.com/>`_, which without extensions already is
 an *"Simple, agentless IT automation that anyone can use"*.
 
-If you are new to Ansible, we recommend read our :ref:`installation-guide`. But
-"`a2s`" is installable as an Ansible Role and is distributed over Ansible Galaxy:
+If you are new to Ansible, we recommend read our :ref:`installation-guide`.
+TL;DR:
+
 
 .. code-block:: bash
 
+  # "a2s is installable as an Ansible role and is distributed over Ansible Galaxy
   ansible-galaxy install fititnt.syntactic_sugar
+
+
+.. important::
+
+  By design a2s explicitly choose not respect some Ansible best practices
+  related to large scale projects and may implement features that would never
+  be accepted on the Ansible standard modules because would be redundant with
+  more lines of code. We may explicitly warn you in some cases, and even help
+  you on how to migrate from a2s to more enterprise approach.
 
 
 ..
@@ -34,10 +45,11 @@ If you are new to Ansible, we recommend read our :ref:`installation-guide`. But
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
    installation
+   philosophy
    api
    playbooks
    alternatives
