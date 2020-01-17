@@ -1,8 +1,8 @@
-# {{ ansible_managed }}
-{% for section in item.confs %}
-[{{ section }}]
-{% for value in item.confs[section] -%}
-{{ value }}
-{%- endfor %}
+; {{ ansible_managed }}
+{% for section in a2s_rclone.conf.sections %}
+[{{ section.name }}]
+{% for key, value in section.options.items() %}
+{{ key }} = {{ value }}
+{% endfor %}
 
 {% endfor %}

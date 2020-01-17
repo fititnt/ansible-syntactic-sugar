@@ -2,10 +2,12 @@
 # FILE:            {{ role_path }}/tasks/rclone/main.yml
 # LICENSE:         Public Domain
 
-- name: "rclone | main.yml"
+- name: "rclone | install"
   include: "{{ role_path }}/tasks/rclone/install.yml"
+  when:
+    - "(a2s_rclone is defined) and (a2s_rclone.conf is defined)"
 
-- name: "rclone | main.yml"
+- name: "rclone | config"
   include: "{{ role_path }}/tasks/rclone/config.yml"
   when:
-    - "(a2s_rclone is defined) and (a2s_rclone.confs is defined)"
+    - "(a2s_rclone is defined) and (a2s_rclone.conf is defined)"
