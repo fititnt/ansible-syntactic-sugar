@@ -20,23 +20,96 @@ Ansible Syntactic Sugar ("a2s") documentation
 for `Ansible <https://www.ansible.com/>`_, which without extensions already is
 an *"Simple, agentless IT automation that anyone can use"*.
 
-If you are new to Ansible, we recommend read our :ref:`installation-guide`.
-TL;DR:
-
+If you are new to Ansible, we recommend read our :doc:`installation`. TL;DR:
 
 .. code-block:: bash
 
   # "a2s is installable as an Ansible role and is distributed over Ansible Galaxy
   ansible-galaxy install fititnt.syntactic_sugar
 
+And then, look at our :doc:`api` and :doc:`playbooks`. TL;DR:
+
+.. code-block:: yaml
+  :caption: playbook.yml
+  :name: playbook
+  :linenos:
+
+  # TODO: improve this quickstart example (fititnt, 2020-01-17 01:11 BRT)
+  # $ ansible-playbook -i myserver.com, playbook.yml
+
+  - hosts: all
+    remote_user: root
+    vars:
+
+      # Create operational system group (if already does not exist)
+      a2s_groups:
+        - name: 'www-data'
+
+      # Create operational system users (with some defaults)
+      a2s_users_defaults:
+        groups: ['www-data']
+
+      a2s_users:
+        - name: app
+        - name: drupal-site
+        - name: joomla-site
+        - name: laravel-site
+        - name: wordpress-site
+        - name: fititnt
+          authorized_keys:
+            key: https://github.com/fititnt.keys
+
+      # Create folders (with some defaults)
+      # "{{ item.myspecialvar }}" is an example of valid default
+      a2s_directories_defauts:
+        path: "/var/www/{{ item.myspecialvar }}"
+        owner: "{{ item.myspecialvar }}"
+        group: www-data
+        mode: '0755'
+        state: present
+
+      a2s_directories:
+        - path: /var/www/my-app
+          owner: app
+        - path: /var/www/my-old-app-folder-to-delete
+          state: absent
+        - myspecialvar: "drupal-site"
+        - myspecialvar: "joomla-site"
+        - myspecialvar: "laravel-site"
+        - myspecialvar: "wordpress-site"
+
+
+      # Install PHP with packages that allow run popular softwares like
+      # Drupal, Joomla, Wordpress & Laravel
+      a2s_install_php: " {{ a2s__php74 }}"
+
+      # Uncomment next variable only for Windows hosts.
+      # a2s_iswindows: true
+    roles:
+      - { role: fititnt.syntactic_sugar }
 
 .. important::
 
-  By design a2s explicitly choose not respect some Ansible best practices
-  related to large scale projects and may implement features that would never
+  a2s by design have to explicitly choose not respect some specific Ansible best
+  practices related to large scale projects to allow implement more even more
+  concise Infrastructure As Code. An notable anti-pattern is a2s allowing you
+  bootstrap some features that would be better be done to additional Asible Role
+  with :ref:`a2s_templates`.
+
+  a2s by design may implement implement features that would never
   be accepted on the Ansible standard modules because would be redundant with
-  more lines of code. We may explicitly warn you in some cases, and even help
-  you on how to migrate from a2s to more enterprise approach.
+  more lines of code or would be better implemented by external extensions.
+
+  We may explicitly warn you in some cases, and even help you on how to migrate
+  from a2s to more enterprise approach. We by default namespace our rules using
+  `a2s_` to make it easier.
+
+.. admonition:: Dedicated to the public domain
+
+  The a2s codebase is dedicated to public
+  domain to estimulate your creativity and allow sub parts of a2s be reused
+  freely.
+
 
 
 ..

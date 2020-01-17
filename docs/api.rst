@@ -116,6 +116,14 @@ To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
 > TODO: document a2s_mysql_users (fititnt, 2020-01-13 06:01 BRT)
 
 
+.. _a2s_templates:
+
+`a2s_templates`
+=========
+
+> TODO: document a2s_templates (fititnt, 2020-01-16 23:50 BRT)
+
+
 `a2s_users`
 =========
 
