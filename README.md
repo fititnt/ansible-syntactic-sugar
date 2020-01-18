@@ -18,6 +18,7 @@ Feedback is welcome!
 <!--
  References on how to style Sphinix
    - https://sphinx-rtd-theme.readthedocs.io/en/stable/demo/demo.html
+   - https://documentation-style-guide-sphinx.readthedocs.io/en/latest/style-guide.html#headings
    - https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/WritingReST/InlineCode.html
 -->
 
