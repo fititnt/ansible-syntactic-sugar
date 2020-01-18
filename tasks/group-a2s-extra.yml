@@ -1,0 +1,30 @@
+---
+# This is a draft. Can be ignored at this moment
+
+# Custom group. This does not have direct equivalent on Ansible Modules
+
+# - name: "group-a2s-extra.yml: placeholder message"
+#   debug:
+#     msg: "This is a draft. Not implemented at this moment"
+
+- name: "adminer"
+  include: adminer/main.yml
+  when:
+    - "(a2s_betatesting|bool is sameas true)"
+    - "(a2s_install_adminer is defined)
+      and (a2s_install_adminer.download_url is defined)
+      and (a2s_install_adminer.install_directory is defined)
+      and (a2s_install_adminer.install_file is defined)"
+    - "(a2s_only is undefined) or ('a2s_install_adminer' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_install_adminer' not in a2s_except)"
+  tags:
+    - a2s-adminer
+
+- name: "rclone"
+  include: rclone/main.yml
+  when:
+    # - "(a2s_internal_rclone_manange is sameas true)"
+    - "(a2s_only is undefined) or ('a2s_rclone' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_rclone' not in a2s_except)"
+  tags:
+    - a2s-rclone

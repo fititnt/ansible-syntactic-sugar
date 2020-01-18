@@ -1,0 +1,17 @@
+---
+# This is a draft. Can be ignored at this moment
+
+# Custom group. This does not have direct equivalent on Ansible Modules
+
+# - name: "group-a2s-devel.yml: placeholder message"
+#   debug:
+#     msg: "This is a draft. Not implemented at this moment"
+
+- name: "devel-nginx"
+  include: devel-nginx/main.yml
+  when:
+    - "(a2s_internal_devel_nginx_manange is sameas true)"
+    - "(a2s_only is undefined) or ('a2s_devel_nginx' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_devel_nginx' not in a2s_except)"
+  tags:
+    - a2s-devel-nginx

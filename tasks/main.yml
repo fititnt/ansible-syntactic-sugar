@@ -84,165 +84,60 @@
   tags:
     - always
 
-## Run each ALB Extra subcomponent _____________________________________________
+## Load a2s apis by group ______________________________________________________
 
-- name: "groups"
-  include: groups/main.yml
+- name: "group-packaging-os.yml"
+  include: "group-packaging-os.yml"
   when:
-    - "(a2s_groups is defined)
-      and (a2s_groups[0] is defined)
-      and (a2s_groups[0].name is defined)"
-    - "(a2s_only is undefined) or ('a2s_groups' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_groups' not in a2s_except)"
+    - "(a2s_only_groups is undefined) or ('packaging-os' in a2s_only_groups)"
+    - "(a2s_except_groups is undefined) or ('packaging-os' not in a2s_except_groups)"
   tags:
-    - a2s-groups
+    - a2s-group-packaging-os
 
-- name: "users"
-  include: users/main.yml
+- name: "group-system.yml"
+  include: "group-system.yml"
   when:
-    - "(a2s_users is defined)
-      and (a2s_users[0] is defined)
-      and (a2s_users[0].name is defined)"
-    - "(a2s_only is undefined) or ('a2s_users' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_users' not in a2s_except)"
+    - "(a2s_only_groups is undefined) or ('system' in a2s_only_groups)"
+    - "(a2s_except_groups is undefined) or ('system' not in a2s_except_groups)"
   tags:
-    - a2s-users
+    - a2s-group-system
 
-- name: "directory"
-  include: directory/main.yml
+- name: "group-files.yml"
+  include: "group-files.yml"
   when:
-    - "(a2s_directories is defined)
-      and (a2s_directories[0] is defined)
-      and (a2s_directories[0].path is defined)"
-    - "(a2s_only is undefined) or ('a2s_directories' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_directories' not in a2s_except)"
+    - "(a2s_only_groups is undefined) or ('files' in a2s_only_groups)"
+    - "(a2s_except_groups is undefined) or ('files' not in a2s_except_groups)"
   tags:
-    # - a2s-directory
-    - a2s-directories
+    - a2s-group-files
 
-- name: "copy"
-  include: copy/main.yml
+- name: "group-packaging-languages.yml"
+  include: "group-packaging-languages.yml"
   when:
-    - "(a2s_copies is defined)
-      and (a2s_copies[0] is defined)
-      and (a2s_copies[0].dest is defined)"
-    - "(a2s_only is undefined) or ('a2s_copies' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_copies' not in a2s_except)"
+    - "(a2s_only_groups is undefined) or ('packaging-languages' in a2s_only_groups)"
+    - "(a2s_except_groups is undefined) or ('packaging-languages' not in a2s_except_groups)"
   tags:
-    # - a2s-copy
-    - a2s-copies
+    - a2s-group-packaging-languages
 
-- name: "synchronize"
-  include: synchronize/main.yml
+- name: "group-database.yml"
+  include: "group-database.yml"
   when:
-    - "(a2s_synchronizes is defined)
-      and (a2s_synchronizes[0] is defined)
-      and (a2s_synchronizes[0].dest is defined)"
-    - "(a2s_only is undefined) or ('a2s_synchronizes' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_synchronizes' not in a2s_except)"
+    - "(a2s_only_groups is undefined) or ('database' in a2s_only_groups)"
+    - "(a2s_except_groups is undefined) or ('database' not in a2s_except_groups)"
   tags:
-    - a2s-synchronizes
+    - a2s-group-database
 
-- name: "hostname"
-  include: hostname/main.yml
+- name: "group-a2s-devel.yml"
+  include: "group-a2s-devel.yml"
   when:
-    - "(a2s_hostname is defined)"
-    - "(a2s_only is undefined) or ('a2s_hostname' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_hostname' not in a2s_except)"
+    - "(a2s_only_groups is undefined) or ('a2s-devel' in a2s_only_groups)"
+    - "(a2s_except_groups is undefined) or ('a2s-devel' not in a2s_except_groups)"
   tags:
-    - a2s-hostname
+    - a2s-group-a2s-devel
 
-- name: "etchosts"
-  include: etchosts/main.yml
+- name: "group-a2s-extra.yml"
+  include: "group-a2s-extra.yml"
   when:
-    - "(a2s_etchosts is defined) and (a2s_etchosts[0] is defined)"
-    - "(a2s_only is undefined) or ('a2s_etchosts' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_etchosts' not in a2s_except)"
+    - "(a2s_only_groups is undefined) or ('a2s-extra' in a2s_only_groups)"
+    - "(a2s_except_groups is undefined) or ('a2s-extra' not in a2s_except_groups)"
   tags:
-    - a2s-etchosts
-
-- name: "devel-nginx"
-  include: devel-nginx/main.yml
-  when:
-    - "(a2s_internal_devel_nginx_manange is sameas true)"
-    - "(a2s_only is undefined) or ('a2s_devel_nginx' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_devel_nginx' not in a2s_except)"
-  tags:
-    - a2s-devel-nginx
-
-- name: "php"
-  include: php/main.yml
-  when:
-    - "(a2s_betatesting|bool is sameas true)"
-    - "(a2s_only is undefined) or ('a2s_install_php' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_install_php' not in a2s_except)"
-  tags:
-    - a2s-php
-
-- name: "composer"
-  include: composer/main.yml
-  when:
-    - "(a2s_betatesting|bool is sameas true)"
-    - "(a2s_only is undefined)
-      or ('a2s_install_composer' in a2s_only)
-      or ('a2s_install_composers' in a2s_only)"
-    - "(a2s_except is undefined)
-      or (('a2s_install_composer' not in a2s_except)
-      and ('a2s_install_composers' not in a2s_except))"
-  tags:
-    - s2s-install-composer
-    - s2s-install-composers
-
-- name: "mysql"
-  include: mysql/main.yml
-  when:
-    - "(a2s_mysql_dbs is defined) and (a2s_mysql_dbs[0] is defined)
-      or (mysql_users is defined) and (mysql_users[0] is defined)"
-    # a2s_only & a2s_except defined on the main.yml
-    # - "(a2s_only is undefined) or ('a2s_etchosts' in a2s_only)"
-    # - "(a2s_except is undefined) or ('a2s_etchosts' not in a2s_except)"
-  tags:
-    - a2s-mysql-dbs
-
-- name: "adminer"
-  include: adminer/main.yml
-  when:
-    - "(a2s_betatesting|bool is sameas true)"
-    - "(a2s_install_adminer is defined)
-      and (a2s_install_adminer.download_url is defined)
-      and (a2s_install_adminer.install_directory is defined)
-      and (a2s_install_adminer.install_file is defined)"
-    - "(a2s_only is undefined) or ('a2s_install_adminer' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_install_adminer' not in a2s_except)"
-  tags:
-    - a2s-adminer
-
-- name: "rclone"
-  include: rclone/main.yml
-  when:
-    # - "(a2s_internal_rclone_manange is sameas true)"
-    - "(a2s_only is undefined) or ('a2s_rclone' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_rclone' not in a2s_except)"
-  tags:
-    - a2s-rclone
-
-- name: "template"
-  include: template/main.yml
-  when:
-    - "(a2s_templates is defined)
-      and (a2s_templates[0] is defined)
-      and (a2s_templates[0].dest is defined)"
-    - "(a2s_only is undefined) or ('a2s_templates' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_templates' not in a2s_except)"
-  tags:
-    - a2s-templates
-
-- name: "cron"
-  include: cron/main.yml
-  when:
-    - "(a2s_crons is defined)
-      and (a2s_crons[0] is defined)"
-    - "(a2s_only is undefined) or ('a2s_crons' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_crons' not in a2s_except)"
-  tags:
-    - a2s-crons
+    - a2s-group-aa2s-extra

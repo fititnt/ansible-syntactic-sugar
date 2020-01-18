@@ -6,3 +6,15 @@
 # https://docs.ansible.com/ansible/latest/modules/list_of_packaging_modules.html
 
 # a2s_mysql_dbs
+# a2s_mysql_users
+
+- name: "mysql"
+  include: mysql/main.yml
+  when:
+    - "(a2s_mysql_dbs is defined) and (a2s_mysql_dbs[0] is defined)
+      or (mysql_users is defined) and (mysql_users[0] is defined)"
+    # a2s_only & a2s_except defined on the main.yml
+    # - "(a2s_only is undefined) or ('a2s_etchosts' in a2s_only)"
+    # - "(a2s_except is undefined) or ('a2s_etchosts' not in a2s_except)"
+  tags:
+    - a2s-mysql-dbs

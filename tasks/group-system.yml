@@ -5,6 +5,55 @@
 
 # https://docs.ansible.com/ansible/latest/modules/list_of_system_modules.html
 
+- name: "groups"
+  include: groups/main.yml
+  when:
+    - "(a2s_groups is defined)
+      and (a2s_groups[0] is defined)
+      and (a2s_groups[0].name is defined)"
+    - "(a2s_only is undefined) or ('a2s_groups' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_groups' not in a2s_except)"
+  tags:
+    - a2s-groups
+
+- name: "users"
+  include: users/main.yml
+  when:
+    - "(a2s_users is defined)
+      and (a2s_users[0] is defined)
+      and (a2s_users[0].name is defined)"
+    - "(a2s_only is undefined) or ('a2s_users' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_users' not in a2s_except)"
+  tags:
+    - a2s-users
+
+- name: "hostname"
+  include: hostname/main.yml
+  when:
+    - "(a2s_hostname is defined)"
+    - "(a2s_only is undefined) or ('a2s_hostname' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_hostname' not in a2s_except)"
+  tags:
+    - a2s-hostname
+
+- name: "etchosts"
+  include: etchosts/main.yml
+  when:
+    - "(a2s_etchosts is defined) and (a2s_etchosts[0] is defined)"
+    - "(a2s_only is undefined) or ('a2s_etchosts' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_etchosts' not in a2s_except)"
+  tags:
+    - a2s-etchosts
+
+- name: "cron"
+  include: cron/main.yml
+  when:
+    - "(a2s_crons is defined)
+      and (a2s_crons[0] is defined)"
+    - "(a2s_only is undefined) or ('a2s_crons' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_crons' not in a2s_except)"
+  tags:
+    - a2s-crons
 
 # a2s_groups
 # a2s_users

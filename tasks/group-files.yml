@@ -12,3 +12,49 @@
 # a2s_synchronizes
 # (TODO): a2s_fetches
 # a2s_templates
+
+- name: "directory"
+  include: directory/main.yml
+  when:
+    - "(a2s_directories is defined)
+      and (a2s_directories[0] is defined)
+      and (a2s_directories[0].path is defined)"
+    - "(a2s_only is undefined) or ('a2s_directories' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_directories' not in a2s_except)"
+  tags:
+    # - a2s-directory
+    - a2s-directories
+
+- name: "copy"
+  include: copy/main.yml
+  when:
+    - "(a2s_copies is defined)
+      and (a2s_copies[0] is defined)
+      and (a2s_copies[0].dest is defined)"
+    - "(a2s_only is undefined) or ('a2s_copies' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_copies' not in a2s_except)"
+  tags:
+    # - a2s-copy
+    - a2s-copies
+
+- name: "synchronize"
+  include: synchronize/main.yml
+  when:
+    - "(a2s_synchronizes is defined)
+      and (a2s_synchronizes[0] is defined)
+      and (a2s_synchronizes[0].dest is defined)"
+    - "(a2s_only is undefined) or ('a2s_synchronizes' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_synchronizes' not in a2s_except)"
+  tags:
+    - a2s-synchronizes
+
+- name: "template"
+  include: template/main.yml
+  when:
+    - "(a2s_templates is defined)
+      and (a2s_templates[0] is defined)
+      and (a2s_templates[0].dest is defined)"
+    - "(a2s_only is undefined) or ('a2s_templates' in a2s_only)"
+    - "(a2s_except is undefined) or ('a2s_templates' not in a2s_except)"
+  tags:
+    - a2s-templates

@@ -2,3 +2,7 @@
 # This is a draft. Can be ignored at this moment
 
 # https://docs.ansible.com/ansible/latest/modules/list_of_notification_modules.html
+
+- name: "group-notifications.yml: placeholder message"
+  debug:
+    msg: "This is a draft. Not implemented at this moment"
