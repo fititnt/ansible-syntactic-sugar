@@ -1,0 +1,15 @@
+---
+# This is a draft. Can be ignored at this moment
+
+# NOTE: if any at all, only some of these packages will be implemented.
+
+# https://docs.ansible.com/ansible/latest/modules/list_of_system_modules.html
+
+
+# a2s_groups
+# a2s_users
+#    authorized_key
+#    known_hosts
+# a2s_hostname
+# a2s_etchosts
+# a2s_crons

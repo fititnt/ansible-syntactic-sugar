@@ -2,9 +2,9 @@
 a2s APIs
 ##################
 
-**********
+*********
 Overview of a2s APIs
-**********
+*********
 
 a2s, released as Ansible role, when not restricted with special variables, will
 convert the instructions of your Ansible inventory defined on variables started
@@ -37,9 +37,9 @@ With some exceptions, most of the time, you can expect that:
 
 
 
-**********
+*********
 Standard APIs
-**********
+*********
 
 .. note::
 
@@ -146,9 +146,9 @@ To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
   modules. Missing required `user` (`a2s_users[n]authorized_keys[m]user`) will
   default to `name` (`a2s_users[n]name`). Other missing values will be ommited
 
-**********
+*********
 Extra APIs
-**********
+*********
 
 `a2s_etchosts`
 =========
@@ -268,9 +268,9 @@ explicitly provide a value.
 - **Type of values**: list of a2s public APIs
 - **Example**: see [_Run only these APIs_ playbook example](#_run-only-these-apis_-playbook-example).
 
-**********
+*********
 Installers
-**********
+*********
 
 `a2s_install_adminer`
 =========
@@ -352,8 +352,8 @@ In Ansible is possible append arrays values with `+` (objects you use
 `| combine()`), e.g `a2s_php_install: "{{ a2s__php74 + ['php7.4-dev', 'php7.4-ldap'] }}"`
 
 
-**********
+*********
 Devel APIs
-**********
+*********
 
 No documented Devel APIs at this moment.

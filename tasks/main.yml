@@ -202,7 +202,7 @@
     # - "(a2s_only is undefined) or ('a2s_etchosts' in a2s_only)"
     # - "(a2s_except is undefined) or ('a2s_etchosts' not in a2s_except)"
   tags:
-    - a2s-etchosts
+    - a2s-mysql-dbs
 
 - name: "adminer"
   include: adminer/main.yml

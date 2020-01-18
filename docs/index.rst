@@ -3,8 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+##################
 Ansible Syntactic Sugar ("a2s") documentation
-===========================================================
+##################
 
 .. image:: https://img.shields.io/ansible/role/45694
     :alt: Ansible Role
@@ -180,7 +181,6 @@ definitions:
    playbooks
    todo
    alternatives
-   basic
    admonition
 
 

@@ -6,8 +6,9 @@ a2s TODO
 
   This page is a draft. May change later.
 
-archive_module
--------
+*********
+Files modules
+*********
 
 https://docs.ansible.com/ansible/latest/modules/archive_module.html
 
@@ -23,6 +24,22 @@ file_module
 https://docs.ansible.com/ansible/latest/modules/file_module.html
 
 
+ini_file_module
+-------
+
+https://docs.ansible.com/ansible/latest/modules/ini_file_module.html
+
+
+unarchive_module
+-------
+
+https://docs.ansible.com/ansible/latest/modules/unarchive_module.html#unarchive-module
+
+
+*********
+Other / Ungrouped
+*********
+
 htpasswd_module
 -------
 
@@ -34,16 +51,7 @@ known_hosts_module
 
 https://docs.ansible.com/ansible/latest/modules/known_hosts_module.html
 
-ini_file_module
--------
 
-https://docs.ansible.com/ansible/latest/modules/ini_file_module.html
-
-
-unarchive_module
--------
-
-https://docs.ansible.com/ansible/latest/modules/unarchive_module.html#unarchive-module
 
 
 ..
