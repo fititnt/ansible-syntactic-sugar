@@ -178,6 +178,7 @@ definitions:
    philosophy
    api
    playbooks
+   todo
    alternatives
    basic
    admonition

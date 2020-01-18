@@ -5,6 +5,7 @@
 # SEE:             https://docs.ansible.com/ansible/latest/modules/user_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_user_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/known_hosts_module.html
 
 - name: "{{ role_path }}/tasks/users/user.yml"
   include: "{{ role_path }}/tasks/users/user.yml"
@@ -15,6 +16,8 @@
   include: "{{ role_path }}/tasks/users/authorized_key.yml"
   tags:
     - a2s-user-authorized-keys
+
+# TODO: implement known_hosts_module
 
 # - name: "debug3"
 #   debug:
