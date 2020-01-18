@@ -1,3 +1,5 @@
+.. include:: Includes.txt
+
 ##################
 a2s philosophy
 ##################

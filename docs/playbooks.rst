@@ -1,9 +1,13 @@
+.. include:: Includes.txt
+
+######################
 a2s Example Playbooks
-=================================
+######################
 
 
+*********
 Minimal Playbook
--------------
+*********
 
 .. admonition:: a2s_
 
@@ -21,8 +25,9 @@ Minimal Playbook
       - { role: fititnt.syntactic_sugar }
 
 
+*********
 *Run only these APIs* playbook example
--------------
+*********
 
 a2s have so many features that you play may become bigger. As explained in
 [Ansible Playbook Tags](https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html)
@@ -64,8 +69,9 @@ only when importing this role.
           - a2s_mysql_users
 
 
+*********
 Playbook using all Public APIs
--------------
+*********
 
 .. code-block:: yaml
 
@@ -99,8 +105,9 @@ Playbook using all Public APIs
       - { role: fititnt.syntactic_sugar }
 
 
+*********
 Playbook full example with Continuos Integration and testinfra
--------------
+*********
 
 Check the contents of [molecule/default/playbook.yml](molecule/default/playbook.yml)
 and our Travis-CI panel at <https://travis-ci.com/fititnt/ap-application-load-balancer-extras>.

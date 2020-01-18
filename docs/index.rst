@@ -1,11 +1,13 @@
+.. include:: Includes.txt
+
 .. Ansible Syntactic Sugar ("a2s") documentation master file, created by
    sphinx-quickstart on Thu Jan 16 03:38:44 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-##################
-Ansible Syntactic Sugar ("a2s") documentation
-##################
+################################################
+Ansible Syntactic Sugar ("`a2s`") documentation
+##############################################
 
 .. image:: https://img.shields.io/ansible/role/45694
     :alt: Ansible Role
@@ -17,7 +19,7 @@ Ansible Syntactic Sugar ("a2s") documentation
     :alt: Build Status
     :target: https://travis-ci.com/fititnt/ansible-syntactic-sugar
 
-"`a2s`" is a non-official `Syntactic Sugar <https://en.wikipedia.org/wiki/Syntactic_sugar>`_
+`a2s` is a non-official `Syntactic Sugar <https://en.wikipedia.org/wiki/Syntactic_sugar>`_
 for `Ansible <https://www.ansible.com/>`_, which without extensions already is
 an *"Simple, agentless IT automation that anyone can use"*.
 
@@ -79,8 +81,8 @@ And then, look at our :doc:`api` and :doc:`playbooks`. TL;DR:
 
 But playbook-basic.yml, while may help you to undestand a2s (or even Ansible)
 may be less powerfull than a2s offer. One tricky that a2s uses to avoid be too
-optionated on defaults is simply create an equivalent to most `a2s_APINAME` as
-`a2s_APINAME_defaults` and suggest you to keep near your  `a2s_APINAME`
+optionated on defaults is simply create an equivalent to most ``a2s_APINAME`` as
+``a2s_APINAME_defaults`` and suggest you to keep near your  `a2s_APINAME`
 definitions:
 
 .. code-block:: yaml
@@ -181,12 +183,10 @@ definitions:
    playbooks
    todo
    alternatives
-   admonition
 
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

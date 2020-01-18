@@ -15,6 +15,13 @@ Feedback is welcome!
 
 ## Documentation
 
+<!--
+ References on how to style Sphinix
+   - https://sphinx-rtd-theme.readthedocs.io/en/stable/demo/demo.html
+   - https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/WritingReST/InlineCode.html
+-->
+
+
 Please check <https://ansible-syntactic-sugar.readthedocs.io/>. <s>The contents of
 this README file will eventually be migrated</s> The migration starded, but will
 take some time to learn/implement a different documentation engine.

@@ -1,3 +1,5 @@
+.. include:: Includes.txt
+
 ##################
 a2s alternatives
 ##################
@@ -6,11 +8,11 @@ a2s alternatives
 
   This page is a draft. May change later.
 *********
-`Ansible without plugins`
+Ansible without plugins
 *********
 
 *********
-`suitable`
+suitable
 *********
 
 - <https://www.reddit.com/r/ansible/comments/8lguqj/anyone_using_the_python_api_wrapper_named_suitable/>

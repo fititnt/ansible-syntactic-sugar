@@ -1,6 +1,15 @@
+.. include:: Includes.txt
+
 ##################
 a2s APIs
 ##################
+
+.. error::
+
+  This documentation is incomplete and with obvious markup issues. May take
+  some time to finish the migration from GitHub page README.md to ReadTheDocs
+  and also fix some issues with Sphinx (like how to improve the usability of
+  the navigation bar) (fititnt, 2020-01-18 03:27 BRT)
 
 *********
 Overview of a2s APIs
@@ -35,8 +44,6 @@ With some exceptions, most of the time, you can expect that:
     the same as the result of performing it repeatedly without any intervening
     actions.* -- `Ansible Glossary for idempotency <https://docs.ansible.com/ansible/latest/reference_appendices/glossary.html#term-idempotency>`_
 
-
-
 *********
 Standard APIs
 *********
@@ -52,10 +59,9 @@ Standard APIs
 `a2s_directories`
 =========
 
-- **Short Description**: _file – Manage <s>files</s> directories and <s>file</s>
-  directories properties_
+- **Short Description**: *Manange directories*
 - **Ansible Modules**:
-  - [file](https://docs.ansible.com/ansible/latest/modules/file_module.html)
+  - `file_module <https://docs.ansible.com/ansible/latest/modules/file_module.html>`_
 - **Type of values**: list of dictionaries accepted by the underlining Ansible
   module. `state` value will default `directory`. Other missing values will be
   ommited.
