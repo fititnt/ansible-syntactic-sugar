@@ -4,7 +4,7 @@
 # LICENSE:         Public Domain
 # SEE:             https://serverfault.com/questions/832799/ansible-add-ip-of-all-hosts-to-etc-hosts-of-all-other-hosts
 
-- name: "hostname | require minimum length and enforce a valid RFC822 value"
+- name: "[system] hostname | require minimum length and enforce a valid RFC822 value"
   set_fact:
     a2s_hostname_rfc822: "{{ a2s_hostname | replace('_', '-') }}"
   when:
@@ -13,7 +13,7 @@
     - a2s-hostname
 
 # TODO: fix 'ignore_errors: yes' (fititnt, 2020-01-06 21:02)
-- name: "hostname | set hostname"
+- name: "[system] hostname | set hostname"
   hostname:
     name: "{{ a2s_hostname_rfc822 }}"
     use: "{{ a2s_internal_hostname_use | default(omit) }}"

@@ -6,7 +6,7 @@
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_file_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_owner_module.html
 
-- name: "directory | (*nix): add/remove directories [a2s_directories_defaults: {{ a2s_directories_defaults }}]"
+- name: "[files] directory | (*nix): add/remove directories [a2s_directories_defaults: {{ a2s_directories_defaults }}]"
   file:
     path: "{{ item.path }}"
     state: "{{ item.state | default('directory') }}"
@@ -37,7 +37,7 @@
   tags:
     - a2s-directory-directories
 
-- name: "directory | (Windows): add/remove directories"
+- name: "[files] directory | (Windows): add/remove directories"
   win_file:
     path: "{{ item.path }}"
     state: "{{ item.state | default('directory') }}"

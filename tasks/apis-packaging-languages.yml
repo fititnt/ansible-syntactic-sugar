@@ -11,8 +11,8 @@
   include: php/main.yml
   when:
     - "(a2s_betatesting|bool is sameas true)"
-    - "(a2s_only is undefined) or ('a2s_install_php' in a2s_only)"
-    - "(a2s_except is undefined) or ('a2s_install_php' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_install_php' in a2s_only)"
+    - "(a2s_except_apis is undefined) or ('a2s_install_php' not in a2s_except)"
   tags:
     - a2s-php
 
@@ -20,10 +20,10 @@
   include: composer/main.yml
   when:
     - "(a2s_betatesting|bool is sameas true)"
-    - "(a2s_only is undefined)
+    - "(a2s_only_apis is undefined)
       or ('a2s_install_composer' in a2s_only)
       or ('a2s_install_composers' in a2s_only)"
-    - "(a2s_except is undefined)
+    - "(a2s_except_apis is undefined)
       or (('a2s_install_composer' not in a2s_except)
       and ('a2s_install_composers' not in a2s_except))"
   tags:

@@ -5,7 +5,7 @@
 # SEE:             https://docs.ansible.com/ansible/latest/modules/user_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_user_module.html
 
-- name: "users | user (*nix): add/remove users [a2s_users_defaults: {{ a2s_users_defaults }}]"
+- name: "[system] users | user (*nix): add/remove users [a2s_users_defaults: {{ a2s_users_defaults }}]"
   user:
     name: "{{ item.name }}"
     state: "{{ item.state | default(a2s_users_defaults.state | default(omit)) }}"
@@ -51,7 +51,7 @@
   tags:
     - a2s-user-users
 
-- name: "users | user (Windows): add/remove users"
+- name: "[system] users | user (Windows): add/remove users"
   win_user:
     name: "{{ item.name }}"
     state: "{{ item.state | default(a2s_users_defaults.state | default(omit)) }}"

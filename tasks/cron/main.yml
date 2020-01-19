@@ -4,7 +4,7 @@
 # LICENSE:         Public Domain
 # SEE:             https://docs.ansible.com/ansible/latest/modules/cron_module.html
 
-- name: "cron | main.yml: Manage cron.d and crontab entries [a2s_crons_defaults: {{ a2s_crons_defaults }}]"
+- name: "[system] cron | main.yml: Manage cron.d and crontab entries [a2s_crons_defaults: {{ a2s_crons_defaults }}]"
   cron:
     name: "{{ item.name }}"
     state: "{{ item.state | default(a2s_crons_defaults.state | default(omit)) }}"

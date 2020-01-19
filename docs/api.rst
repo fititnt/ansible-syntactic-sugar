@@ -4,12 +4,17 @@
 a2s APIs
 ##################
 
-.. error::
+.. warning::
 
-  This documentation is incomplete and with obvious markup issues. May take
-  some time to finish the migration from GitHub page README.md to ReadTheDocs
-  and also fix some issues with Sphinx (like how to improve the usability of
-  the navigation bar) (fititnt, 2020-01-18 03:27 BRT)
+  a2s still an apha release. This page is not complete.
+
+
+.. contents:: Table of Contents of APIs
+
+.. raw:: html
+
+  <hr />
+
 
 *************
 Standard APIs
@@ -52,6 +57,24 @@ Standard APIs
       mode: '0755'
     - path: /var/www/my-old-app-folder-to-delete
       state: absent
+
+
+`a2s_etchosts`
+==============
+
+- **Short Description**: *List of strings to be added on /etc/hosts file. The
+  current implementation will not will not replace older values.*
+- **Ansible Modules**:
+  - None. This is a custom implementation.
+- **Type of values**: List of strings.
+
+.. code-block:: yaml
+
+  a2s_etchosts:
+    - "127.0.0.1  site-a.local"
+    - "198.51.100.0  example.org example.com"
+
+Note: `a2s_etchosts` is very likely to be improved before a2s stable release.
 
 `a2s_groups`
 ============
@@ -139,23 +162,41 @@ To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
 Extra APIs
 ***********
 
-`a2s_etchosts`
-==============
+`a2s_install_adminer`
+=====================
 
-- **Short Description**: *List of strings to be added on /etc/hosts file. The
-  current implementation will not will not replace older values.*
-- **Ansible Modules**:
-  - None. This is a custom implementation.
-- **Type of values**: List of strings.
+
+`a2s_rclone`
+=================
+
+***********
+Devel APIs
+***********
+
+`a2s_devel_nginx`
+=================
+
+Install NGinx with `a2s_devel_nginx: true`. Used for testing.
+
+.. note::
+
+  This is an internal feature and may not be documented because is not planned
+  to be used for end users. The source code is at:
+  <https://github.com/fititnt/ansible-syntactic-sugar/blob/master/tasks/devel-nginx/main.yml>
+
+
+Example:
 
 .. code-block:: yaml
 
-  a2s_etchosts:
-    - "127.0.0.1  site-a.local"
-    - "198.51.100.0  example.org example.com"
+  - hosts: all
+    remote_user: root
+    vars:
 
-Note: `a2s_etchosts` is very likely to be improved before a2s stable release.
+      a2s_devel_nginx: true
 
+    roles:
+      - { role: fititnt.syntactic_sugar }
 
 ***********
 Installers
@@ -242,8 +283,47 @@ In Ansible is possible append arrays values with `+` (objects you use
 `| combine()`), e.g `a2s_php_install: "{{ a2s__php74 + ['php7.4-dev', 'php7.4-ldap'] }}"`
 
 
-***********
-Devel APIs
-***********
+*******************
+Groups of a2s APIs
+*******************
 
-No documented Devel APIs at this moment.
+a2s-devel
+===========
+
+a2s-extra
+===========
+
+database
+===========
+
+files
+===========
+
+notifications
+=============
+
+packaging-languages
+===================
+
+packaging-os
+===================
+
+system
+===================
+
+*********************
+Control a2s workflow
+*********************
+
+
+`a2s_except_apis`
+======================
+
+`a2s_except_apis_groups`
+========================
+
+`a2s_only_apis`
+================
+
+`a2s_only_apis_groups`
+======================

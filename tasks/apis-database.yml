@@ -13,8 +13,8 @@
   when:
     - "(a2s_mysql_dbs is defined) and (a2s_mysql_dbs[0] is defined)
       or (mysql_users is defined) and (mysql_users[0] is defined)"
-    # a2s_only & a2s_except defined on the main.yml
-    # - "(a2s_only is undefined) or ('a2s_etchosts' in a2s_only)"
-    # - "(a2s_except is undefined) or ('a2s_etchosts' not in a2s_except)"
+    # a2s_only_apis & a2s_except_apis defined on the main.yml
+    # - "(a2s_only_apis is undefined) or ('a2s_etchosts' in a2s_only)"
+    # - "(a2s_except_apis is undefined) or ('a2s_etchosts' not in a2s_except)"
   tags:
     - a2s-mysql-dbs

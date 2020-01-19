@@ -20,7 +20,7 @@
 #   when:
 #     - "(item.authorized_key is defined)"
 
-- name: "user | authorized_keys: add/remove authorized_keys"
+- name: "[system] user | authorized_keys: add/remove authorized_keys"
   authorized_key:
     # If the a2s_users[n]authorized_keys[m]user is missing, we use a2s_users[n]name
     user: "{{ item.1.user | default(item.0.name) }}"

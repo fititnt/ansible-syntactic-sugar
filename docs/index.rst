@@ -7,7 +7,7 @@
 
 ################################################
 Ansible Syntactic Sugar ("`a2s`") documentation
-##############################################
+################################################
 
 .. image:: https://img.shields.io/ansible/role/45694
     :alt: Ansible Role
@@ -23,12 +23,20 @@ Ansible Syntactic Sugar ("`a2s`") documentation
 for `Ansible <https://www.ansible.com/>`_, which without extensions already is
 an *"Simple, agentless IT automation that anyone can use"*.
 
+*************
+Installation
+*************
+
 If you are new to Ansible, we recommend read our :doc:`installation`. TL;DR:
 
 .. code-block:: bash
 
   # "a2s is installable as an Ansible role and is distributed over Ansible Galaxy
   ansible-galaxy install fititnt.syntactic_sugar
+
+*************
+Quickstart
+*************
 
 And then, look at our :doc:`api` and :doc:`playbooks`. TL;DR:
 

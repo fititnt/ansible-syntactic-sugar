@@ -9,7 +9,7 @@
 # Note: the quick check about if need to reinstall is done on upper level, not
 #       here.
 
-- name: "adminer | Create base directory (if a2s__adminer.install_directory_create is defined)"
+- name: "[a2s-extra] adminer | Create base directory (if a2s__adminer.install_directory_create is defined)"
   file:
     path: "{{ a2s_install_adminer.install_directory | default('/opt/adminer') }}"
     state: "directory"
@@ -21,7 +21,7 @@
   tags:
     - a2s-install-adminer
 
-- name: "adminer | Download Adminer"
+- name: "[a2s-extra] adminer | Download Adminer"
   get_url:
     url: "{{ a2s_install_adminer.download_url | default('https://www.adminer.org/latest.php') }}"
     dest: "{{ (a2s_install_adminer.install_directory | default('/opt/adminer/'))

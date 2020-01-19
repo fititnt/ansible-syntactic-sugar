@@ -3,7 +3,7 @@
 # FILE:            {{ role_path }}/tasks/etc-hosts/main.yml
 # LICENSE:         Public Domain
 
-- name: "etchosts | Append values to /etc/hosts"
+- name: "[system] etchosts | Append values to /etc/hosts"
   lineinfile:
     dest: /etc/hosts
     line: "{{ item }}"

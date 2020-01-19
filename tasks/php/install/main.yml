@@ -7,7 +7,7 @@
 # https://computingforgeeks.com/how-to-install-php-on-ubuntu/
 
 # TODO: consider optimize this loop when all itens have same state to not use loop (fititnt, 2019-12-08 02:06 BRT)
-- name: "php | install | package"
+- name: "[packaging-languages] php | install | package"
   package:
     name: "{{ item.name | default(item) }}"
     state: "{{ item.state | default(omit) }}"

@@ -21,7 +21,7 @@
 #     - s2s-install-composer
 #     - s2s-install-composers
 
-- name: "composer | install.yml: check if already installed"
+- name: "[packaging-languages] composer | install.yml: check if already installed"
   stat:
     path: "{{ composer_options.path }}/composer"
   register: composer_previus_installation
@@ -29,24 +29,24 @@
     - s2s-install-composer
     - s2s-install-composers
 
-- name: "debug"
-  debug:
-    msg:
-      composer_previus_installation: "{{ composer_previus_installation }}"
-      composer_options: "{{ composer_options }}"
-      path: "{{ composer_options.path }}/composer"
-  tags:
-    - s2s-install-composer
-    - s2s-install-composers
+# - name: "[packaging-languages] composer debug"
+#   debug:
+#     msg:
+#       composer_previus_installation: "{{ composer_previus_installation }}"
+#       composer_options: "{{ composer_options }}"
+#       path: "{{ composer_options.path }}/composer"
+#   tags:
+#     - s2s-install-composer
+#     - s2s-install-composers
 
-- name: "composer: install.yml: decide if should force install or not"
+- name: "[packaging-languages] composer: install.yml: decide if should force install or not"
   set_fact:
     composer_continue_install: "{{ ((composer_options.force is defined)
      and (composer_options.force|bool))
      or (not composer_previus_installation.stat.exists) }}"
   changed_when: false
 
-- name: "composer | install.yml (*nix): temp file"
+- name: "[packaging-languages] composer | install.yml (*nix): temp file"
   tempfile:
     state: file
     prefix: "composer-setup"
@@ -62,7 +62,7 @@
     - s2s-install-composer
     - s2s-install-composers
 
-# - name: "composer | install.yml (Windows): temp file"
+# - name: "[packaging-languages] composer | install.yml (Windows): temp file"
 #   win_tempfile:
 #     state: file
 #     prefix: "composer-setup"
@@ -75,7 +75,7 @@
 #     - s2s-install-composer
 #     - s2s-install-composers
 
-# - name: "debug"
+# - name: "[packaging-languages] debug"
 #   debug:
 #     msg:
 #       composer_temp_file: "{{ composer_temp_file }}"
@@ -83,7 +83,7 @@
 #     - s2s-install-composer
 #     - s2s-install-composers
 
-- name: "composer | install.yml: download installer"
+- name: "[packaging-languages] composer | install.yml: download installer"
   get_url:
     url: https://getcomposer.org/installer
     dest: "{{ composer_temp_file.path }}"
@@ -96,7 +96,7 @@
     - s2s-install-composer
     - s2s-install-composers
 
-- name: "composer | install.yml: php composer-setup.php (...)"
+- name: "[packaging-languages] composer | install.yml: php composer-setup.php (...)"
   command: "{{ composer_options.php | default('php') }} {{ composer_temp_file.path }} --install-dir='{{ composer_options.path }}' --filename=composer {{ (composer_options.version is defined) and (composer_options.version) | ternary('--version=' + composer_options.version, '') }}" # noqa 204
   register: composer_shell_run
   become: yes
@@ -108,7 +108,7 @@
     - s2s-install-composer
     - s2s-install-composers
 
-- name: "composer | install.yml: shell result"
+- name: "[packaging-languages] composer | install.yml: shell result"
   debug:
     msg:
       composer_shell_run: "{{ composer_shell_run }}"

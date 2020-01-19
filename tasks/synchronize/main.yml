@@ -5,7 +5,7 @@
 # SEE:             https://docs.ansible.com/ansible/latest/modules/synchronize_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_robocopy_module.html
 
-- name: "synchronize | (*nix): synchronize"
+- name: "[files] synchronize | (*nix): synchronize"
   synchronize:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -43,7 +43,7 @@
 
 # Note: this actually is not a complete replacement for synchronize, so a2s may
 #       need to rethink this implementation or not (fititnt, 2020-01-08 09:11 BRT)
-- name: "syncronize | (Windows) win_robocopy"
+- name: "[files] syncronize | (Windows) win_robocopy"
   win_robocopy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"

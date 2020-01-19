@@ -25,9 +25,9 @@ Minimal Playbook
       - { role: fititnt.syntactic_sugar }
 
 
-*********
+**************************************
 *Run only these APIs* playbook example
-*********
+**************************************
 
 a2s have so many features that you play may become bigger. As explained in
 [Ansible Playbook Tags](https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html)
@@ -52,7 +52,7 @@ only when importing this role.
   - hosts: all
     role: fititnt.syntactic_sugar
       vars:
-      a2s_only:
+      a2s_only_apis:
           - a2s_groups
           - a2s_users
 
@@ -64,14 +64,14 @@ only when importing this role.
   - hosts: all
     role: fititnt.syntactic_sugar
       vars:
-        a2s_except:
+        a2s_except_apis:
           - a2s_mysql_dbs
           - a2s_mysql_users
 
 
-*********
-Playbook using all Public APIs
-*********
+***********************************
+Playbook using several Public APIs
+***********************************
 
 .. code-block:: yaml
 
@@ -105,9 +105,9 @@ Playbook using all Public APIs
       - { role: fititnt.syntactic_sugar }
 
 
-*********
+**************************************************************
 Playbook full example with Continuos Integration and testinfra
-*********
+**************************************************************
 
 Check the contents of [molecule/default/playbook.yml](molecule/default/playbook.yml)
 and our Travis-CI panel at <https://travis-ci.com/fititnt/ap-application-load-balancer-extras>.

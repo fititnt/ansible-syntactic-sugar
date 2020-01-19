@@ -5,7 +5,7 @@
 #
 # SEE:             https://docs.ansible.com/ansible/latest/modules/package_module.html
 
-- name: "devel-nginx | install: prerequisite packages"
+- name: "[a2s-devel] devel-nginx | install: prerequisite packages"
   package:
     name: "{{ item.name }}"
     state: "{{ item.state | default('present') }}"
@@ -14,7 +14,7 @@
     - "(a2s_internal_devel_nginx_prerequisites_packages is defined)
        and (a2s_internal_devel_nginx_prerequisites_packages[0] is defined)"
 
-- name: "devel-nginx | install | (*nix) install: package install nginx"
+- name: "[a2s-devel] devel-nginx | install | (*nix) install: package install nginx"
   package:
     name: "nginx"
     state: "present"
@@ -23,7 +23,7 @@
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
 
-- name: "devel-nginx | install | start nginx"
+- name: "[a2s-devel] devel-nginx | install | start nginx"
   service:
     name: nginx
     state: started
@@ -33,7 +33,7 @@
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
 
-- name: "devel-nginx | install | enable nginx"
+- name: "[a2s-devel] devel-nginx | install | enable nginx"
   service:
     name: nginx
     enabled: yes

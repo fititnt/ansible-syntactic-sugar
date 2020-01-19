@@ -4,7 +4,7 @@
 # LICENSE:         Public Domain
 # SEE:             https://docs.ansible.com/ansible/latest/modules/mysql_db_module.html
 
-- name: "mysql | mysql_db.yml: Add or remove MariaDB/MySQL databases from a remote host [a2s_mysql_dbs_defaults: {{ a2s_mysql_dbs_defaults }}]"
+- name: "[database] mysql | mysql_db.yml: Add or remove MariaDB/MySQL databases from a remote host [a2s_mysql_dbs_defaults: {{ a2s_mysql_dbs_defaults }}]"
   mysql_db:
     name: "{{ item.name }}"
     state: "{{ item.state | default(a2s_mysql_dbs_defaults.state | default(omit)) }}"

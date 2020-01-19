@@ -2,15 +2,17 @@
 # FILE:            {{ role_path }}/tasks/main.yml
 # LICENSE:         Public Domain
 
-- name: "Welcome message"
+- name: "a2s {{ a2s_version }} welcome message"
   debug:
     msg:
-      a2s_version: "{{ a2s_version }}"
+      # a2s_version: "{{ a2s_version }}"
       a2s_betatesting: "{{ a2s_betatesting | default(omit) }}"
       a2s_debug: "{{ a2s_debug | default('undefined') }}"
       a2s_internal_no_log: "{{ a2s_debug | default('undefined') }}"
-      a2s_only: "{{ a2s_only | default('undefined') }}"
-      a2s_except: "{{ a2s_except | default('undefined') }}"
+      a2s_only_apis: "{{ a2s_only_apis | default('undefined') }}"
+      a2s_except_apis: "{{ a2s_except_apis | default('undefined') }}"
+      a2s_only_apis_groups: "{{ a2s_only_apis_groups | default('undefined') }}"
+      a2s_except_apis_groups: "{{ a2s_except_apis_groups | default('undefined') }}"
       a2s_autoinstall_dependencies: "{{ a2s_autoinstall_dependencies | default('undefined') }}"
       a2s_autoinstall_repositories: "{{ a2s_autoinstall_repositories | default('undefined') }}"
       a2s_internal_iswindows: "{{ a2s_internal_iswindows | default('undefined') }}"
@@ -86,58 +88,60 @@
 
 ## Load a2s apis by group ______________________________________________________
 
-- name: "group-packaging-os.yml"
-  include: "group-packaging-os.yml"
+- name: "apis-packaging-os.yml"
+  # include: "apis-packaging-os.yml"
+  # static: false
+  include_tasks: "apis-packaging-os.yml"
   when:
-    - "(a2s_only_groups is undefined) or ('packaging-os' in a2s_only_groups)"
-    - "(a2s_except_groups is undefined) or ('packaging-os' not in a2s_except_groups)"
+    - "(a2s_only_apis_groups is undefined) or ('packaging-os' in a2s_only_apis_groups)"
+    - "(a2s_except_apis_groups is undefined) or ('packaging-os' not in a2s_except_apis_groups)"
   tags:
     - a2s-group-packaging-os
 
-- name: "group-system.yml"
-  include: "group-system.yml"
+- name: "apis-system.yml"
+  include_tasks: "apis-system.yml"
   when:
-    - "(a2s_only_groups is undefined) or ('system' in a2s_only_groups)"
-    - "(a2s_except_groups is undefined) or ('system' not in a2s_except_groups)"
+    - "(a2s_only_apis_groups is undefined) or ('system' in a2s_only_apis_groups)"
+    - "(a2s_except_apis_groups is undefined) or ('system' not in a2s_except_apis_groups)"
   tags:
     - a2s-group-system
 
-- name: "group-files.yml"
-  include: "group-files.yml"
+- name: "apis-files.yml"
+  include_tasks: "apis-files.yml"
   when:
-    - "(a2s_only_groups is undefined) or ('files' in a2s_only_groups)"
-    - "(a2s_except_groups is undefined) or ('files' not in a2s_except_groups)"
+    - "(a2s_only_apis_groups is undefined) or ('files' in a2s_only_apis_groups)"
+    - "(a2s_except_apis_groups is undefined) or ('files' not in a2s_except_apis_groups)"
   tags:
     - a2s-group-files
 
-- name: "group-packaging-languages.yml"
-  include: "group-packaging-languages.yml"
+- name: "apis-packaging-languages.yml"
+  include_tasks: "apis-packaging-languages.yml"
   when:
-    - "(a2s_only_groups is undefined) or ('packaging-languages' in a2s_only_groups)"
-    - "(a2s_except_groups is undefined) or ('packaging-languages' not in a2s_except_groups)"
+    - "(a2s_only_apis_groups is undefined) or ('packaging-languages' in a2s_only_apis_groups)"
+    - "(a2s_except_apis_groups is undefined) or ('packaging-languages' not in a2s_except_apis_groups)"
   tags:
     - a2s-group-packaging-languages
 
-- name: "group-database.yml"
-  include: "group-database.yml"
+- name: "apis-database.yml"
+  include_tasks: "apis-database.yml"
   when:
-    - "(a2s_only_groups is undefined) or ('database' in a2s_only_groups)"
-    - "(a2s_except_groups is undefined) or ('database' not in a2s_except_groups)"
+    - "(a2s_only_apis_groups is undefined) or ('database' in a2s_only_apis_groups)"
+    - "(a2s_except_apis_groups is undefined) or ('database' not in a2s_except_apis_groups)"
   tags:
     - a2s-group-database
 
-- name: "group-a2s-devel.yml"
-  include: "group-a2s-devel.yml"
+- name: "apis-a2s-devel.yml"
+  include_tasks: "apis-a2s-devel.yml"
   when:
-    - "(a2s_only_groups is undefined) or ('a2s-devel' in a2s_only_groups)"
-    - "(a2s_except_groups is undefined) or ('a2s-devel' not in a2s_except_groups)"
+    - "(a2s_only_apis_groups is undefined) or ('a2s-devel' in a2s_only_apis_groups)"
+    - "(a2s_except_apis_groups is undefined) or ('a2s-devel' not in a2s_except_apis_groups)"
   tags:
     - a2s-group-a2s-devel
 
-- name: "group-a2s-extra.yml"
-  include: "group-a2s-extra.yml"
+- name: "apis-a2s-extra.yml"
+  include_tasks: "apis-a2s-extra.yml"
   when:
-    - "(a2s_only_groups is undefined) or ('a2s-extra' in a2s_only_groups)"
-    - "(a2s_except_groups is undefined) or ('a2s-extra' not in a2s_except_groups)"
+    - "(a2s_only_apis_groups is undefined) or ('a2s-extra' in a2s_only_apis_groups)"
+    - "(a2s_except_apis_groups is undefined) or ('a2s-extra' not in a2s_except_apis_groups)"
   tags:
-    - a2s-group-aa2s-extra
+    - a2s-group-a2s-extra

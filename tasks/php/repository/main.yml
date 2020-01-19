@@ -6,7 +6,7 @@
 # https://computingforgeeks.com/how-to-install-php-7-4-on-centos-rhel-8/
 # https://computingforgeeks.com/how-to-install-php-on-ubuntu/
 
-- name: "php | repository | apt_key (Debian Family)"
+- name: "[packaging-languages] php | repository | apt_key (Debian Family)"
   apt_key:
     url: "{{ a2s_internal_php_apt_key.url | default(omit) }}"
     state: "{{ a2s_internal_php_apt_key.state | default(omit) }}"
@@ -19,7 +19,7 @@
   tags:
     - a2s-php-repository
 
-- name: "php | repository | apt_repository (Debian Family)"
+- name: "[packaging-languages] php | repository | apt_repository (Debian Family)"
   apt_repository:
     repo: "{{ a2s_internal_php_apt_repository.repo | default(omit) }}"
     state: "{{ a2s_internal_php_apt_repository.state | default(omit) }}"

@@ -3,7 +3,7 @@
 # FILE:            {{ role_path }}/tasks/composer/main.yml
 # LICENSE:         Public Domain
 
-- name: "composer | install composer (a2s_install_composer is boolean)"
+- name: "[packaging-languages] composer | install composer (a2s_install_composer is boolean)"
   include: "{{ role_path }}/tasks/composer/install.yml"
   vars:
     composer_options: "{{ a2s__composer }}"
@@ -16,7 +16,7 @@
     - s2s-install-composer
     - s2s-install-composers
 
-- name: "composer | install composer (a2s_install_composer is dictionary)"
+- name: "[packaging-languages] composer | install composer (a2s_install_composer is dictionary)"
   include: "{{ role_path }}/tasks/composer/install.yml"
   vars:
     composer_options: "{{ a2s_install_composer }}"
@@ -29,7 +29,7 @@
     - s2s-install-composer
     - s2s-install-composers
 
-- name: "composer | install composer (a2s_install_composers is list of dictionaries)"
+- name: "[packaging-languages] composer | install composer (a2s_install_composers is list of dictionaries)"
   include: "{{ role_path }}/tasks/composer/install.yml"
   vars:
     composer_options: "{{ item }}"

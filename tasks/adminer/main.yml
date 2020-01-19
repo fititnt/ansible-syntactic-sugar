@@ -4,7 +4,7 @@
 # LICENSE:         Public Domain
 
 # - name: "adminer | check if already installed and a2s_install_adminer.force_update != true"
-- name: "adminer | check if already installed"
+- name: "[a2s-extra] adminer | check if already installed"
   stat:
     path: "{{ a2s_install_adminer.install_directory }}/{{ a2s_install_adminer.install_file }}"
   register: adminer_installation
@@ -14,7 +14,7 @@
   tags:
     - a2s-install-adminer
 
-- name: "adminer | install adminer"
+- name: "[a2s-extra] adminer | install adminer"
   include: "{{ role_path }}/tasks/adminer/install/main.yml"
   when:
     - "(adminer_installation is defined)" # This should not be necessary. May be removed later

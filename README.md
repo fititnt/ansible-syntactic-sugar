@@ -1,4 +1,4 @@
-# ansible-syntactic-sugar ("a2s") - v0.5.0-alpha
+# ansible-syntactic-sugar ("a2s") - v0.6.0-alpha
 
 [![Ansible Role](https://img.shields.io/ansible/role/45694)](https://galaxy.ansible.com/fititnt/syntactic_sugar)
 [![Ansible Quality Score](https://img.shields.io/ansible/quality/45694)](https://galaxy.ansible.com/fititnt/syntactic_sugar)

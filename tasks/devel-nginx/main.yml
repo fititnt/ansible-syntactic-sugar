@@ -2,5 +2,5 @@
 # FILE:            {{ role_path }}/tasks/devel-nginx/main.yml
 # LICENSE:         Public Domain
 
-- name: "devel-nginx | main.yml"
+- name: "[a2s-devel] devel-nginx | main.yml"
   include: "{{ role_path }}/tasks/devel-nginx/install.yml"
