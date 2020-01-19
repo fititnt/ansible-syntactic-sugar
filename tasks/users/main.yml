@@ -17,6 +17,11 @@
   tags:
     - a2s-user-authorized-keys
 
+- name: "{{ role_path }}/tasks/users/known_hosts.yml"
+  include: "{{ role_path }}/tasks/users/known_hosts.yml"
+  tags:
+    - a2s-user-known-hosts
+
 # TODO: implement known_hosts_module
 
 # - name: "debug3"

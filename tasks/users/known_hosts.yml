@@ -1,0 +1,28 @@
+---
+
+# FILE:            {{ role_path }}/tasks/users/known_hosts.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/known_hosts_module.html
+
+# NOTE: here some discussion about ssh-keygen -R / ssh-keyscan already using
+#       Ansible instead of my bash scripts. The current version of
+#       a2s_users[n]known_hosts would need extra steps from end user
+#       and is not very "Syntatic Sugar" at this moment (fititnt, 2020-01-19 03:06 BRT)
+
+- name: "[system] user | known_hosts: add/remove a host from the known_hosts file"
+  known_hosts:
+    hash_host: "{{ item.1.hash_host | default(omit) }}"
+    key: "{{ item.1.key | default(omit) }}"
+    name: "{{ item.1.name | default(omit) }}"
+    path: "{{ item.1.path | default(omit) }}"
+     # host is alias for name
+    host: "{{ item.1.host | default(omit) }}"
+    state: "{{ item.1.state | default(omit) }}"
+  with_subelements:
+    - "{{ a2s_users }}"
+    - "known_hosts"
+    - skip_missing: true
+  notify:
+    - "a2s-user-known-hosts changed"
+  tags:
+    - a2s-user-known-hosts

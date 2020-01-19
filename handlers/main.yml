@@ -14,6 +14,7 @@
     - "a2s-template-templates changed"
     - "a2s-user-users changed"
     - "a2s-user-authorized-keys changed"
+    - "a2s-user-known-hosts changed"
     - "a2s-install-php changed"
     - "a2s-php-repository changed"
     - "a2s-mysql-dbs changed"

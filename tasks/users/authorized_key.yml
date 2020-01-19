@@ -33,7 +33,6 @@
     manage_dir: "{{ item.1.manage_dir | default(omit) }}"
     path: "{{ item.1.path | default(omit) }}"
     validate_certs: "{{ item.1.validate_certs | default(omit) }}"
-    asdasdasdasd: "{{ item.1.validate_certs | default(omit) }}"
   with_subelements:
     - "{{ a2s_users }}"
     - "authorized_keys"

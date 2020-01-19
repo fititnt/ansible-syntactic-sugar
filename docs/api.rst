@@ -145,7 +145,9 @@ To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
   - [user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
   - [win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
 - **Type of values**: list of dictionaries accepted by the underlining Ansible
-  modules. Missing values will be ommited.
+  modules. Missing values will try `a2s_users_default`, then will be ommited.
+- **Special defaults override**: `a2s_users_default`
+
 
 
 `a2s_users[n]authorized_keys`
