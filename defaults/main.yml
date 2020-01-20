@@ -9,6 +9,8 @@ a2s_autoinstall_repositories: false
 
 # Defaults
 a2s_directories_default: {}
+a2s_copies_default: {}
+a2s_files_default: {}
 a2s_mysql_dbs_defaults: {}
 a2s_mysql_users_defaults: {}
 a2s_users_defaults: {}

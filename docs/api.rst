@@ -76,6 +76,28 @@ Standard APIs
 
 Note: `a2s_etchosts` is very likely to be improved before a2s stable release.
 
+`a2s_files`
+=================
+
+- **Short Description**: *Manange directories*
+- **Ansible Modules**:
+  - `file_module <https://docs.ansible.com/ansible/latest/modules/file_module.html>`_
+  - `win_file_module <https://docs.ansible.com/ansible/latest/modules/win_file_module.html>`_
+  - `file_module <https://docs.ansible.com/ansible/latest/modules/copy_module.html>`_ (if `a2s_files[n]content` is defined)
+  - `win_file_module <https://docs.ansible.com/ansible/latest/modules/copy_file_module.html>`_ (if `a2s_files[n]content` is defined)
+- **Type of values**: list of dictionaries accepted by the underlining Ansible
+  module. Other missing values will be ommited.
+- **Special defaults override**: `a2s_files_default`
+- **Examples**
+
+.. code-block:: yaml
+
+  a2s_files_default:
+    group: www-data
+  a2s_files:
+    - path: /var/www/html/hello.html
+      owner: app
+
 `a2s_groups`
 ============
 

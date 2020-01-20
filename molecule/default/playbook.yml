@@ -13,20 +13,51 @@
       - "127.0.0.1  cdn.site-b.local"
 
     a2s_groups:
-      - name: cdns
+      - name: "cdns"
+      - name: "www-data"
+
+    # Create users
+    a2s_users_default:
+      create_home: no
+      groups: ["www-data"]
 
     a2s_users:
-      - name: cdn-site-a
-        groups:
-          - cdns
-      - name: cdn-site-b
-        groups:
-          - cdns
-      - name: site-a
-      - name: php-demo
-      - name: fititnt
+      - name: "app"
+      - name: "cdn-site-a"
+        groups: ["cdns", "www-data"]
+      - name: "cdn-site-b"
+        groups: ["cdns", "www-data"]
+      - name: "site-a"
+      - name: "php-demo"
+      - name: "fititnt"
+        create_home: yes
         authorized_keys:
           - key: https://github.com/fititnt.keys
+
+    # Create directories
+    a2s_directories_default:
+      # path: "/var/www/html/{{ item.var1 | default('undefined') }}/"
+      # user: "{{ item.var1 | default('www-data') }}"
+      group: "www-data"
+
+    a2s_directories:
+      - path: /var/www/html
+        recurse: yes
+        owner: root
+        group: root
+      # # You cam implement custom vars and define rules on a2s_directories_default
+      # - var1: "app"
+      # - var1: "site-a"
+      # - var1: "site-b"
+      # - var1: "cdn-site-a"
+      # - var1: "cdn-site-b"
+
+    # a2s_files_default:
+    #   group: "www-data"
+
+    # a2s_files:
+    #   - path: "/var/www/html/app/index.html"
+    #     owner: "app"
 
     # a2s_rclone: false
     a2s_devel_nginx: true
