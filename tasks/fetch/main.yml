@@ -1,0 +1,24 @@
+---
+
+# FILE:            {{ role_path }}/tasks/fetch/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/fetch_module.html
+
+- name: "[files] a2s_fetches | Via: debug | a2s_fetches_default (override undefined values)"
+  debug:
+    msg:
+      a2s_fetches_default: "{{ a2s_fetches_default }}"
+
+- name: "[files] a2s_fetches | Via: fetch | Fetch files from remote nodes"
+  fetch:
+    dest: "{{ item.dest | default(a2s_fetches_default.dest | default(omit)) }}"
+    fail_on_missing: "{{ item.fail_on_missing | default(a2s_fetches_default.fail_on_missing | default(omit)) }}"
+    flat: "{{ item.flat | default(a2s_fetches_default.flat | default(omit)) }}"
+    src: "{{ item.src | default(a2s_fetches_default.src | default(omit)) }}"
+    validate_checksum: "{{ item.validate_checksum | default(a2s_fetches_default.validate_checksum | default(omit)) }}"
+
+  with_items: "{{ a2s_fetches }}"
+  notify:
+    - "a2s-fetches changed"
+  tags:
+    - a2s-fetches

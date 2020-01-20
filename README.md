@@ -8,7 +8,7 @@
 Ansible role that acts as _syntactic sugar_ for 1) some [ansible modules](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html),
 2) <s>populate sample content</s><sup>(now on [ansible-faker](https://github.com/fititnt/ansible-faker))</sup>
 and 3) install some common software to help with quick tests and 4) even
-explain/implement [how to run only a subset of an Ansible role](#a2s_only)**.
+explain/implement [how to run only a subset of an Ansible role](#a2s_only_apis)**.
 
 > **Warning: this is a pre-release**. Variable naming conventions may change.
 Feedback is welcome!

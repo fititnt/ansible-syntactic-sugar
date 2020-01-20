@@ -7,9 +7,15 @@ a2s_betatesting: false
 a2s_autoinstall_dependencies: false
 a2s_autoinstall_repositories: false
 
+# a2s_except_apis: []
+# a2s_except_apis_groups: []
+# a2s_only_apis: []
+# a2s_only_apis_groups: []
+
 # Defaults
 a2s_directories_default: {}
 a2s_copies_default: {}
+a2s_fetches_default: {}
 a2s_files_default: {}
 a2s_mysql_dbs_defaults: {}
 a2s_mysql_users_defaults: {}

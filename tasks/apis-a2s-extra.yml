@@ -15,8 +15,8 @@
       and (a2s_install_adminer.download_url is defined)
       and (a2s_install_adminer.install_directory is defined)
       and (a2s_install_adminer.install_file is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_install_adminer' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_install_adminer' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_install_adminer' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_install_adminer' not in a2s_except_apis)"
   tags:
     - a2s-adminer
 
@@ -24,7 +24,7 @@
   include: rclone/main.yml
   when:
     # - "(a2s_internal_rclone_manange is sameas true)"
-    - "(a2s_only_apis is undefined) or ('a2s_rclone' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_rclone' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_rclone' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_rclone' not in a2s_except_apis)"
   tags:
     - a2s-rclone

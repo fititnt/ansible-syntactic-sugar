@@ -11,8 +11,8 @@
     - "(a2s_groups is defined)
       and (a2s_groups[0] is defined)
       and (a2s_groups[0].name is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_groups' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_groups' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_groups' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_groups' not in a2s_except_apis)"
   tags:
     - a2s-groups
 
@@ -22,8 +22,8 @@
     - "(a2s_users is defined)
       and (a2s_users[0] is defined)
       and (a2s_users[0].name is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_users' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_users' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_users' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_users' not in a2s_except_apis)"
   tags:
     - a2s-users
 
@@ -31,8 +31,8 @@
   include: hostname/main.yml
   when:
     - "(a2s_hostname is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_hostname' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_hostname' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_hostname' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_hostname' not in a2s_except_apis)"
   tags:
     - a2s-hostname
 
@@ -40,8 +40,8 @@
   include: etchosts/main.yml
   when:
     - "(a2s_etchosts is defined) and (a2s_etchosts[0] is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_etchosts' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_etchosts' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_etchosts' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_etchosts' not in a2s_except_apis)"
   tags:
     - a2s-etchosts
 
@@ -50,8 +50,8 @@
   when:
     - "(a2s_crons is defined)
       and (a2s_crons[0] is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_crons' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_crons' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_crons' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_crons' not in a2s_except_apis)"
   tags:
     - a2s-crons
 

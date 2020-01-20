@@ -131,9 +131,9 @@
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
   notify:
-    - "a2s-copy-copies changed"
+    - "a2s-files changed"
   tags:
-    - a2s-copy-copies
+    - a2s-files
 
 - name: "[files] a2s_files | Via: win_copy | (Windows only) (a2s_files[n]content defined EXPLICITLY) create/delete file with content"
   win_copy:
@@ -153,6 +153,6 @@
     - "(a2s_internal_iswindows is defined)
       and (a2s_internal_iswindows|bool is sameas true)"
   notify:
-    - "a2s-copy-copies changed"
+    - "a2s-files changed"
   tags:
-    - a2s-copy-copies
+    - a2s-files

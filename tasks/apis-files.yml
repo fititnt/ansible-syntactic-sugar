@@ -18,10 +18,9 @@
   when:
     - "(a2s_directories is defined)
       and (a2s_directories[0] is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_directories' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_directories' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_directories' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_directories' not in a2s_except_apis)"
   tags:
-    # - a2s-directory
     - a2s-directories
 
 - name: "file"
@@ -29,11 +28,20 @@
   when:
     - "(a2s_files is defined)
       and (a2s_files[0] is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_files' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_files' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_files' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_files' not in a2s_except_apis)"
   tags:
-    # - a2s-directory
     - a2s-files
+
+- name: "fetch"
+  include: fetch/main.yml
+  when:
+    - "(a2s_fetches is defined)
+      and (a2s_fetches[0] is defined)"
+    - "(a2s_only_apis is undefined) or ('a2s_fetches' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_fetches' not in a2s_except_apis)"
+  tags:
+    - a2s-fetches
 
 - name: "copy"
   include: copy/main.yml
@@ -41,8 +49,8 @@
     - "(a2s_copies is defined)
       and (a2s_copies[0] is defined)
       and (a2s_copies[0].dest is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_copies' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_copies' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_copies' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_copies' not in a2s_except_apis)"
   tags:
     # - a2s-copy
     - a2s-copies
@@ -53,8 +61,8 @@
     - "(a2s_synchronizes is defined)
       and (a2s_synchronizes[0] is defined)
       and (a2s_synchronizes[0].dest is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_synchronizes' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_synchronizes' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_synchronizes' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_synchronizes' not in a2s_except_apis)"
   tags:
     - a2s-synchronizes
 
@@ -64,7 +72,7 @@
     - "(a2s_templates is defined)
       and (a2s_templates[0] is defined)
       and (a2s_templates[0].dest is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_templates' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_templates' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_templates' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_templates' not in a2s_except_apis)"
   tags:
     - a2s-templates

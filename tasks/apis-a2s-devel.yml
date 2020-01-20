@@ -11,7 +11,7 @@
   include: devel-nginx/main.yml
   when:
     - "(a2s_internal_devel_nginx_manange is sameas true)"
-    - "(a2s_only_apis is undefined) or ('a2s_devel_nginx' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_devel_nginx' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_devel_nginx' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_devel_nginx' not in a2s_except_apis)"
   tags:
     - a2s-devel-nginx

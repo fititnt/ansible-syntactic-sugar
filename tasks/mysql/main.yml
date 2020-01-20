@@ -6,8 +6,8 @@
   include: "{{ role_path }}/tasks/mysql/mysql_db.yml"
   when:
     - "(a2s_mysql_dbs is defined) and (a2s_mysql_dbs[0] is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_mysql_dbs' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_mysql_dbs' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_mysql_dbs' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_mysql_dbs' not in a2s_except_apis)"
   tags:
     - s2s-mysql-dbs
 
@@ -15,7 +15,7 @@
   include: "{{ role_path }}/tasks/mysql/mysql_user.yml"
   when:
     - "(a2s_mysql_users is defined) and (a2s_mysql_users[0] is defined)"
-    - "(a2s_only_apis is undefined) or ('a2s_mysql_users' in a2s_only)"
-    - "(a2s_except_apis is undefined) or ('a2s_mysql_users' not in a2s_except)"
+    - "(a2s_only_apis is undefined) or ('a2s_mysql_users' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_mysql_users' not in a2s_except_apis)"
   tags:
     - s2s-mysql-users

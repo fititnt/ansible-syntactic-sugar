@@ -89,6 +89,36 @@ Standard APIs
 
 Note: `a2s_etchosts` is very likely to be improved before a2s stable release.
 
+`a2s_fetches`
+=================
+
+- **Short Description**: *Fetch files from remote machines and storing them
+  locally in a file tree, organized by hostname.*
+- **Ansible Modules**:
+  `fetch_module <https://docs.ansible.com/ansible/latest/modules/fetch_module.html>`_
+- **Type of values**: list of dictionaries accepted by the underlining Ansible
+  module. Missing values will be ommited.
+- **Special defaults override**: `a2s_fetches_default`
+
+.. code-block:: yaml
+  :caption: a2s_fetches_example.yml
+  :name: a2s_fetches_example
+  :linenos:
+
+  a2s_fetches_default:
+    dest: /backup/
+  a2s_fetches:
+    - src: /etc/ssh/ssh_host_rsa_key # File required on a new node to keep the fingerprint
+    - src: /home/root/.ssh/id_rsa
+    - src: /home/root/.ssh/id_rsa.pub
+
+  ## For each host, files will be downloaded prefixed with inventory name
+  ## Paths will be respected. E.g for node "host.example.com" you get:
+  # /backup/host.example.com/etc/ssh/ssh_host_rsa_key
+  # /backup/host.example.com/home/root/.ssh/id_rsa
+  # /backup/host.example.com/home/root/.ssh/id_rsa.pub
+
+
 `a2s_files`
 =================
 
