@@ -5,6 +5,7 @@
   listen:
     - "a2s-copy-copies changed"
     - "a2s-directory-directories changed"
+    - "a2s-files changed"
     - "a2s-etchosts-etchosts changed"
     - "a2s-etchosts changed"
     - "a2s-groups changed"

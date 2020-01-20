@@ -17,13 +17,23 @@
   include: directory/main.yml
   when:
     - "(a2s_directories is defined)
-      and (a2s_directories[0] is defined)
-      and (a2s_directories[0].path is defined)"
+      and (a2s_directories[0] is defined)"
     - "(a2s_only_apis is undefined) or ('a2s_directories' in a2s_only)"
     - "(a2s_except_apis is undefined) or ('a2s_directories' not in a2s_except)"
   tags:
     # - a2s-directory
     - a2s-directories
+
+- name: "file"
+  include: file/main.yml
+  when:
+    - "(a2s_files is defined)
+      and (a2s_files[0] is defined)"
+    - "(a2s_only_apis is undefined) or ('a2s_files' in a2s_only)"
+    - "(a2s_except_apis is undefined) or ('a2s_files' not in a2s_except)"
+  tags:
+    # - a2s-directory
+    - a2s-files
 
 - name: "copy"
   include: copy/main.yml

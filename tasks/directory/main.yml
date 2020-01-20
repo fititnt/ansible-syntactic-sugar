@@ -6,28 +6,35 @@
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_file_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_owner_module.html
 
-- name: "[files] directory | (*nix): add/remove directories [a2s_directories_defaults: {{ a2s_directories_defaults }}]"
+- name: "[files] directory | (*nix): add/remove directories [a2s_directories_default: {{ a2s_directories_default }}]"
   file:
-    path: "{{ item.path }}"
-    state: "{{ item.state | default('directory') }}"
-    access_time: "{{ item.access_time | default(a2s_directories_defaults.access_time | default(omit)) }}"
-    access_time_format: "{{ item.access_time_format | default(a2s_directories_defaults.access_time_format | default(omit)) }}"
-    attributes: "{{ item.attributes | default(a2s_directories_defaults.attributes | default(omit)) }}"
-    follow: "{{ item.follow | default(a2s_directories_defaults.follow | default(omit)) }}"
-    force: "{{ item.force | default(a2s_directories_defaults.force | default(omit)) }}"
-    group: "{{ item.group | default(a2s_directories_defaults.group | default(omit)) }}"
-    # mode: "{{ item.mode | default(a2s_default_directory_mode) }}"
-    mode: "{{ item.mode | default(a2s_directories_defaults.mode | default(omit)) }}"
-    modification_time: "{{ item.modification_time | default(a2s_directories_defaults.modification_time | default(omit)) }}"
-    modification_time_format: "{{ item.modification_time_format | default(a2s_directories_defaults.modification_time_format | default(omit)) }}"
-    owner: "{{ item.owner | default(a2s_directories_defaults.owner | default(omit)) }}"
-    recurse: "{{ item.recurse | default(a2s_directories_defaults.recurse | default(omit)) }}"
-    selevel: "{{ item.selevel | default(a2s_directories_defaults.selevel | default(omit)) }}"
-    serole: "{{ item.serole | default(a2s_directories_defaults.serole | default(omit)) }}"
-    setype: "{{ item.setype | default(a2s_directories_defaults.setype | default(omit)) }}"
-    seuser: "{{ item.seuser | default(a2s_directories_defaults.seuser | default(omit)) }}"
-    src: "{{ item.src | default(a2s_directories_defaults.src | default(omit)) }}"
-    unsafe_writes: "{{ item.unsafe_writes | default(a2s_directories_defaults.unsafe_writes | default(omit)) }}"
+    path: "{{ item.path | default(a2s_directories_default.path | default(omit)) }}"
+    dest: "{{ item.dest | default(a2s_directories_default.dest | default(omit)) }}" # alias for path
+    name: "{{ item.name | default(a2s_directories_default.name | default(omit)) }}" # alias for path
+    src: "{{ item.src | default(a2s_directories_default.src | default(omit)) }}"
+    # We set by (last) default 'directory'. Yes, actually users
+    # can create/delete non-directories
+    state: "{{ item.src | default(a2s_directories_default.src | default(omit)) }}"
+
+    # Other parameters, by alphabetical order
+    access_time: "{{ item.access_time | default(a2s_directories_default.access_time | default(omit)) }}"
+    access_time_format: "{{ item.access_time_format | default(a2s_directories_default.access_time_format | default(omit)) }}"
+    attributes: "{{ item.attributes | default(a2s_directories_default.attributes | default(omit)) }}"
+    attr: "{{ item.attr | default(a2s_directories_default.attr | default(omit)) }}" # alias for attributes
+    follow: "{{ item.follow | default(a2s_directories_default.follow | default(omit)) }}"
+    force: "{{ item.force | default(a2s_directories_default.force | default(omit)) }}"
+    group: "{{ item.group | default(a2s_directories_default.group | default(omit)) }}"
+    mode: "{{ item.mode | default(a2s_directories_default.mode | default(omit)) }}"
+    modification_time: "{{ item.modification_time | default(a2s_directories_default.modification_time | default(omit)) }}"
+    modification_time_format: "{{ item.modification_time_format | default(a2s_directories_default.modification_time_format | default(omit)) }}"
+    owner: "{{ item.owner | default(a2s_directories_default.owner | default(omit)) }}"
+    recurse: "{{ item.recurse | default(a2s_directories_default.recurse | default(omit)) }}"
+    selevel: "{{ item.selevel | default(a2s_directories_default.selevel | default(omit)) }}"
+    serole: "{{ item.serole | default(a2s_directories_default.serole | default(omit)) }}"
+    setype: "{{ item.setype | default(a2s_directories_default.setype | default(omit)) }}"
+    seuser: "{{ item.seuser | default(a2s_directories_default.seuser | default(omit)) }}"
+    src: "{{ item.src | default(a2s_directories_default.src | default(omit)) }}"
+    unsafe_writes: "{{ item.unsafe_writes | default(a2s_directories_default.unsafe_writes | default(omit)) }}"
   with_items: "{{ a2s_directories }}"
   when:
     - "(a2s_internal_iswindows is undefined)

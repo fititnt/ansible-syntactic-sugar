@@ -1,0 +1,55 @@
+---
+
+# FILE:            {{ role_path }}/tasks/file/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/file_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_file_module.html
+
+- name: "[files] file | (*nix): Manage files and file properties [a2s_files_default: {{ a2s_files_default }}]"
+  file:
+    path: "{{ item.path | default(a2s_files_default.path | default(omit)) }}"
+    dest: "{{ item.dest | default(a2s_files_default.dest | default(omit)) }}" # alias for path
+    name: "{{ item.name | default(a2s_files_default.name | default(omit)) }}" # alias for path
+    src: "{{ item.src | default(a2s_files_default.src | default(omit)) }}"
+    state: "{{ item.src | default(a2s_files_default.src | default(omit)) }}" # We omit state
+
+    # Other parameters, by alphabetical order
+    access_time: "{{ item.access_time | default(a2s_files_default.access_time | default(omit)) }}"
+    access_time_format: "{{ item.access_time_format | default(a2s_files_default.access_time_format | default(omit)) }}"
+    attributes: "{{ item.attributes | default(a2s_files_default.attributes | default(omit)) }}"
+    attr: "{{ item.attr | default(a2s_files_default.attr | default(omit)) }}" # alias for attributes
+    follow: "{{ item.follow | default(a2s_files_default.follow | default(omit)) }}"
+    force: "{{ item.force | default(a2s_files_default.force | default(omit)) }}"
+    group: "{{ item.group | default(a2s_files_default.group | default(omit)) }}"
+    mode: "{{ item.mode | default(a2s_files_default.mode | default(omit)) }}"
+    modification_time: "{{ item.modification_time | default(a2s_files_default.modification_time | default(omit)) }}"
+    modification_time_format: "{{ item.modification_time_format | default(a2s_files_default.modification_time_format | default(omit)) }}"
+    owner: "{{ item.owner | default(a2s_files_default.owner | default(omit)) }}"
+    recurse: "{{ item.recurse | default(a2s_files_default.recurse | default(omit)) }}"
+    selevel: "{{ item.selevel | default(a2s_files_default.selevel | default(omit)) }}"
+    serole: "{{ item.serole | default(a2s_files_default.serole | default(omit)) }}"
+    setype: "{{ item.setype | default(a2s_files_default.setype | default(omit)) }}"
+    seuser: "{{ item.seuser | default(a2s_files_default.seuser | default(omit)) }}"
+    src: "{{ item.src | default(a2s_files_default.src | default(omit)) }}"
+    unsafe_writes: "{{ item.unsafe_writes | default(a2s_files_default.unsafe_writes | default(omit)) }}"
+  with_items: "{{ a2s_files }}"
+  when:
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"
+  notify:
+    - "a2s-files changed"
+  tags:
+    - a2s-files
+
+- name: "[files] file | (Windows): Manage files and file properties [a2s_files_default: {{ a2s_files_default }}]"
+  win_file:
+    path: "{{ item.path | default(a2s_files_default.path | default(omit)) }}"
+    state: "{{ item.state | default(a2s_files_default.state | default(omit)) }}"
+  with_items: "{{ a2s_files }}"
+  when:
+    - "(a2s_internal_iswindows is defined)
+      and (a2s_internal_iswindows|bool is sameas true)"
+  notify:
+    - "a2s-files changed"
+  tags:
+    - a2s-files
