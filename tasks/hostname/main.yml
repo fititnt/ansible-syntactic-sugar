@@ -19,6 +19,7 @@
     use: "{{ a2s_internal_hostname_use | default(omit) }}"
   # ignore_errors: yes
   ignore_errors: "{{ a2s_isconteiner | default(false) }}"
+  become: yes
   when:
     - "(a2s_hostname_rfc822 is defined)"
   notify:

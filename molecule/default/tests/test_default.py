@@ -46,6 +46,14 @@ def test_users_authorized_key(host):
     assert f.group == 'fititnt'
 
 
+def test_a2s_files(host):
+    file_app_index = host.file('/var/www/html/app/index.html')
+
+    assert file_app_index.exists
+    assert file_app_index.user == 'app'
+    assert file_app_index.group == 'www-data'
+
+
 def test_devel_nginx_is_installed(host):
     assert host.package("nginx").is_installed
 

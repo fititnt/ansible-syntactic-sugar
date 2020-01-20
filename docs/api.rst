@@ -45,18 +45,31 @@ Standard APIs
 - **Type of values**: list of dictionaries accepted by the underlining Ansible
   module. `state` value will default `directory`. Other missing values will be
   ommited.
-- **Examples**
 
 
 .. code-block:: yaml
+  :caption: a2s_directories_example.yml
+  :name: a2s_directories_example
+  :linenos:
+
+  # Create directories. a2s_directories_default allows create custom variables
+  # like (var1 in item.var1) or reuse one variable (like owner in item.owner)
+  a2s_directories_default:
+    path: "/var/www/html/{{ item.var1 }}/"
+    owner: "{{ item.var1 }}"
+    group: "www-data"
 
   a2s_directories:
-    - path: /var/www/my-app
-      owner: app
-      group: www-data
-      mode: '0755'
-    - path: /var/www/my-old-app-folder-to-delete
-      state: absent
+    - path: /var/www/html
+      recurse: yes
+      owner: root
+      group: root
+      var1: null
+    - var1: "app"
+    - var1: "site-a"
+    - var1: "site-b"
+    - var1: "cdn-site-a"
+    - var1: "cdn-site-b"
 
 
 `a2s_etchosts`
@@ -79,24 +92,36 @@ Note: `a2s_etchosts` is very likely to be improved before a2s stable release.
 `a2s_files`
 =================
 
-- **Short Description**: *Manange directories*
+- **Short Description**: *Manange files. Exlusive feature: Allows create file
+  content from string*
 - **Ansible Modules**:
-  - `file_module <https://docs.ansible.com/ansible/latest/modules/file_module.html>`_
-  - `win_file_module <https://docs.ansible.com/ansible/latest/modules/win_file_module.html>`_
-  - `file_module <https://docs.ansible.com/ansible/latest/modules/copy_module.html>`_ (if `a2s_files[n]content` is defined)
-  - `win_file_module <https://docs.ansible.com/ansible/latest/modules/copy_file_module.html>`_ (if `a2s_files[n]content` is defined)
+  `file_module <https://docs.ansible.com/ansible/latest/modules/file_module.html>`_
+  and `win_file_module <https://docs.ansible.com/ansible/latest/modules/win_file_module.html>`_
+  or, if `a2s_files[n]content` is defined,
+  `copy_module <https://docs.ansible.com/ansible/latest/modules/copy_module.html>`_
+  and  `win_copy_module <https://docs.ansible.com/ansible/latest/modules/copy_file_module.html>`_
 - **Type of values**: list of dictionaries accepted by the underlining Ansible
   module. Other missing values will be ommited.
 - **Special defaults override**: `a2s_files_default`
-- **Examples**
+
+You can consider `a2s_files` with the same parameters of Ansible file_module &
+win_file_module. The only exception to this rule is if you define a non-empty
+value to `a2s_files[n]content`: in this case `a2s_files` will use Ansible
+copy_module & win_copy_module.
+
 
 .. code-block:: yaml
+  :caption: a2s_files_example.yml
+  :name: a2s_files_example
+  :linenos:
 
   a2s_files_default:
-    group: www-data
+    group: "www-data"
+
   a2s_files:
-    - path: /var/www/html/hello.html
-      owner: app
+    - path: "/var/www/html/app/index.html"
+      content: "Hello world, app!"
+      owner: "app"
 
 `a2s_groups`
 ============
@@ -170,6 +195,28 @@ To add to /etc/hosts, check [`a2s_etchosts`](#a2s_etchosts).
   modules. Missing values will try `a2s_users_default`, then will be ommited.
 - **Special defaults override**: `a2s_users_default`
 
+.. code-block:: yaml
+  :caption: a2s_users_example.yml
+  :name: a2s_users_example
+  :linenos:
+
+  a2s_users_default:
+    create_home: no
+    groups: ["www-data"]
+
+  a2s_users:
+    - name: "app"
+    - name: "site-a"
+    - name: "site-b"
+    - name: "cdn-site-a"
+      groups: ["cdns", "www-data"]
+    - name: "cdn-site-b"
+      groups: ["cdns", "www-data"]
+    - name: "php-demo"
+    - name: "fititnt"
+      create_home: yes
+      authorized_keys:
+        - key: https://github.com/fititnt.keys
 
 
 `a2s_users[n]authorized_keys`

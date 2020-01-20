@@ -4,7 +4,6 @@
 # LICENSE:         Public Domain
 # SEE:             https://docs.ansible.com/ansible/latest/modules/file_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_file_module.html
-# SEE:             https://docs.ansible.com/ansible/latest/modules/win_owner_module.html
 
 - name: "[files] a2s_directories | Via: debug | a2s_directories_default"
   debug:
@@ -12,7 +11,40 @@
       a2s_directories_default: "{{ a2s_directories_default | to_json }}"
       a2s_directories: "{{ a2s_directories | default('undefined') }}"
   vars:
-    item: {}
+    # Did Ansible allow NOT evaluate a variable, so this part would not be
+    # necessary? (fititnt, 2020-01-20 02:29 BRT)
+    item:
+      path: '[[ item.path ]]'
+      src: '[[ item.src ]]'
+      access_time: "[[ item.access_time ]]"
+      access_time_format: "[[ item.access_time_format ]]"
+      attributes: "[[ item.attributes ]]"
+      attr: "[[ item.attr ]]"
+      follow: "[[ item.follow ]]"
+      force: "[[ item.force ]]"
+      mode: "[[ item.mode ]]"
+      modification_time: "[[ item.modification_time ]]"
+      modification_time_format: "[[ item.modification_time_format ]]"
+      owner: "[[ item.owner ]]"
+      recurse: "[[ item.recurse ]]"
+      selevel: "[[ item.selevel ]]"
+      serole: "[[ item.serole ]]"
+      setype: "[[ item.setype ]]"
+      seuser: "[[ item.seuser ]]"
+      unsafe_writes: "[[ item.unsafe_writes ]]"
+      var: "[[ item.var ]]"
+      var1: "[[ item.var1 ]]"
+      var2: "[[ item.var2 ]]"
+      var3: "[[ item.var3 ]]"
+      a: "[[ item.a ]]"
+      b: "[[ item.b ]]"
+      c: "[[ item.c ]]"
+      x: "[[ item.x ]]"
+      y: "[[ item.y ]]"
+      z: "[[ item.z ]]"
+  # We allow this fail because the user may be using and variable that only
+  # exist when evaluating the loop and this variable was not expected.
+  ignore_errors: yes
 
 - name: "[files] a2s_directories | Via: file | (*nix only): add/remove directories"
   file:
@@ -22,7 +54,7 @@
     src: "{{ item.src | default(a2s_directories_default.src | default(omit)) }}"
     # We set by (last) default 'directory'. Yes, actually users
     # can create/delete non-directories
-    state: "{{ item.state | default(a2s_directories_default.state | default(omit)) }}"
+    state: "{{ item.state | default(a2s_directories_default.state | default('directory')) }}"
 
     # Other parameters, by alphabetical order
     access_time: "{{ item.access_time | default(a2s_directories_default.access_time | default(omit)) }}"

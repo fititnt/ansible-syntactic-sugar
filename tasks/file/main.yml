@@ -4,10 +4,49 @@
 # LICENSE:         Public Domain
 # SEE:             https://docs.ansible.com/ansible/latest/modules/file_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_file_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/copy_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_copy_module.html
 
 - name: "[files] a2s_files | Via: debug | a2s_files_default"
   debug:
-    msg: "{{ a2s_files_default }}"
+    msg:
+      a2s_files_default: "{{ a2s_files_default | to_json }}"
+      a2s_files: "{{ a2s_files | default('undefined') }}"
+  vars:
+    # Did Ansible allow NOT evaluate a variable, so this part would not be
+    # necessary? (fititnt, 2020-01-20 02:29 BRT)
+    item:
+      path: '[[ item.path ]]'
+      src: '[[ item.src ]]'
+      access_time: "[[ item.access_time ]]"
+      access_time_format: "[[ item.access_time_format ]]"
+      attributes: "[[ item.attributes ]]"
+      attr: "[[ item.attr ]]"
+      follow: "[[ item.follow ]]"
+      force: "[[ item.force ]]"
+      mode: "[[ item.mode ]]"
+      modification_time: "[[ item.modification_time ]]"
+      modification_time_format: "[[ item.modification_time_format ]]"
+      owner: "[[ item.owner ]]"
+      recurse: "[[ item.recurse ]]"
+      selevel: "[[ item.selevel ]]"
+      serole: "[[ item.serole ]]"
+      setype: "[[ item.setype ]]"
+      seuser: "[[ item.seuser ]]"
+      unsafe_writes: "[[ item.unsafe_writes ]]"
+      var: "[[ item.var ]]"
+      var1: "[[ item.var1 ]]"
+      var2: "[[ item.var2 ]]"
+      var3: "[[ item.var3 ]]"
+      a: "[[ item.a ]]"
+      b: "[[ item.b ]]"
+      c: "[[ item.c ]]"
+      x: "[[ item.x ]]"
+      y: "[[ item.y ]]"
+      z: "[[ item.z ]]"
+  # We allow this fail because the user may be using and variable that only
+  # exist when evaluating the loop and this variable was not expected.
+  ignore_errors: yes
 
 - name: "[files] a2s_files | Via: file | (*nix only) Manage files and file properties"
   file:
@@ -61,31 +100,32 @@
 
 - name: "[files] a2s_files | Via: copy | (*nix only) (a2s_files[n]content defined EXPLICITLY) create/delete file with content"
   copy:
-    dest: "{{ item.dest | default(a2s_copies_default.dest | default(omit)) }}"
-    src: "{{ item.src | default(a2s_copies_default.src | default(omit)) }}"
+    # We will use dest and path. Copy only have dest, without alias
+    dest: "{{ item.dest | default(item.path | default(a2s_files_default.path | default(omit))) }}"
+    src: "{{ item.src | default(a2s_files_default.src | default(omit)) }}"
+    content: "{{ item.content | default(omit) }}" # We at this moment will require this explicitly (not use default)
 
     # Other parameters, by alphabetical order
-    attributes: "{{ item.dest | default(a2s_copies_default.attributes | default(omit)) }}"
-    attr: "{{ item.dest | default(a2s_copies_default.attr | default(omit)) }}" # alias for attributes
-    backup: "{{ item.dest | default(a2s_copies_default.backup | default(omit)) }}"
-    checksum: "{{ item.dest | default(a2s_copies_default.checksum | default(omit)) }}"
-    content: "{{ item.dest | default(a2s_copies_default.content | default(omit)) }}"
-    decrypt: "{{ item.dest | default(a2s_copies_default.decrypt | default(omit)) }}"
-    directory_mode: "{{ item.dest | default(a2s_copies_default.directory_mode | default(omit)) }}"
-    follow: "{{ item.dest | default(a2s_copies_default.follow | default(omit)) }}"
-    force: "{{ item.dest | default(a2s_copies_default.force | default(omit)) }}"
-    group: "{{ item.dest | default(a2s_copies_default.group | default(omit)) }}"
-    local_follow: "{{ item.dest | default(a2s_copies_default.local_follow | default(omit)) }}"
-    mode: "{{ item.dest | default(a2s_copies_default.mode | default(omit)) }}"
-    owner: "{{ item.dest | default(a2s_copies_default.owner | default(omit)) }}"
-    remote_src: "{{ item.dest | default(a2s_copies_default.remote_src | default(omit)) }}"
-    selevel: "{{ item.dest | default(a2s_copies_default.selevel | default(omit)) }}"
-    serole: "{{ item.dest | default(a2s_copies_default.serole | default(omit)) }}"
-    setype: "{{ item.dest | default(a2s_copies_default.setype | default(omit)) }}"
-    seuser: "{{ item.dest | default(a2s_copies_default.seuser | default(omit)) }}"
-    unsafe_writes: "{{ item.dest | default(a2s_copies_default.unsafe_writes | default(omit)) }}"
-    validate: "{{ item.dest | default(a2s_copies_default.validate | default(omit)) }}"
-  with_items: "{{ a2s_copies }}"
+    attributes: "{{ item.attributes | default(a2s_files_default.attributes | default(omit)) }}"
+    # attr: "{{ item.attr | default(a2s_files_default.attr | default(omit)) }}" # alias for attributes
+    backup: "{{ item.backup | default(a2s_files_default.backup | default(omit)) }}"
+    checksum: "{{ item.checksum | default(a2s_files_default.checksum | default(omit)) }}"
+    decrypt: "{{ item.decrypt | default(a2s_files_default.decrypt | default(omit)) }}"
+    directory_mode: "{{ item.directory_mode | default(a2s_files_default.directory_mode | default(omit)) }}"
+    follow: "{{ item.follow | default(a2s_files_default.follow | default(omit)) }}"
+    force: "{{ item.force | default(a2s_files_default.force | default(omit)) }}"
+    group: "{{ item.group | default(a2s_files_default.group | default(omit)) }}"
+    local_follow: "{{ item.local_follow | default(a2s_files_default.local_follow | default(omit)) }}"
+    mode: "{{ item.mode | default(a2s_files_default.mode | default(omit)) }}"
+    owner: "{{ item.owner | default(a2s_files_default.owner | default(omit)) }}"
+    remote_src: "{{ item.remote_src | default(a2s_files_default.remote_src | default(omit)) }}"
+    selevel: "{{ item.selevel | default(a2s_files_default.selevel | default(omit)) }}"
+    serole: "{{ item.serole | default(a2s_files_default.serole | default(omit)) }}"
+    setype: "{{ item.setype | default(a2s_files_default.setype | default(omit)) }}"
+    seuser: "{{ item.seuser | default(a2s_files_default.seuser | default(omit)) }}"
+    unsafe_writes: "{{ item.unsafe_writes | default(a2s_files_default.unsafe_writes | default(omit)) }}"
+    validate: "{{ item.validate | default(a2s_files_default.validate | default(omit)) }}"
+  with_items: "{{ a2s_files }}"
   when:
     - "(item.content is defined) and (item.content | length > 0)"
     - "(a2s_internal_iswindows is undefined)
@@ -97,17 +137,17 @@
 
 - name: "[files] a2s_files | Via: win_copy | (Windows only) (a2s_files[n]content defined EXPLICITLY) create/delete file with content"
   win_copy:
-    dest: "{{ item.dest | default(a2s_copies_default.dest | default(omit)) }}"
-    src: "{{ item.src | default(a2s_copies_default.src | default(omit)) }}"
+    dest: "{{ item.dest | default(a2s_files_default.dest | default(omit)) }}"
+    src: "{{ item.src | default(a2s_files_default.src | default(omit)) }}"
+    content: "{{ item.content | default(omit) }}" # We at this moment will require this explicitly (not use default)
 
     # Other parameters, by alphabetical order
-    backup: "{{ item.backup | default(a2s_copies_default.backup | default(omit)) }}"
-    content: "{{ item.content | default(a2s_copies_default.content | default(omit)) }}"
-    decrypt: "{{ item.decrypt | default(a2s_copies_default.decrypt | default(omit)) }}"
-    force: "{{ item.force | default(a2s_copies_default.force | default(omit)) }}"
-    local_follow: "{{ item.local_follow | default(a2s_copies_default.local_follow | default(omit)) }}"
-    remote_src: "{{ item.remote_src | default(a2s_copies_default.remote_src | default(omit)) }}"
-  with_items: "{{ a2s_copies }}"
+    backup: "{{ item.backup | default(a2s_files_default.backup | default(omit)) }}"
+    decrypt: "{{ item.decrypt | default(a2s_files_default.decrypt | default(omit)) }}"
+    force: "{{ item.force | default(a2s_files_default.force | default(omit)) }}"
+    local_follow: "{{ item.local_follow | default(a2s_files_default.local_follow | default(omit)) }}"
+    remote_src: "{{ item.remote_src | default(a2s_files_default.remote_src | default(omit)) }}"
+  with_items: "{{ a2s_files }}"
   when:
     - "(item.content is defined) and (item.content | length > 0)"
     - "(a2s_internal_iswindows is defined)
