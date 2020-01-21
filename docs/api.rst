@@ -15,10 +15,13 @@ a2s APIs
 
   <hr />
 
+.. _ref-standard-apis:
 
 *************
 Standard APIs
 *************
+
+
 
 `a2s_copies`
 ============

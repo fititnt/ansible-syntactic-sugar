@@ -1,12 +1,60 @@
 .. include:: Includes.txt
 
 ##################
-a2s philosophy
+Philosophy
 ##################
 
 .. note::
 
-  This page is a draft. Will change later.
+  `a2s` still a pre-release. But a TL;DR: to explain the idea behind is *"`a2s`
+  be to Ansible what jQuery is to JavaScript"*. So it means:
+
+  - `a2s` still YAML and still Ansible.
+
+    - It should not require Python knowledge for one averange Pull Request with
+      a new feature.
+    - Ideally should be easy to reuse parts of this code by others.
+
+  - `a2s` **"most common data structure"** is a List **"of something"** to be
+    executed in order
+
+    - If **"this something"** is an abstraction to an Ansible Module
+
+      - The name should be plural form
+      - The same way Ansible modules may implement parameter aliases (e.g. `file_module
+        have dest and name as aliases for path <https://docs.ansible.com/ansible/latest/modules/file_module.html>`_)
+        , `a2s` may implement entire API aliases (e.g a2s_directories, a2s_links
+        are alises to file_module).
+      - We point to the official documentation instead of repeating all options,
+        and (if any) document what a2s add to the underlining API.
+      - if uses more than one API, both documentation and execution should
+        mention.
+
+    - If **"this something"** is a very customized implementation, it should
+      explain all options. And very likely warn the user if is an API that could
+      be changed on a next major version
+
+  - `a2s` should be *"be otimized for humans"* and simpler usages.
+
+    - It does not means that more than simpler usages cannot be otimized, but
+      they may require read more documentation, in special ones related on how
+      to run just part of the `a2s` per play run.
+    - What may be more complex than simple to medium implementation is out of
+      scope and we recommend users to use dedicated Ansible roles.
+
+  - `a2s` should be namespaced to avoid conflict with Ansible underling modules,
+    with other Ansible Roles and maybe even with more than one version of itself
+    (or someone elses fork) installed.
+
+    - *How* this could be done, we're open to ideas.
+    - `a2s` should respect `SemVer <https://semver.org/>`_ and may have major
+      versions more often than most averange software.
+
+
+..
+  (This is a source code comment)
+  - `a2s` can be less strict than Ansible modules if this makes more easy to use
+  - `a2s` license is Public Domain.
 
 
 ********************

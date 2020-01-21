@@ -38,7 +38,6 @@
     serole: "{{ item.dest | default(a2s_copies_default.serole | default(omit)) }}"
     setype: "{{ item.dest | default(a2s_copies_default.setype | default(omit)) }}"
     seuser: "{{ item.dest | default(a2s_copies_default.seuser | default(omit)) }}"
-    src: "{{ item.dest | default(a2s_copies_default.src | default(omit)) }}"
     unsafe_writes: "{{ item.dest | default(a2s_copies_default.unsafe_writes | default(omit)) }}"
     validate: "{{ item.dest | default(a2s_copies_default.validate | default(omit)) }}"
   with_items: "{{ a2s_copies }}"

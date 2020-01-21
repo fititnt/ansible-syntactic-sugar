@@ -64,4 +64,5 @@ def test_devel_nginx_is_enabled(host):
 
 
 def test_devel_nginx_is_running(host):
-    assert host.service("nginx").is_running
+    is_conteiner = 'ISCONTEINER' in os.environ
+    assert not is_conteiner or host.service("nginx").is_running

@@ -75,8 +75,14 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+html_css_files = [
+    # 'css/custom.css',
+    'custom.css',
+]
+
 def setup(app):
     app.add_stylesheet("css/theme.css")
+    app.add_stylesheet("css/custom.css")
 
 
 # See https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=master_doc
