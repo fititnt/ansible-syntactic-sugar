@@ -188,6 +188,7 @@ definitions:
    :maxdepth: 3
    :caption: Contents:
 
+   quickstart
    why
    installation
    philosophy
