@@ -1,8 +1,8 @@
 .. include:: Includes.txt
 
-##################
-a2s APIs
-##################
+###########################
+Ansible Syntactic Sugar APIs
+###########################
 
 .. warning::
 

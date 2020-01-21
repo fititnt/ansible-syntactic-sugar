@@ -4,14 +4,34 @@
 [![Ansible Quality Score](https://img.shields.io/ansible/quality/45694)](https://galaxy.ansible.com/fititnt/syntactic_sugar)
 [![Build Status](https://travis-ci.com/fititnt/ansible-syntactic-sugar.svg?branch=master)](https://travis-ci.com/fititnt/ansible-syntactic-sugar)
 
-**[not-production-ready] `a2s` is a non-official optionated cross-platform
-Ansible role that acts as _syntactic sugar_ for 1) some [ansible modules](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html),
+**![Maturity: Technology Preview](https://img.shields.io/badge/Maturity-technology--preview-informational)
+`a2s` is a non-official Ansible role that acts as _[syntactic sugar](https://en.wikipedia.org/wiki/Syntactic_sugar)_
+for [Ansible](https://www.ansible.com/), which without extensions already is
+an _"Simple, agentless IT automation that anyone can use"_**.
+
+<!--
+By design typical
+usage with `a2s` is idempotent and tend to be more cross-platform and less
+verbose than alternatives, but have a drawback of not be otimized for more
+complex setups.
+-->
+
+
+<!--
+`a2s` is a non-official `Syntactic Sugar <https://en.wikipedia.org/wiki/Syntactic_sugar>`_
+for `Ansible <https://www.ansible.com/>`_, which without extensions already is
+an *"Simple, agentless IT automation that anyone can use"*.
+
+for 1) some [ansible modules](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html),
 2) <s>populate sample content</s><sup>(now on [ansible-faker](https://github.com/fititnt/ansible-faker))</sup>
 and 3) install some common software to help with quick tests and 4) even
 explain/implement [how to run only a subset of an Ansible role](#a2s_only_apis)**.
 
-> **Warning: this is a pre-release**. Variable naming conventions may change.
-Feedback is welcome!
+-->
+
+> **Warning: this is a Technology Preview release**. While it's used on
+non-public projects by it's initial maintainer, it may eventually accept
+suggestions that could improve it's base design.
 
 ## Documentation
 

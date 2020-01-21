@@ -19,7 +19,10 @@ Ansible Syntactic Sugar ("`a2s`") documentation
     :alt: Build Status
     :target: https://travis-ci.com/fititnt/ansible-syntactic-sugar
 
-`a2s` is a non-official `Syntactic Sugar <https://en.wikipedia.org/wiki/Syntactic_sugar>`_
+.. |image-maturity-technology-preview| image:: https://img.shields.io/badge/Maturity-technology--preview-informational
+    :alt: Maturity: Technology Preview
+
+|image-maturity-technology-preview| `a2s` is a non-official `Syntactic Sugar <https://en.wikipedia.org/wiki/Syntactic_sugar>`_
 for `Ansible <https://www.ansible.com/>`_, which without extensions already is
 an *"Simple, agentless IT automation that anyone can use"*.
 
@@ -185,9 +188,11 @@ definitions:
    :maxdepth: 3
    :caption: Contents:
 
+   why
    installation
    philosophy
    api
+   constant
    playbooks
    todo
    alternatives

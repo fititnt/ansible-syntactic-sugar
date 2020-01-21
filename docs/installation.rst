@@ -3,6 +3,16 @@
 Installation guides
 =================================
 
+.. code-block:: bash
+
+  # Too long didn't read:
+  # "a2s is installable as an Ansible role and is distributed over Ansible Galaxy
+  ansible-galaxy install fititnt.syntactic_sugar
+
+.. raw:: html
+
+  <hr />
+
 **a2s** extends **Ansible**. Ansible uses **Python** on the "control node" (for example
 your notebook running Linux, Mac or `Windows via WSL <https://docs.ansible.com/ansible/latest/user_guide/windows_faq.html>`_)
 to control remote machines over **SSH** (these machines could be Windows, Linux,
