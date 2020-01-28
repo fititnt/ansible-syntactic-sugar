@@ -1,0 +1,53 @@
+---
+
+# FILE:            {{ role_path }}/tasks/apt/apt_key.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/apt_repository_module.html
+# SEE:             https://wiki.debian.org/PackageManagement
+
+- name: "[packaging-os] a2s_apt_repositories | Via: debug | a2s_apt_repositories_default"
+  debug:
+    msg:
+      a2s_apt_repositories_default: "{{ a2s_apt_repositories_default | to_json }}"
+      # a2s_apt_repositories: "{{ a2s_apt_repositories | default('undefined') }}"
+  vars:
+    # Did Ansible allow NOT evaluate a variable, so this part would not be
+    # necessary? (fititnt, 2020-01-20 02:29 BRT)
+    item:
+      codename: '[[ item.codename ]]'
+      filename: '[[ item.filename ]]'
+      mode: '[[ item.mode ]]'
+      repo: '[[ item.repo ]]'
+      state: '[[ item.state ]]'
+      update_cache: '[[ item.update_cache ]]'
+      validate_certs: '[[ item.validate_certs ]]'
+      var: "[[ item.var ]]"
+      var1: "[[ item.var1 ]]"
+      var2: "[[ item.var2 ]]"
+      var3: "[[ item.var3 ]]"
+      a: "[[ item.a ]]"
+      b: "[[ item.b ]]"
+      c: "[[ item.c ]]"
+      x: "[[ item.x ]]"
+      y: "[[ item.y ]]"
+      z: "[[ item.z ]]"
+  # We allow this fail because the user may be using and variable that only
+  # exist when evaluating the loop and this variable was not expected.
+  ignore_errors: yes
+
+- name: "[packaging-os] a2s_apt_repositories | Via: apt_repository | (Debian Like only): Add and remove APT repositories"
+  apt_repository:
+    codename: "{{ item.codename | default(a2s_apt_repositories_default.codename | default(omit)) }}"
+    filename: "{{ item.filename | default(a2s_apt_repositories_default.filename | default(omit)) }}"
+    mode: "{{ item.mode | default(a2s_apt_repositories_default.mode | default(omit)) }}"
+    repo: "{{ item.repo | default(a2s_apt_repositories_default.repo | default(omit)) }}"
+    state: "{{ item.state | default(a2s_apt_repositories_default.state | default(omit)) }}"
+    update_cache: "{{ item.update_cache | default(a2s_apt_repositories_default.update_cache | default(omit)) }}"
+    validate_certs: "{{ item.validate_certs | default(a2s_apt_repositories_default.validate_certs | default(omit)) }}"
+  with_items: "{{ a2s_apt_repositories }}"
+  when:
+    - "(a2s_apt_repositories is defined) and (a2s_apt_repositories[0] is defined)"
+  notify:
+    - "a2s-apt-repositories changed"
+  tags:
+    - a2s-apt-repositories

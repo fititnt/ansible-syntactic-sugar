@@ -1,0 +1,62 @@
+---
+
+# FILE:            {{ role_path }}/tasks/apt/apt_key.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/apt_key_module.html
+# SEE:             https://wiki.debian.org/PackageManagement
+
+- name: "[packaging-os] a2s_apt_keys | Via: debug | a2s_apt_keys_default"
+  debug:
+    msg:
+      a2s_apt_keys_default: "{{ a2s_apt_keys_default | to_json }}"
+      # a2s_apt_keys: "{{ a2s_apt_keys | default('undefined') }}"
+  vars:
+    # Did Ansible allow NOT evaluate a variable, so this part would not be
+    # necessary? (fititnt, 2020-01-20 02:29 BRT)
+    item:
+      data: '[[ item.data ]]'
+      file: '[[ item.file ]]'
+      id: '[[ item.id ]]'
+      keyring: '[[ item.keyring ]]'
+      keyserver: '[[ item.keyserver ]]'
+      state: '[[ item.state ]]'
+      url: '[[ item.url ]]'
+      validate_certs: '[[ item.validate_certs ]]'
+      var: "[[ item.var ]]"
+      var1: "[[ item.var1 ]]"
+      var2: "[[ item.var2 ]]"
+      var3: "[[ item.var3 ]]"
+      a: "[[ item.a ]]"
+      b: "[[ item.b ]]"
+      c: "[[ item.c ]]"
+      x: "[[ item.x ]]"
+      y: "[[ item.y ]]"
+      z: "[[ item.z ]]"
+  # We allow this fail because the user may be using and variable that only
+  # exist when evaluating the loop and this variable was not expected.
+  ignore_errors: yes
+
+- name: "[packaging-os] a2s_apt_keys | Via: apt_key | (Debian Like only):  Add or remove an apt key"
+  apt_key:
+    data: "{{ item.data | default(a2s_apt_keys_default.data | default(omit)) }}"
+    file: "{{ item.file | default(a2s_apt_keys_default.file | default(omit)) }}"
+    id: "{{ item.id | default(a2s_apt_keys_default.id | default(omit)) }}"
+    keyring: "{{ item.keyring | default(a2s_apt_keys_default.keyring | default(omit)) }}"
+    keyserver: "{{ item.keyserver | default(a2s_apt_keys_default.keyserver | default(omit)) }}"
+    state: "{{ item.state | default(a2s_apt_keys_default.state | default(omit)) }}"
+    url: "{{ item.url | default(a2s_apt_keys_default.url | default(omit)) }}"
+    validate_certs: "{{ item.validate_certs | default(a2s_apt_keys_default.validate_certs | default(omit)) }}"
+
+  with_items: "{{ a2s_apt_keys }}"
+  when:
+    # # Check if is windows should be on upper level
+    # - "(a2s_internal_iswindows is undefined)
+    #   or (a2s_internal_iswindows|bool is sameas false)"
+    # Skip specific run exceptions
+    # - "(a2s_only_apis is undefined) or ('a2s_apt_keys' in a2s_only_apis)"
+    # - "(a2s_except_apis is undefined) or ('a2s_apt_keys' not in a2s_except_apis)"
+    - "(a2s_apt_keys is defined) and (a2s_apt_keys[0] is defined)"
+  notify:
+    - "a2s-apt-keys changed"
+  tags:
+    - a2s-apt-keys

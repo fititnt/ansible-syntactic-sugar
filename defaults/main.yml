@@ -13,6 +13,9 @@ a2s_autoinstall_repositories: false
 # a2s_only_apis_groups: []
 
 # Defaults
+a2s_apts_default: {}
+a2s_apt_keys_default: {}
+a2s_apt_repositories_default: {}
 a2s_directories_default: {}
 a2s_copies_default: {}
 a2s_fetches_default: {}

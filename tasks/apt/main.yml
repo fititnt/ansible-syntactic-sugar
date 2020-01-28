@@ -1,0 +1,31 @@
+---
+
+# FILE:            {{ role_path }}/tasks/apt/main.yml
+# LICENSE:         Public Domain
+
+- name: "[packaging-os] apt_key.yml?"
+  include: "{{ role_path }}/tasks/apt/apt_key.yml"
+  when:
+    - "(a2s_only_apis is undefined) or ('a2s_apt_keys' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_apt_keys' not in a2s_except_apis)"
+    - "(a2s_apt_keys is defined) and (a2s_apt_keys[0] is defined)"
+  tags:
+    - s2s-apt-keys
+
+- name: "[packaging-os] apt_repository.yml?"
+  include: "{{ role_path }}/tasks/apt/apt_repository.yml"
+  when:
+    - "(a2s_only_apis is undefined) or ('a2s_apt_repositories' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_apt_repositories' not in a2s_except_apis)"
+    - "(a2s_apt_repositories is defined) and (a2s_apt_repositories[0] is defined)"
+  tags:
+    - a2s-apt-repositories
+
+- name: "[packaging-os] apt.yml?"
+  include: "{{ role_path }}/tasks/apt/apt.yml"
+  when:
+    - "(a2s_only_apis is undefined) or ('a2s_apts' in a2s_only_apis)"
+    - "(a2s_except_apis is undefined) or ('a2s_apts' not in a2s_except_apis)"
+    - "(a2s_apts is defined) and (a2s_apts[0] is defined)"
+  tags:
+    - s2s-apt-keys

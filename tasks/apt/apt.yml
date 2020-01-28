@@ -1,0 +1,86 @@
+---
+
+# FILE:            {{ role_path }}/tasks/apt/apt.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/apt_module.html
+# SEE:             https://wiki.debian.org/PackageManagement
+
+- name: "[packaging-os] a2s_apts | Via: debug | a2s_apts_default"
+  debug:
+    msg:
+      a2s_apts_default: "{{ a2s_apts_default | to_json }}"
+      # a2s_apts: "{{ a2s_apts | default('undefined') }}"
+  vars:
+    # Did Ansible allow NOT evaluate a variable, so this part would not be
+    # necessary? (fititnt, 2020-01-20 02:29 BRT)
+    item:
+      allow_unauthenticated: '[[ item.allow_unauthenticated ]]'
+      autoclean: '[[ item.autoclean ]]'
+      autoremove: '[[ item.autoremove ]]'
+      cache_valid_time: '[[ item.cache_valid_time ]]'
+      deb: '[[ item.deb ]]'
+      default_release: '[[ item.default_release ]]'
+      dpkg_options: '[[ item.dpkg_options ]]'
+      force: '[[ item.force ]]'
+      force_apt_get: '[[ item.force_apt_get ]]'
+      install_recommends: '[[ item.install_recommends ]]'
+      name: '[[ item.name ]]'
+      package: '[[ item.package ]]'
+      pkg: '[[ item.pkg ]]'
+      only_upgrade: '[[ item.only_upgrade ]]'
+      policy_rc_d: '[[ item.policy_rc_d ]]'
+      purge: '[[ item.purge ]]'
+      state: '[[ item.state ]]'
+      update_cache: '[[ item.update_cache ]]'
+      upgrade: '[[ item.upgrade ]]'
+      var: "[[ item.var ]]"
+      var1: "[[ item.var1 ]]"
+      var2: "[[ item.var2 ]]"
+      var3: "[[ item.var3 ]]"
+      a: "[[ item.a ]]"
+      b: "[[ item.b ]]"
+      c: "[[ item.c ]]"
+      x: "[[ item.x ]]"
+      y: "[[ item.y ]]"
+      z: "[[ item.z ]]"
+  # We allow this fail because the user may be using and variable that only
+  # exist when evaluating the loop and this variable was not expected.
+  ignore_errors: yes
+
+- name: "[packaging-os] a2s_apts | Via: apt | (Debian Like only): Manages apt-packages"
+  apt:
+    name: "{{ item.name | default(a2s_apts_default.name | default(omit)) }}"
+    package: "{{ item.package | default(a2s_apts_default.package | default(omit)) }}" # Alias of name
+    pkg: "{{ item.pkg | default(a2s_apts_default.pkg | default(omit)) }}" # Alias of name
+    state: "{{ item.state | default(a2s_apts_default.state | default(omit)) }}"
+
+    # Other parameters
+    allow_unauthenticated: "{{ item.allow_unauthenticated | default(a2s_apts_default.allow_unauthenticated | default(omit)) }}"
+    autoclean: "{{ item.autoclean | default(a2s_apts_default.autoclean | default(omit)) }}"
+    autoremove: "{{ item.autoremove | default(a2s_apts_default.autoremove | default(omit)) }}"
+    cache_valid_time: "{{ item.cache_valid_time | default(a2s_apts_default.cache_valid_time | default(omit)) }}"
+    deb: "{{ item.deb | default(a2s_apts_default.deb | default(omit)) }}"
+    default_release: "{{ item.default_release | default(a2s_apts_default.default_release | default(omit)) }}"
+    dpkg_options: "{{ item.dpkg_options | default(a2s_apts_default.dpkg_options | default(omit)) }}"
+    force: "{{ item.force | default(a2s_apts_default.force | default(omit)) }}"
+    force_apt_get: "{{ item.force_apt_get | default(a2s_apts_default.force_apt_get | default(omit)) }}"
+    install_recommends: "{{ item.install_recommends | default(a2s_apts_default.install_recommends | default(omit)) }}"
+    only_upgrade: "{{ item.only_upgrade | default(a2s_apts_default.only_upgrade | default(omit)) }}"
+    policy_rc_d: "{{ item.policy_rc_d | default(a2s_apts_default.policy_rc_d | default(omit)) }}"
+    purge: "{{ item.purge | default(a2s_apts_default.purge | default(omit)) }}"
+    update_cache: "{{ item.update_cache | default(a2s_apts_default.update_cache | default(omit)) }}"
+    upgrade: "{{ item.upgrade | default(a2s_apts_default.upgrade | default(omit)) }}"
+
+  with_items: "{{ a2s_apts }}"
+  when:
+    # # Check if is windows should be on upper level
+    # - "(a2s_internal_iswindows is undefined)
+    #   or (a2s_internal_iswindows|bool is sameas false)"
+    # Skip specific run exceptions
+    # - "(a2s_only_apis is undefined) or ('a2s_apts' in a2s_only_apis)"
+    # - "(a2s_except_apis is undefined) or ('a2s_apts' not in a2s_except_apis)"
+    - "(a2s_apts is defined) and (a2s_apts[0] is defined)"
+  notify:
+    - "a2s-apts changed"
+  tags:
+    - a2s-apts

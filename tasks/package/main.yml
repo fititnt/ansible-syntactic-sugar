@@ -1,0 +1,48 @@
+---
+
+# FILE:            {{ role_path }}/tasks/package/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/package_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_package_module.html
+
+# TODO: implement a2s_packages_default (fititnt, 2020-01-28 16:10 BRT)
+
+- name: "[system] a2s_packages | Via: package | (*nix only): add/remove packages"
+  package:
+    name: "{{ (item.name is defined) | ternary(item.name, item) }}"
+    state: "{{ (item.name is defined and item.state is defined) | ternary(item.state, omit) }}"
+    use: "{{ (item.name is defined and item.use is defined) | ternary(item.use, omit) }}"
+  with_items: "{{ a2s_packages }}"
+  when:
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"
+  notify:
+    - "a2s-packages changed"
+  tags:
+    - a2s-packages
+
+# NOTE: since win_package is more complicated, we will not implicitly acept simpler
+#       list of strings and require a dictionary
+- name: "[system] a2s_packages | Via: win_package | (Windows only): add/remove packages"
+  win_package:
+    arguments: "{{ item.arguments | default(omit) }}"
+    chdir: "{{ item.chdir | default(omit) }}"
+    creates_path: "{{ item.creates_path | default(omit) }}"
+    creates_service: "{{ item.creates_service | default(omit) }}"
+    creates_version: "{{ item.creates_version | default(omit) }}"
+    expected_return_code: "{{ item.expected_return_code | default(omit) }}"
+    log_path: "{{ item.log_path | default(omit) }}"
+    password: "{{ item.password | default(omit) }}"
+    path: "{{ item.path | default(omit) }}"
+    product_id: "{{ item.product_id | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+    username: "{{ item.username | default(omit) }}"
+    validate_certs: "{{ item.validate_certs | default(omit) }}"
+  with_items: "{{ a2s_packages }}"
+  when:
+    - "(a2s_internal_iswindows is defined)
+      and (a2s_internal_iswindows|bool is sameas true)"
+  notify:
+    - "a2s-packages changed"
+  tags:
+    - a2s-packages

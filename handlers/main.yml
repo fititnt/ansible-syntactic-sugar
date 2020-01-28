@@ -3,6 +3,9 @@
 
 - meta: noop
   listen:
+    - "a2s-apts changed"
+    - "a2s-apt-keys changed"
+    - "a2s-apt-repositories changed"
     - "a2s-copy-copies changed"
     - "a2s-directory-directories changed"
     - "a2s-files changed"
@@ -24,4 +27,5 @@
     - "a2s-install-adminer"
     - "a2s-crons changed"
     - "a2s-rclone-conf changed"
+    - "a2s-packages changed"
   when: false
