@@ -5,8 +5,63 @@
 #
 # SEE:             https://docs.ansible.com/ansible/latest/modules/template_module.html
 #
+# USAGE:
+# Example:
+#    a2s_rclone:
+#      conf:
+#        dest: "/root/.config/rclone/rclone.conf"
+#        owner: "root"
+#        sections:
+#          - name: "backblaze-bucket"
+#            options:
+#              type: "b2"
+#              account: "000b3XXXXXXXXXXXXXXXXXXX"
+#              key: "K000E1XXXXXXXXXXXXXXX"
+#              endpoint: ""
 
-- name: "rclone | config.yml [{{ a2s_rclone }}]"
+
+- name: "[a2s-extra] rclone a2s_rclone | Via: debug | a2s_rclone variable"
+  debug:
+    msg:
+      a2s_rclone: "{{ a2s_rclone }}"
+
+# - name: "debug"
+#   debug:
+#     msg:
+#       a2s_rclone: "{{ a2s_rclone}}"
+#       path: "{{ a2s_rclone.conf.dest | default('/root/.config/rclone/rclone.conf') | dirname }}"
+
+- name: "[a2s-extra] rclone a2s_rclone | Via: stat | a2s_rclone.conf.dest dirname exist?"
+  stat:
+    path: "{{ a2s_rclone.conf.dest | default('/root/.config/rclone/rclone.conf') | dirname }}"
+  register: stat_rclone_conf_dest_dirname
+  tags:
+    - a2s-rclone-conf
+
+# - debug:
+#     msg:
+#       stat_rclone_conf_dest_dirname: "{{ stat_rclone_conf_dest_dirname }}"
+
+# - debug:
+#     msg: "Path exists and is a directory"
+#   when: p.stat.isdir is defined and p.stat.isdir
+
+- name: "[a2s-extra] rclone | Create {{ a2s_rclone.conf.dest | default('/root/.config/rclone/rclone.conf') | dirname }}"
+  file:
+    path: "{{ a2s_rclone.conf.dest | default('/root/.config/rclone/rclone.conf') | dirname }}"
+    state: "directory"
+    group: "{{ a2s_rclone.conf.group | default(omit) }}"
+    mode: "{{ a2s_rclone.conf.mode | default(omit) }}"
+    owner: "{{ a2s_rclone.conf.owner | default(omit) }}"
+    recurse: yes
+  when:
+    - "(not stat_rclone_conf_dest_dirname.stat.exists)"
+    # - "(stat_rclone_conf_dest_dirname.stat.isdir is not defined)
+    #   and (not stat_rclone_conf_dest_dirname.stat.isdir)"
+  tags:
+    - a2s-rclone-conf
+
+- name: "[a2s-extra] rclone | config.yml [{{ a2s_rclone }}]"
   template:
     src: "{{ a2s_rclone.conf.src | default('rclone/rclone.conf.j2') }}"
     dest: "{{ a2s_rclone.conf.dest | default('/root/.config/rclone/rclone.conf') }}"

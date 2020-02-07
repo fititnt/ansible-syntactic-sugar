@@ -22,6 +22,11 @@
   tags:
     - a2s-user-known-hosts
 
+# - name: "{{ role_path }}/tasks/users/templates.yml"
+#   include: "{{ role_path }}/tasks/users/templates.yml"
+#   tags:
+#     - a2s-user-templates
+
 # TODO: implement known_hosts_module
 
 # - name: "debug3"

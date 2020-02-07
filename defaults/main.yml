@@ -23,6 +23,7 @@ a2s_files_default: {}
 a2s_mysql_dbs_defaults: {}
 a2s_mysql_users_defaults: {}
 a2s_users_defaults: {}
+a2s_templates_default: {}
 
 # Customize these values if you don't want specify always on subcomponents like
 # sample-content-cdn, sample-content-php, sample-content-static-site ...

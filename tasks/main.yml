@@ -83,6 +83,10 @@
       a2s_install_composer: "{{ a2s_install_composer | default(omit) }}"
       a2s_install_composers: "{{ a2s_install_composers | default(omit) }}"
       a2s_install_php: "{{ a2s_install_php | default(omit) }}"
+
+      # Other quick debugs
+      test1: "{{ (a2s_only_apis_groups is undefined) or ('packaging-os' in a2s_only_apis_groups) }}"
+      test2: "{{ (a2s_only_apis_groups is undefined) or ('packaging-os' in a2s_only_apis_groups) }}"
   tags:
     - always
 
