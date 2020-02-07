@@ -2,10 +2,6 @@
 
 # FILE:            {{ role_path }}/tasks/users/main.yml
 # LICENSE:         Public Domain
-# SEE:             https://docs.ansible.com/ansible/latest/modules/user_module.html
-# SEE:             https://docs.ansible.com/ansible/latest/modules/win_user_module.html
-# SEE:             https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html
-# SEE:             https://docs.ansible.com/ansible/latest/modules/known_hosts_module.html
 
 - name: "{{ role_path }}/tasks/users/user.yml"
   include: "{{ role_path }}/tasks/users/user.yml"
@@ -21,6 +17,16 @@
   include: "{{ role_path }}/tasks/users/known_hosts.yml"
   tags:
     - a2s-user-known-hosts
+
+- name: "{{ role_path }}/tasks/users/directories.yml"
+  include: "{{ role_path }}/tasks/users/directories.yml"
+  tags:
+    - a2s-user-directories
+
+- name: "{{ role_path }}/tasks/users/copies.yml"
+  include: "{{ role_path }}/tasks/users/copies.yml"
+  tags:
+    - a2s-user-copies
 
 - name: "{{ role_path }}/tasks/users/templates.yml"
   include: "{{ role_path }}/tasks/users/templates.yml"

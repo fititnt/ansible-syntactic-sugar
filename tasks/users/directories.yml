@@ -1,0 +1,110 @@
+---
+
+# FILE:            {{ role_path }}/tasks/users/directories.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/file_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_file_module.html
+
+# - name: "[system] a2s_users.directories  | Via: debug | a2s_users_directories_default"
+#   debug:
+#     msg:
+#       a2s_users_directories_default: "{{ this_default | to_json }}"
+#       a2s_directories: "{{ a2s_directories | default('undefined') }}"
+#   vars:
+#     # Did Ansible allow NOT evaluate a variable, so this part would not be
+#     # necessary? (fititnt, 2020-01-20 02:29 BRT)
+#     item:
+#       path: '[[ item.1.path ]]'
+#       src: '[[ item.1.src ]]'
+#       access_time: "[[ item.1.access_time ]]"
+#       access_time_format: "[[ item.1.access_time_format ]]"
+#       attributes: "[[ item.1.attributes ]]"
+#       attr: "[[ item.1.attr ]]"
+#       follow: "[[ item.1.follow ]]"
+#       force: "[[ item.1.force ]]"
+#       mode: "[[ item.1.mode ]]"
+#       modification_time: "[[ item.1.modification_time ]]"
+#       modification_time_format: "[[ item.1.modification_time_format ]]"
+#       owner: "[[ item.1.owner ]]"
+#       recurse: "[[ item.1.recurse ]]"
+#       selevel: "[[ item.1.selevel ]]"
+#       serole: "[[ item.1.serole ]]"
+#       setype: "[[ item.1.setype ]]"
+#       seuser: "[[ item.1.seuser ]]"
+#       unsafe_writes: "[[ item.1.unsafe_writes ]]"
+#       var: "[[ item.1.var ]]"
+#       var1: "[[ item.1.var1 ]]"
+#       var2: "[[ item.1.var2 ]]"
+#       var3: "[[ item.1.var3 ]]"
+#       a: "[[ item.1.a ]]"
+#       b: "[[ item.1.b ]]"
+#       c: "[[ item.1.c ]]"
+#       x: "[[ item.1.x ]]"
+#       y: "[[ item.1.y ]]"
+#       z: "[[ item.1.z ]]"
+#   # We allow this fail because the user may be using and variable that only
+#   # exist when evaluating the loop and this variable was not expected.
+#   ignore_errors: yes
+
+- name: "[system] a2s_users[n]directories | Via: file | (*nix only): add/remove directories"
+  file:
+    path: "{{ item.1.path | default(this_default.path | default(omit)) }}"
+    # dest: "{{ item.1.dest | default(this_default.dest | default(omit)) }}" # alias for path
+    # name: "{{ item.1.name | default(this_default.name | default(omit)) }}" # alias for path
+    src: "{{ item.1.src | default(this_default.src | default(omit)) }}"
+    # We set by (last) default 'directory'. Yes, actually users
+    # can create/delete non-directories
+    state: "{{ item.1.state | default(this_default.state | default('directory')) }}"
+
+    # Other parameters, by alphabetical order
+    access_time: "{{ item.1.access_time | default(this_default.access_time | default(omit)) }}"
+    access_time_format: "{{ item.1.access_time_format | default(this_default.access_time_format | default(omit)) }}"
+    attributes: "{{ item.1.attributes | default(this_default.attributes | default(omit)) }}"
+    attr: "{{ item.1.attr | default(this_default.attr | default(omit)) }}" # alias for attributes
+    follow: "{{ item.1.follow | default(this_default.follow | default(omit)) }}"
+    force: "{{ item.1.force | default(this_default.force | default(omit)) }}"
+    group: "{{ item.1.group | default(this_default.group | default(omit)) }}"
+    mode: "{{ item.1.mode | default(this_default.mode | default(omit)) }}"
+    modification_time: "{{ item.1.modification_time | default(this_default.modification_time | default(omit)) }}"
+    modification_time_format: "{{ item.1.modification_time_format | default(this_default.modification_time_format | default(omit)) }}"
+    owner: "{{ item.1.owner | default(this_default.owner | default(omit)) }}"
+    recurse: "{{ item.1.recurse | default(this_default.recurse | default(omit)) }}"
+    selevel: "{{ item.1.selevel | default(this_default.selevel | default(omit)) }}"
+    serole: "{{ item.1.serole | default(this_default.serole | default(omit)) }}"
+    setype: "{{ item.1.setype | default(this_default.setype | default(omit)) }}"
+    seuser: "{{ item.1.seuser | default(this_default.seuser | default(omit)) }}"
+    unsafe_writes: "{{ item.1.unsafe_writes | default(this_default.unsafe_writes | default(omit)) }}"
+  # with_items: "{{ a2s_directories }}"
+  with_subelements:
+    - "{{ a2s_users }}"
+    - "directories"
+    - skip_missing: true
+  vars:
+    this_default: "{{ a2s_users_default.directories_default | default(a2s_users_templates_default) }}"
+  when:
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"
+  notify:
+    - "a2s-user-directories changed"
+  tags:
+    - a2s-user-directories
+
+- name: "[system] a2s_users[n]directories | Via: win_file | (Windows): add/remove directories"
+  win_file:
+    path: "{{ item.1.path | default(this_default.path | default(omit)) }}"
+
+    # We set by (last) default 'directory'. Yes, actually users
+    # can create/delete non-directories
+    state: "{{ item.1.src | default(this_default.src | default(omit)) }}"
+  # with_items: "{{ a2s_directories }}"
+  with_subelements:
+    - "{{ a2s_users }}"
+    - "directories"
+    - skip_missing: true
+  when:
+    - "(a2s_internal_iswindows is defined)
+      and (a2s_internal_iswindows|bool is sameas true)"
+  notify:
+    - "a2s-user-directories changed"
+  tags:
+    - a2s-user-directories

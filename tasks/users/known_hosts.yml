@@ -9,7 +9,7 @@
 #       a2s_users[n]known_hosts would need extra steps from end user
 #       and is not very "Syntatic Sugar" at this moment (fititnt, 2020-01-19 03:06 BRT)
 
-- name: "[system] user | known_hosts: add/remove a host from the known_hosts file"
+- name: "[system] a2s_users[n]known_hosts | Via: known_hosts | add/remove a host from the known_hosts file"
   known_hosts:
     hash_host: "{{ item.1.hash_host | default(omit) }}"
     key: "{{ item.1.key | default(omit) }}"

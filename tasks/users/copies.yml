@@ -1,0 +1,77 @@
+---
+
+# FILE:            {{ role_path }}/tasks/user/copies.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/copy_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_copy_module.html
+
+# - name: "[files] a2s_users.copies | Via: debug | this_default (override undefined values)"
+#   debug:
+#     msg:
+#       this_default: "{{ this_default }}"
+
+- name: "[system] a2s_users[n]copies | Via: copy | (*nix only) copy files/directories"
+  copy:
+    dest: "{{ item.1.dest | default(this_default.dest | default(omit)) }}"
+    src: "{{ item.1.src | default(this_default.src | default(omit)) }}"
+
+    # Other parameters, by alphabetical order
+    attributes: "{{ item.1.attributes | default(this_default.attributes | default(omit)) }}"
+    attr: "{{ item.1.attr | default(this_default.attr | default(omit)) }}" # alias for attributes
+    backup: "{{ item.1.backup | default(this_default.backup | default(omit)) }}"
+    checksum: "{{ item.1.checksum | default(this_default.checksum | default(omit)) }}"
+    content: "{{ item.1.content | default(this_default.content | default(omit)) }}"
+    decrypt: "{{ item.1.decrypt | default(this_default.decrypt | default(omit)) }}"
+    directory_mode: "{{ item.1.directory_mode | default(this_default.directory_mode | default(omit)) }}"
+    follow: "{{ item.1.follow | default(this_default.follow | default(omit)) }}"
+    force: "{{ item.1.force | default(this_default.force | default(omit)) }}"
+    group: "{{ item.1.group | default(this_default.group | default(omit)) }}"
+    local_follow: "{{ item.1.local_follow | default(this_default.local_follow | default(omit)) }}"
+    mode: "{{ item.1.mode | default(this_default.mode | default(omit)) }}"
+    owner: "{{ item.1.owner | default(this_default.owner | default(omit)) }}"
+    remote_src: "{{ item.1.remote_src | default(this_default.remote_src | default(omit)) }}"
+    selevel: "{{ item.1.selevel | default(this_default.selevel | default(omit)) }}"
+    serole: "{{ item.1.serole | default(this_default.serole | default(omit)) }}"
+    setype: "{{ item.1.setype | default(this_default.setype | default(omit)) }}"
+    seuser: "{{ item.1.seuser | default(this_default.seuser | default(omit)) }}"
+    unsafe_writes: "{{ item.1.unsafe_writes | default(this_default.unsafe_writes | default(omit)) }}"
+    validate: "{{ item.1.validate | default(this_default.validate | default(omit)) }}"
+  with_subelements:
+    - "{{ a2s_users }}"
+    - "copies"
+    - skip_missing: true
+  vars:
+    this_default: "{{ a2s_users_default.copies_default | default(a2s_users_copies_default) }}"
+  when:
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"
+  notify:
+    - "a2s-user-copies changed"
+  tags:
+    - a2s-user-copies
+
+- name: "[system] a2s_users[n]copies | Via: win_copy | (Windows only) copy files/directories"
+  win_copy:
+    dest: "{{ item.1.dest | default(this_default.dest | default(omit)) }}"
+    src: "{{ item.1.src | default(this_default.src | default(omit)) }}"
+
+    # Other parameters, by alphabetical order
+    backup: "{{ item.1.backup | default(this_default.backup | default(omit)) }}"
+    content: "{{ item.1.content | default(this_default.content | default(omit)) }}"
+    decrypt: "{{ item.1.decrypt | default(this_default.decrypt | default(omit)) }}"
+    force: "{{ item.1.force | default(this_default.force | default(omit)) }}"
+    local_follow: "{{ item.1.local_follow | default(this_default.local_follow | default(omit)) }}"
+    remote_src: "{{ item.1.remote_src | default(this_default.remote_src | default(omit)) }}"
+  with_subelements:
+    - "{{ a2s_users }}"
+    - "copies"
+    - skip_missing: true
+  vars:
+    this_default: "{{ a2s_users_default.copies_default | default(a2s_users_copies_default) }}"
+  when:
+    - "(a2s_internal_iswindows is defined)
+      and (a2s_internal_iswindows|bool is sameas true)"
+  notify:
+    - "a2s-user-copies changed"
+  tags:
+    - a2s-user-copies

@@ -23,7 +23,17 @@ a2s_files_default: {}
 a2s_mysql_dbs_defaults: {}
 a2s_mysql_users_defaults: {}
 a2s_users_default: {
+  copies_default: a2s_users_copies_default,
+  directories_default: a2s_users_directories_default,
   templates_default: a2s_users_templates_default
+}
+a2s_users_copies_default: {
+  owner: "{{ item.0.name }}", # We reuse the username as owner of the file
+  group: "{{ item.0.group | default(item.0.name) }}" # We reuse the group, then username as group of the file
+}
+a2s_users_directories_default: {
+  owner: "{{ item.0.name }}", # We reuse the username as owner of the file
+  group: "{{ item.0.group | default(item.0.name) }}" # We reuse the group, then username as group of the file
 }
 a2s_users_templates_default: {
   owner: "{{ item.0.name }}", # We reuse the username as owner of the file

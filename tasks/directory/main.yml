@@ -83,7 +83,7 @@
   tags:
     - a2s-directory-directories
 
-- name: "[files] directory | (Windows): add/remove directories"
+- name: "[files] directory | Via: win_file | (Windows): add/remove directories"
   win_file:
     path: "{{ item.path | default(a2s_directories_default.path | default(omit)) }}"
 
