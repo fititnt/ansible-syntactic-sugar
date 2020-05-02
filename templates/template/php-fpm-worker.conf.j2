@@ -1,6 +1,50 @@
 {#
-     TODO: document a bit this template file
+FILE:            {{ role_path }}/tasks/file/main.yml
+LICENSE:         Public Domain
+
+USAGE:
+    Please read the oficial PHP-FPM documentation. Most options are an 1-to-1
+    option, with exception of:
+
+        item.template_vars.extra_string:  Adds a custom string value to end of
+                                          the template file
+        item.template_vars.raw:           Raw string value of generated file.
+                                          If used, will replace everything.
+EXAMPLE:
+
+```yaml
+- name: "A2S a2s_templates + php-fpm-worker.conf.j2 example"
+  hosts: all
+  vars:
+      a2s_templates:
+        - src: "{{ a2s__template_phpfpmworker }}"
+          dest: "/etc/php/7.4/fpm/pool.d/myworker.conf"
+          owner: "myworker"
+          template_vars:
+            worker_name: "myworker"
+            listen: "/run/php/php7.4-fpm-myworker.sock"
+            user: "myworker"
+            extra_string: |
+              php_admin_value[upload_max_filesize]=512M
+              php_admin_value[post_max_size]=512M
+              php_admin_value[max_execution_time]=60
+
+  roles:
+    - role: fititnt.syntactic_sugar
+
+  handlers:
+    - name: "reload php7.4-fpm"
+      service:
+        name: php7.4-fpm
+        state: reloaded
+      listen: "a2s-template-templates changed"
+```
+EXTRA:
+  See https://haydenjames.io/php-fpm-tuning-using-pm-static-max-performance/ for
+  some performance tips
+
 #}
+{% if (item.template_vars.raw is not defined) %}
 [{{ item.template_vars.worker_name }}]
 user = {{ item.template_vars.worker_name | default(a2s__phpfpm_user) }}
 group = {{ item.template_vars.group | default(a2s__phpfpm_group) }}
@@ -15,3 +59,7 @@ pm.start_servers = {{ item.template_vars.pm_start_servers | default(a2s__phpfpm_
 pm.min_spare_servers = {{ item.template_vars.pm_min_spare_servers | default(a2s__phpfpm_pm_min_spare_servers) }}
 pm.max_spare_servers = {{ item.template_vars.pm_max_spare_servers | default(a2s__phpfpm_pm_max_spare_servers) }}
 pm.max_requests = {{ item.template_vars.pm_max_spare_servers | default(a2s__phpfpm_pm_max_requests) }}
+{{ item.template_vars.extra_string | default ('') }}
+{% else %}
+{{ item.template_vars.raw }}
+{% endif %}
