@@ -10,7 +10,7 @@
 - name: "adminer"
   include: adminer/main.yml
   when:
-    - "(a2s_betatesting|bool is sameas true)"
+    # - "(a2s_betatesting|bool is sameas true)"
     - "(a2s_install_adminer is defined)
       and (a2s_install_adminer.download_url is defined)
       and (a2s_install_adminer.install_directory is defined)

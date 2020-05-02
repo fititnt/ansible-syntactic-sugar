@@ -4,10 +4,6 @@
 # LICENSE:         Public Domain
 # SEE:             https://docs.ansible.com/ansible/latest/modules/template_module.html
 
-# TODO: implement state: absent for both a2s_copys and a2s_templates even if
-#       copy and template does not support it. Check https://github.com/ansible/ansible/issues/6929
-#       (fititnt, 2019-01-08 11:48 BRT)
-
 - name: "[files] a2s_templates  | Via: debug | a2s_templates_default"
   debug:
     msg:
@@ -54,7 +50,7 @@
   # exist when evaluating the loop and this variable was not expected.
   ignore_errors: yes
 
-- name: "[files] a2s_templates | Via: file | template a file on destiny"
+- name: "[files] a2s_templates | Via: template | template a file on destiny"
   template:
     src: "{{ item.src | default(a2s_templates_default.src | default(omit)) }}"
     dest: "{{ item.dest | default(a2s_templates_default.dest | default(omit)) }}"
@@ -80,6 +76,21 @@
     variable_end_string: "{{ item.variable_end_string | default(a2s_templates_default.variable_end_string | default(omit)) }}"
     variable_start_string: "{{ item.variable_start_string | default(a2s_templates_default.variable_start_string | default(omit)) }}"
   with_items: "{{ a2s_templates }}"
+  when:
+    - "(item.state is not defined) or ((item.state is defined) and (item.state != 'absent'))"
+  notify:
+    - "a2s-template-templates changed"
+  tags:
+    - a2s-template-templates
+
+- name: "[files] a2s_templates | Via: file | template a file on destiny (only items with state=absent)"
+  file:
+    # path: "{{ item.path | default(item.dest | default(omit)) }}"
+    dest: "{{ item.dest }}"
+    state: absent
+  with_items: "{{ a2s_templates }}"
+  when:
+    - "(item.state is defined) and (item.state == 'absent')"
   notify:
     - "a2s-template-templates changed"
   tags:
