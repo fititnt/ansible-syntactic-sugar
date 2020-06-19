@@ -19,7 +19,7 @@
 - name: "composer"
   include: composer/main.yml
   when:
-    - "(a2s_betatesting|bool is sameas true)"
+    # - "(a2s_betatesting|bool is sameas true)"
     - "(a2s_only_apis is undefined)
       or ('a2s_install_composer' in a2s_only_apis)
       or ('a2s_install_composers' in a2s_only_apis)"
@@ -27,5 +27,5 @@
       or (('a2s_install_composer' not in a2s_except_apis)
       and ('a2s_install_composers' not in a2s_except_apis))"
   tags:
-    - s2s-install-composer
-    - s2s-install-composers
+    - a2s-install-composer
+    - a2s-install-composers
